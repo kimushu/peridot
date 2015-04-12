@@ -1,0 +1,3 @@
+[submodule "fpga/peridot_rubic/software/mruby"]
+	path = fpga/peridot_rubic/software/mruby
+	url = https://github.com/kimushu/mruby.git

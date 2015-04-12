@@ -1,0 +1,9 @@
+/db
+/*.qws
+/.qsys_edit
+/plain/
+/output_files/
+/simulation/
+/greybox_tmp/
+/incremental_db/
+/PLLJ_PLLSPE_INFO.txt
