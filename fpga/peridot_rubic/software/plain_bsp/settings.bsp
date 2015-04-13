@@ -2,8 +2,8 @@
 <sch:Settings xmlns:sch="http://www.altera.com/embeddedsw/bsp/schema">
         <BspType>hal</BspType>
         <BspVersion>default</BspVersion>
-        <BspGeneratedTimeStamp>2015/04/12 14:42:34</BspGeneratedTimeStamp>
-        <BspGeneratedUnixTimeStamp>1428817354534</BspGeneratedUnixTimeStamp>
+        <BspGeneratedTimeStamp>2015/04/14 1:06:06</BspGeneratedTimeStamp>
+        <BspGeneratedUnixTimeStamp>1428941166673</BspGeneratedUnixTimeStamp>
         <BspGeneratedLocation>/home/shuta/projects/peridot/fpga/peridot_rubic/software/plain_bsp</BspGeneratedLocation>
         <BspSettingsFile>settings.bsp</BspSettingsFile>
         <SopcDesignFile>../../plain.sopcinfo</SopcDesignFile>
@@ -74,7 +74,7 @@
                 <SettingName>hal.linker.enable_alt_load</SettingName>
                 <Identifier>NONE</Identifier>
                 <Type>Boolean</Type>
-                <Value>0</Value>
+                <Value>1</Value>
                 <DefaultValue>0</DefaultValue>
                 <DestinationFile>none</DestinationFile>
                 <Description>Enables the alt_load() facility. The alt_load() facility copies sections from the .text memory into RAM. If true, this setting sets up the VMA/LMA of sections in linker.x to allow them to be loaded into the .text memory.</Description>

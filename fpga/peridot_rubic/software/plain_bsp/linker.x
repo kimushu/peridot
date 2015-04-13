@@ -4,7 +4,7 @@
  * Machine generated for CPU 'nios2_core0' in SOPC Builder design 'plain'
  * SOPC Builder design path: ../../plain.sopcinfo
  *
- * Generated: Sat Apr 04 09:58:50 JST 2015
+ * Generated: Mon Apr 13 21:55:51 JST 2015
  */
 
 /*
@@ -69,9 +69,12 @@ OUTPUT_ARCH( nios2 )
 ENTRY( _start )
 
 /*
- * The alt_load() facility is disabled. This typically happens when an
- * external bootloader is provided or the application runs in place.
- * The LMA (aka physical address) of each section defaults to its VMA.
+ * The alt_load() facility is enabled. This typically happens when there isn't
+ * an external bootloader (e.g. flash bootloader).
+ * The LMA (aka physical address) of each loaded section is
+ * set to the .text memory device.
+ * The HAL alt_load() routine called from crt0 copies sections from
+ * the .text memory to RAM as needed.
  */
 
 SECTIONS
@@ -277,9 +280,21 @@ SECTIONS
      * The output section used for the heap is treated in a special way,
      * i.e. the symbols "end" and "_end" are added to point to the heap start.
      *
+     * Because alt_load() is enabled, these sections have
+     * their LMA set to be loaded into the .text memory region.
+     * However, the alt_load() code will NOT automatically copy
+     * these sections into their mapped memory region.
+     *
      */
 
-    .sdram :
+    /*
+     *
+     * This section's LMA is set to the .text region.
+     * crt0 will copy to this section's specified mapped region virtual memory address (VMA)
+     *
+     */
+
+    .sdram LOADADDR (.bss) + SIZEOF (.bss) : AT ( LOADADDR (.bss) + SIZEOF (.bss) )
     {
         PROVIDE (_alt_partition_sdram_start = ABSOLUTE(.));
         *(.sdram .sdram. sdram.*)
@@ -292,7 +307,14 @@ SECTIONS
 
     PROVIDE (_alt_partition_sdram_load_addr = LOADADDR(.sdram));
 
-    .epcs :
+    /*
+     *
+     * This section's LMA is set to the .text region.
+     * crt0 will copy to this section's specified mapped region virtual memory address (VMA)
+     *
+     */
+
+    .epcs : AT ( LOADADDR (.sdram) + SIZEOF (.sdram) )
     {
         PROVIDE (_alt_partition_epcs_start = ABSOLUTE(.));
         *(.epcs .epcs. epcs.*)
@@ -302,7 +324,14 @@ SECTIONS
 
     PROVIDE (_alt_partition_epcs_load_addr = LOADADDR(.epcs));
 
-    .ram_http :
+    /*
+     *
+     * This section's LMA is set to the .text region.
+     * crt0 will copy to this section's specified mapped region virtual memory address (VMA)
+     *
+     */
+
+    .ram_http : AT ( LOADADDR (.epcs) + SIZEOF (.epcs) )
     {
         PROVIDE (_alt_partition_ram_http_start = ABSOLUTE(.));
         *(.ram_http .ram_http. ram_http.*)

@@ -111,14 +111,6 @@ int main()
   SIMPLE_EPCSFS_DEV_INIT(EPCS, epcs);
 
   /* TODO: safe mode */
-  while (0)
-  {
-    IOWR(PIO_LED_BASE, 0, 1);
-    usleep(50000);
-    IOWR(PIO_LED_BASE, 0, 0);
-    usleep(50000);
-  }
-
   rubic.state = RUBIC_STATE_READY;
 
   while (1)
