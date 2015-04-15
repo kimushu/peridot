@@ -93,6 +93,8 @@ alt_irq_entry:
         .section .exceptions.irqreturn, "xa"
 
         br    .Lexception_exit
+        nop
+
 
         .section .exceptions.notirq.label, "xa"
 
