@@ -127,12 +127,12 @@ int simple_epcsfs_close(alt_fd *fd)
     return -EBADF;
   }
 
-  sp->rw_ptr = -1;
   simple_epcsfs_flush(sp, 1);
   if ((sp->eof_ptr != sp->eof_prev) && (sp->flags & _FWRITE)) {
     epcs_small_sector_erase(sp->base, EPCS_OFFSET_BYTES);
     epcs_write_buffer(sp->base, EPCS_OFFSET_BYTES, (uint8_t *)&sp->eof_ptr, sizeof(sp->eof_ptr), 0);
   }
+  sp->eof_ptr = -1;
   return 0;
 }
 
