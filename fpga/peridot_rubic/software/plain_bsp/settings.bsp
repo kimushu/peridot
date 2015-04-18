@@ -2,8 +2,8 @@
 <sch:Settings xmlns:sch="http://www.altera.com/embeddedsw/bsp/schema">
         <BspType>hal</BspType>
         <BspVersion>default</BspVersion>
-        <BspGeneratedTimeStamp>2015/04/14 1:06:06</BspGeneratedTimeStamp>
-        <BspGeneratedUnixTimeStamp>1428941166673</BspGeneratedUnixTimeStamp>
+        <BspGeneratedTimeStamp>2015/04/19 0:13:10</BspGeneratedTimeStamp>
+        <BspGeneratedUnixTimeStamp>1429369990276</BspGeneratedUnixTimeStamp>
         <BspGeneratedLocation>/home/shuta/projects/peridot/fpga/peridot_rubic/software/plain_bsp</BspGeneratedLocation>
         <BspSettingsFile>settings.bsp</BspSettingsFile>
         <SopcDesignFile>../../plain.sopcinfo</SopcDesignFile>
