@@ -41,7 +41,7 @@ set_global_assignment -name FAMILY "Cyclone IV E"
 set_global_assignment -name TOP_LEVEL_ENTITY cq_viola_top
 set_global_assignment -name ORIGINAL_QUARTUS_VERSION 13.1
 set_global_assignment -name PROJECT_CREATION_TIME_DATE "15:41:55  MARCH 01, 2014"
-set_global_assignment -name LAST_QUARTUS_VERSION 13.1
+set_global_assignment -name LAST_QUARTUS_VERSION 15.0.0
 set_global_assignment -name PROJECT_OUTPUT_DIRECTORY output_files
 set_global_assignment -name MIN_CORE_JUNCTION_TEMP 0
 set_global_assignment -name MAX_CORE_JUNCTION_TEMP 85
@@ -87,26 +87,26 @@ set_location_assignment PIN_87 -to lcdc_D[4]
 set_location_assignment PIN_115 -to lcdc_D[5]
 set_location_assignment PIN_128 -to lcdc_D[6]
 set_location_assignment PIN_129 -to lcdc_D[7]
-set_location_assignment PIN_136 -to adc_DOUT
-set_location_assignment PIN_141 -to adc_IRQ
+set_location_assignment PIN_53 -to adc_nCS
+set_location_assignment PIN_54 -to adc_DIN
+set_location_assignment PIN_55 -to adc_DOUT
+set_location_assignment PIN_64 -to adc_DCLK
+set_location_assignment PIN_65 -to adc_nIRQ
 set_location_assignment PIN_142 -to mmc_nCS
 set_location_assignment PIN_143 -to mmc_DI
 set_location_assignment PIN_144 -to mmc_DO
 set_location_assignment PIN_1 -to mmc_CLK
-set_location_assignment PIN_2 -to D_14
-set_location_assignment PIN_3 -to D_15
-set_location_assignment PIN_42 -to adc_DIN
-set_location_assignment PIN_43 -to adc_DCLK
-set_location_assignment PIN_46 -to D_18
-set_location_assignment PIN_51 -to lcdc_nCS
-set_location_assignment PIN_52 -to lcdc_nWR
-set_location_assignment PIN_53 -to lcdc_RS
-set_location_assignment PIN_54 -to D_22
-set_location_assignment PIN_55 -to D_23
-set_location_assignment PIN_64 -to D_24
-set_location_assignment PIN_65 -to D_25
-set_location_assignment PIN_77 -to D_26
-set_location_assignment PIN_80 -to D_27
+set_location_assignment PIN_42 -to lcdc_nCS
+set_location_assignment PIN_46 -to lcdc_nWR
+set_location_assignment PIN_43 -to lcdc_RS
+set_location_assignment PIN_52 -to lcdc_FMARK
+set_location_assignment PIN_51 -to lcdc_nRD
+set_location_assignment PIN_2 -to lcdc_nRESET
+set_location_assignment PIN_3 -to lcdc_BACKLIGHT
+set_location_assignment PIN_136 -to audio_Lch
+set_location_assignment PIN_141 -to audio_Rch
+set_location_assignment PIN_77 -to aux_SCL
+set_location_assignment PIN_80 -to aux_SDA
 set_location_assignment PIN_69 -to SDR_A[12]
 set_location_assignment PIN_70 -to SDR_A[11]
 set_location_assignment PIN_110 -to SDR_A[10]
@@ -163,6 +163,8 @@ set_location_assignment PIN_13 -to EPCS_DATA0
 #set_instance_assignment -name DATA0_PIN ON -to EPCS_DATA0
 
 set_instance_assignment -name RESERVE_PIN AS_OUTPUT_DRIVING_GROUND -to SDR_A[12]
+set_instance_assignment -name RESERVE_PIN AS_OUTPUT_DRIVING_VCC -to lcdc_nRD
+set_instance_assignment -name RESERVE_PIN AS_OUTPUT_DRIVING_VCC -to lcdc_BACKLIGHT
 
 
 # Pin Settings Assignments
@@ -181,10 +183,6 @@ set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to lcdc_*
 # Project files Assignments
 # ==========================
 
-set_global_assignment -name QIP_FILE cq_viola/synthesis/cq_viola.qip
-set_global_assignment -name QIP_FILE syspll.qip
-set_global_assignment -name BDF_FILE cq_viola_top.bdf
-set_global_assignment -name SDC_FILE peridot_top.sdc
 
 
 # Compile Settings Assignments
@@ -198,6 +196,17 @@ set_global_assignment -name PHYSICAL_SYNTHESIS_REGISTER_DUPLICATION ON
 set_global_assignment -name PHYSICAL_SYNTHESIS_REGISTER_RETIMING ON
 set_global_assignment -name ROUTER_LCELL_INSERTION_AND_LOGIC_DUPLICATION ON
 set_global_assignment -name ROUTER_TIMING_OPTIMIZATION_LEVEL MAXIMUM
-set_global_assignment -name AUTO_PACKED_REGISTERS_STRATIXII NORMAL
+set_global_assignment -name QII_AUTO_PACKED_REGISTERS NORMAL
 set_global_assignment -name FITTER_EFFORT "STANDARD FIT"
+set_global_assignment -name QIP_FILE cq_viola/synthesis/cq_viola.qip
+set_global_assignment -name QIP_FILE syspll.qip
+set_global_assignment -name BDF_FILE cq_viola_top.bdf
+set_global_assignment -name SDC_FILE peridot_top.sdc
+set_global_assignment -name REMOVE_REDUNDANT_LOGIC_CELLS ON
+set_global_assignment -name ENABLE_OCT_DONE OFF
+set_global_assignment -name GENERATE_RBF_FILE ON
+set_global_assignment -name ALLOW_ANY_ROM_SIZE_FOR_RECOGNITION ON
+set_global_assignment -name ALLOW_ANY_RAM_SIZE_FOR_RECOGNITION ON
+set_global_assignment -name ALLOW_ANY_SHIFT_REGISTER_SIZE_FOR_RECOGNITION ON
+
 set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top
