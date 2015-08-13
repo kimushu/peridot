@@ -2,9 +2,9 @@
  * linker.h - Linker script mapping information
  *
  * Machine generated for CPU 'nios2_s' in SOPC Builder design 'cq_viola'
- * SOPC Builder design path: C:/PROJECT/Physicaloid/c85_peridot/fpga/peridot_lcdunit/cq_viola.sopcinfo
+ * SOPC Builder design path: ../../cq_viola.sopcinfo
  *
- * Generated: Tue May 13 22:22:41 JST 2014
+ * Generated: Thu Aug 13 12:47:46 JST 2015
  */
 
 /*

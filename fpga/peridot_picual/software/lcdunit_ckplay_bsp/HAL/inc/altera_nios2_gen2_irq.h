@@ -2,7 +2,7 @@
 *                                                                             *
 * License Agreement                                                           *
 *                                                                             *
-* Copyright (c) 2003,2007 Altera Corporation, San Jose, California, USA.      *
+* Copyright (c) 2009 Altera Corporation, San Jose, California, USA.           *
 * All rights reserved.                                                        *
 *                                                                             *
 * Permission is hereby granted, free of charge, to any person obtaining a     *
@@ -28,50 +28,53 @@
 *                                                                             *
 ******************************************************************************/
 
-#include <malloc.h>
-#include "sys/alt_warning.h"
-#include "sys/alt_cache.h"
-#include "system.h"
-
 /*
- * Allocate a block of uncached memory.
- * Return pointer to the block of memory or NULL if can't allocate it.
+ * Support for the Nios II internal interrupt controller.
  */
 
-volatile void* 
-alt_uncached_malloc(size_t size)
+#ifndef __ALT_NIOS2_GEN2_IRQ_H__
+#define __ALT_NIOS2_GEN2_IRQ_H__
+
+#ifdef __cplusplus
+extern "C"
 {
-#if ALT_CPU_DCACHE_SIZE > 0
-#ifdef ALT_CPU_DCACHE_BYPASS_MASK
+#endif /* __cplusplus */
 
-  void* ptr;
+/*
+ * The macro ALTERA_NIOS2_GEN2_IRQ_INSTANCE is used by the alt_irq_init()
+ * function in the auto-generated file alt_sys_init.c to create an
+ * instance of this interrupt controller device driver state if this
+ * module contains an interrupt controller.
+ * Only one instance of a Nios II is allowed so this macro is just empty.
+ */
 
-  /* Round up size to an integer number of data cache lines. Required to guarantee that
-   * cacheable and non-cacheable data won't be mixed on the same cache line. */ 
-  const size_t num_lines = (size + ALT_CPU_DCACHE_LINE_SIZE - 1) / ALT_CPU_DCACHE_LINE_SIZE;
-  const size_t aligned_size = num_lines * ALT_CPU_DCACHE_LINE_SIZE;
+#define ALTERA_NIOS2_GEN2_IRQ_INSTANCE(name, state)
 
-  /* Use memalign() Newlib routine to allocate starting on a data cache aligned address.
-   * Required to guarantee that cacheable and non-cacheable data won't be mixed on the
-   * same cache line. */ 
-  ptr = memalign(ALT_CPU_DCACHE_LINE_SIZE, aligned_size);
+/*
+ * altera_nios2_gen2_irq_init() is called by the auto-generated function 
+ * alt_irq_init() once for the Nios II if it contains an interrupt controller.
+ * The altera_nios2_gen2_irq_init() routine is called using the 
+ * ALTERA_NIOS2_GEN2_IRQ_INIT macro given below.
+ *
+ * This function initializes the internal interrupt controller
+ * so is not called if the Nios II contains an external interrupt
+ * controller port (because the internal interrupt controller
+ * is removed if this port is present).
+ */
 
-  if (ptr == NULL) {
-    return NULL; /* Out of memory */
-  }
+extern void altera_nios2_gen2_irq_init( void );
 
-  /* Ensure that the memory region isn't in the data cache. */
-  alt_dcache_flush(ptr, aligned_size);
+/*
+ * The macro ALTERA_NIOS2_GEN2_IRQ_INIT is used by the alt_irq_init() routine
+ * in the auto-generated file alt_sys_init.c to initialize an instance
+ * of the interrupt controller device driver state.
+ */
 
-  return (volatile void*) (((alt_u32)ptr) | ALT_CPU_DCACHE_BYPASS_MASK);
+#define ALTERA_NIOS2_GEN2_IRQ_INIT(name, state) altera_nios2_gen2_irq_init()
 
-#else /* No address mask option enabled. */
-  /* Generate a link time error, should this function ever be called. */
-  ALT_LINK_ERROR("alt_uncached_malloc() is not available because CPU is not configured to use bit 31 of address to bypass data cache");
-  return NULL;
-#endif /* No address mask option enabled. */
-#else /* No data cache */
-  /* Just use regular malloc. */
-  return malloc(size);
-#endif /* No data cache */
+#ifdef __cplusplus
 }
+#endif /* __cplusplus */
+
+#endif /* __ALT_NIOS2_ULTRA_IRQ_H__ */
+

@@ -1,9 +1,9 @@
 # memory.gdb - GDB memory region definitions
 #
 # Machine generated for CPU 'nios2_s' in SOPC Builder design 'cq_viola'
-# SOPC Builder design path: C:/PROJECT/Physicaloid/c85_peridot/fpga/peridot_lcdunit/cq_viola.sopcinfo
+# SOPC Builder design path: ../../cq_viola.sopcinfo
 #
-# Generated: Wed May 14 00:33:10 JST 2014
+# Generated: Thu Aug 13 12:38:02 JST 2015
 
 # DO NOT MODIFY THIS FILE
 #

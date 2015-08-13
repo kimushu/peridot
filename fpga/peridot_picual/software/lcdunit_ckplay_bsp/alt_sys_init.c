@@ -2,9 +2,9 @@
  * alt_sys_init.c - HAL initialization source
  *
  * Machine generated for CPU 'nios2_s' in SOPC Builder design 'cq_viola'
- * SOPC Builder design path: C:/PROJECT/Physicaloid/c85_peridot/fpga/peridot_lcdunit/cq_viola.sopcinfo
+ * SOPC Builder design path: ../../cq_viola.sopcinfo
  *
- * Generated: Tue May 13 21:34:51 JST 2014
+ * Generated: Thu Aug 13 12:34:16 JST 2015
  */
 
 /*
@@ -58,7 +58,7 @@
  * Device headers
  */
 
-#include "altera_nios2_qsys_irq.h"
+#include "altera_nios2_gen2_irq.h"
 #include "altera_avalon_jtag_uart.h"
 #include "altera_avalon_spi.h"
 #include "altera_avalon_sysid_qsys.h"
@@ -68,7 +68,7 @@
  * Allocate the device storage
  */
 
-ALTERA_NIOS2_QSYS_IRQ_INSTANCE ( NIOS2_S, nios2_s);
+ALTERA_NIOS2_GEN2_IRQ_INSTANCE ( NIOS2_S, nios2_s);
 ALTERA_AVALON_JTAG_UART_INSTANCE ( JTAG_UART, jtag_uart);
 ALTERA_AVALON_SPI_INSTANCE ( TOUCHPANEL, touchpanel);
 ALTERA_AVALON_SYSID_QSYS_INSTANCE ( SYSID, sysid);
@@ -84,7 +84,7 @@ ALTERA_AVALON_TIMER_INSTANCE ( SYSTIMER, systimer);
 
 void alt_irq_init ( const void* base )
 {
-    ALTERA_NIOS2_QSYS_IRQ_INIT ( NIOS2_S, nios2_s);
+    ALTERA_NIOS2_GEN2_IRQ_INIT ( NIOS2_S, nios2_s);
     alt_irq_cpu_enable_interrupts();
 }
 
