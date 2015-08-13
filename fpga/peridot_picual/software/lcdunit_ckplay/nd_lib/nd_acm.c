@@ -1,9 +1,9 @@
 /**************************************************************************
-	PROCYON ƒRƒ“ƒ\[ƒ‹ƒ‰ƒCƒuƒ‰ƒŠund_Libv (PERIDOT LCD Edition)
+	PROCYON ã‚³ãƒ³ã‚½ãƒ¼ãƒ«ãƒ©ã‚¤ãƒ–ãƒ©ãƒªã€Œnd_Libã€ (PERIDOT LCD Edition)
 
-		‚`‚b‚lƒR[ƒfƒbƒNƒfƒR[ƒhƒGƒ“ƒWƒ“
+		ï¼¡ï¼£ï¼­ã‚³ãƒ¼ãƒ‡ãƒƒã‚¯ãƒ‡ã‚³ãƒ¼ãƒ‰ã‚¨ãƒ³ã‚¸ãƒ³
 
-	2014/05/13	PERIDOT LCDƒ†ƒjƒbƒg—pC³
+	2014/05/13	PERIDOT LCDãƒ¦ãƒ‹ãƒƒãƒˆç”¨ä¿®æ­£
 
  **************************************************************************/
 
@@ -18,7 +18,7 @@
 
 
 
-/***** ’è”Eƒ}ƒNƒ’è‹` ***************************************************/
+/***** å®šæ•°ãƒ»ãƒã‚¯ãƒ­å®šç¾© ***************************************************/
 
 #define nd_malloc		alt_uncached_malloc
 #define nd_free			alt_uncached_free
@@ -26,22 +26,22 @@
 //#define nd_free			free
 
 
-/***** \‘¢‘Ì’è‹` *********************************************************/
+/***** æ§‹é€ ä½“å®šç¾© *********************************************************/
 
 
-/***** ƒvƒƒgƒ^ƒCƒvéŒ¾ ***************************************************/
+/***** ãƒ—ãƒ­ãƒˆã‚¿ã‚¤ãƒ—å®£è¨€ ***************************************************/
 
 
 
 /**************************************************************************
-	‚b‚jƒXƒgƒŠ[ƒ€‚ğÄ¶ i¦b’èÀ‘•j
+	ï¼£ï¼«ã‚¹ãƒˆãƒªãƒ¼ãƒ ã‚’å†ç”Ÿ ï¼ˆâ€»æš«å®šå®Ÿè£…ï¼‰
  **************************************************************************/
 /*
-  Œ`® 
+  å½¢å¼ 
 	nd_s32 nd_GsCkPlay(FIL *fckh, void *pVram_top)
 
-  ‹@”\
-	CK“®‰æƒtƒ@ƒCƒ‹‚ğÄ¶
+  æ©Ÿèƒ½
+	CKå‹•ç”»ãƒ•ã‚¡ã‚¤ãƒ«ã‚’å†ç”Ÿ
 */
 #ifdef __ALTERA_AVALON_ONCHIP_MEMORY2
 static nd_u32 ckbuff[512/4] __attribute__ ((section (".onchip_memory.rwdata")));
@@ -50,7 +50,7 @@ static nd_u32 ckbuff[512/4];
 #endif
 
 
-// ƒtƒŒ[ƒ€Œv‘ª—pƒR[ƒ‹ƒoƒbƒNƒ^ƒCƒ} 
+// ãƒ•ãƒ¬ãƒ¼ãƒ è¨ˆæ¸¬ç”¨ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯ã‚¿ã‚¤ãƒ 
 static volatile int g_framebusy;
 static alt_alarm g_framewait;
 alt_u32 framewait_callback(void *context)
@@ -73,7 +73,7 @@ int framewait_start(alt_u32 nticks)
 }
 
 
-// Ä¶ŠÖ”–{‘Ì 
+// å†ç”Ÿé–¢æ•°æœ¬ä½“ 
 nd_s32 nd_GsCkPlay(
 		FIL *fckh, void *pVram_top)
 {
@@ -87,19 +87,19 @@ nd_s32 nd_GsCkPlay(
 	alt_u32 fps_ticks;
 
 
-	res = f_lseek(fckh, 0);						// ƒtƒ@ƒCƒ‹æ“ª‚ÖƒV[ƒN 
+	res = f_lseek(fckh, 0);						// ãƒ•ã‚¡ã‚¤ãƒ«å…ˆé ­ã¸ã‚·ãƒ¼ã‚¯ 
 	if (res != FR_OK) return (-1);
 
 	pBuff = (nd_u16 *)&ckbuff[0];
 
-	f_read(fckh, pBuff, 512, &readsize);		// ƒwƒbƒ_ƒtƒBƒ‹ 
-	if (*pBuff != 0x4b43) return (-1);			// 'C''K'‚Ìƒwƒbƒ_‚Å‚È‚¢ 
+	f_read(fckh, pBuff, 512, &readsize);		// ãƒ˜ãƒƒãƒ€ãƒ•ã‚£ãƒ« 
+	if (*pBuff != 0x4b43) return (-1);			// 'C''K'ã®ãƒ˜ãƒƒãƒ€ã§ãªã„ 
 
 	x_size    = *(pBuff + 2);
 	y_size    = *(pBuff + 3);
 	mcu_num   = *(pBuff + 4);
 	acm_fps   = (60 * 256) / *(pBuff + 5);
-	frame_num = *(pBuff + 6);					// frame‚Ì‰ºˆÊ16bit‚Ì‚İ(è”²‚«) 
+	frame_num = *(pBuff + 6);					// frameã®ä¸‹ä½16bitã®ã¿(æ‰‹æŠœã) 
 
 	start_x   = (window_xsize - x_size) / 2;
 	start_y   = (window_ysize - y_size) / 2;
@@ -111,18 +111,18 @@ nd_s32 nd_GsCkPlay(
 				60/acm_fps);
 
 	if (pVram_top == na_null) {
-		pVB_top = (nd_u32 *)nd_malloc(na_VRAM_size *2);	// ‚Q–Ê•ª‚ÌƒtƒŒ[ƒ€ƒoƒbƒtƒ@‚ğŠm•Û 
-		if (pVB_top == na_null) return (-3);			// ƒƒ‚ƒŠ‚ªŠm•Û‚Å‚«‚È‚¢ 
+		pVB_top = (nd_u32 *)nd_malloc(na_VRAM_size *2);	// ï¼’é¢åˆ†ã®ãƒ•ãƒ¬ãƒ¼ãƒ ãƒãƒƒãƒ•ã‚¡ã‚’ç¢ºä¿ 
+		if (pVB_top == na_null) return (-3);			// ãƒ¡ãƒ¢ãƒªãŒç¢ºä¿ã§ããªã„ 
 	} else {
 		pVB_top = (nd_u32 *)pVram_top;
 	}
 
-	VBoffs[0] = (nd_u32)pVB_top;				// ƒ_ƒuƒ‹ƒoƒbƒtƒ@‚ğİ’è 
+	VBoffs[0] = (nd_u32)pVB_top;				// ãƒ€ãƒ–ãƒ«ãƒãƒƒãƒ•ã‚¡ã‚’è¨­å®š 
 //	VBoffs[1] = VBoffs[0] + na_VRAM_size;
 	VBoffs[1] = VBoffs[0] + na_VRAM_linesize/2;
 
 	if (pVram_top == na_null) {
-		nd_GsEglColor(nd_COLORBLACK, 0, 256);		// ƒoƒbƒtƒ@‚Ì‰Šú‰» 
+		nd_GsEglColor(nd_COLORBLACK, 0, 256);		// ãƒãƒƒãƒ•ã‚¡ã®åˆæœŸåŒ– 
 		nd_GsEglDrawBuffer = VBoffs[0];
 		nd_GsEglBoxfill(0, 0, window_xmax, window_ymax);
 		nd_GsEglDrawBuffer = VBoffs[1];
@@ -145,11 +145,11 @@ nd_s32 nd_GsCkPlay(
 		pVref = (nd_u16 *)(VBoffs[1-pg] + (y << na_VRAM_linewidth) + (x << 1));
 
 		while(n < mcu_num) {
-			// ƒXƒgƒ‰ƒCƒvƒoƒbƒtƒ@ƒtƒBƒ‹ 
+			// ã‚¹ãƒˆãƒ©ã‚¤ãƒ—ãƒãƒƒãƒ•ã‚¡ãƒ•ã‚£ãƒ« 
 			pBuff = (nd_u16 *)&ckbuff[0];
 
 			res = f_read(fckh, pBuff, 512, &readsize);
-			if (res != FR_OK || readsize < 512) {		// Ä¶’†‚ÉƒŠ[ƒhƒGƒ‰[ 
+			if (res != FR_OK || readsize < 512) {		// å†ç”Ÿä¸­ã«ãƒªãƒ¼ãƒ‰ã‚¨ãƒ©ãƒ¼ 
 				frame_num = 0;
 				playerr   = -2;
 				break;
@@ -158,14 +158,14 @@ nd_s32 nd_GsCkPlay(
 			s_mcu = *pBuff++;
 			n += s_mcu;
 
-			// ƒXƒgƒ‰ƒCƒv‚ÌƒfƒR[ƒh 
+			// ã‚¹ãƒˆãƒ©ã‚¤ãƒ—ã®ãƒ‡ã‚³ãƒ¼ãƒ‰ 
 			for( ; s_mcu > 0 ; s_mcu--) {
 				pBuff += nd_acm_mcudecode(pBuff, pVdrw, pVref);
 
 				pVdrw += 8;
 				pVref += 8;
 				x += 8;
-				if (x >= (x_size + start_x)) {			// ƒ‰ƒCƒ“‚ÌÜ‚è•Ô‚µ 
+				if (x >= (x_size + start_x)) {			// ãƒ©ã‚¤ãƒ³ã®æŠ˜ã‚Šè¿”ã— 
 					x = start_x;
 					y += 8;
 					pVdrw = (nd_u16 *)(VBoffs[pg  ] + (y << na_VRAM_linewidth) + (x << 1));
@@ -176,7 +176,7 @@ nd_s32 nd_GsCkPlay(
 
 		frame_num--;
 
-		while( g_framebusy ) {}							// ‹K’è‚ÌƒtƒŒ[ƒ€ŠÔ‘Ò‚Â 
+		while( g_framebusy ) {}							// è¦å®šã®ãƒ•ãƒ¬ãƒ¼ãƒ æ™‚é–“å¾…ã¤ 
 		nd_GsEglPage(VBoffs[pg], VBoffs[1-pg], 0);
 		pg = 1 - pg;
 	}
@@ -190,14 +190,14 @@ nd_s32 nd_GsCkPlay(
 
 
 /**************************************************************************
-	‚`‚b‚lˆ³k‰æ‘œ‚ğ“WŠJ i¦b’èÀ‘•j
+	ï¼¡ï¼£ï¼­åœ§ç¸®ç”»åƒã‚’å±•é–‹ ï¼ˆâ€»æš«å®šå®Ÿè£…ï¼‰
  **************************************************************************/
 /*
-  Œ`® 
+  å½¢å¼ 
 	void nd_GsAcmDecode(nd_u16 *pAcm, nd_s32 x, nd_s32 y)
 
-  ‹@”\
-	VRAM‚Ì(x,y)‚ÉACMˆ³k‰æ‘œ‚ğ“WŠJ‚·‚é
+  æ©Ÿèƒ½
+	VRAMã®(x,y)ã«ACMåœ§ç¸®ç”»åƒã‚’å±•é–‹ã™ã‚‹
 */
 void nd_GsAcmDecode(
 		nd_u16 *pAcm,
@@ -208,13 +208,13 @@ void nd_GsAcmDecode(
 	nd_s32 i,j;
 	nd_u16 *pVram;
 
-	if (*pAcm++ != 0x4b43) return;	// 'C''K'‚Ìƒwƒbƒ_‚Å‚È‚¢
+	if (*pAcm++ != 0x4b43) return;	// 'C''K'ã®ãƒ˜ãƒƒãƒ€ã§ãªã„
 
 	mcu_num = *pAcm++;
 	x_size  = *pAcm++;
 	y_size  = *pAcm++;
 
-	pAcm += 4;		// b’èÀ‘•ƒwƒbƒ_‚ğ“Ç‚İ”ò‚Î‚· 
+	pAcm += 4;		// æš«å®šå®Ÿè£…ãƒ˜ãƒƒãƒ€ã‚’èª­ã¿é£›ã°ã™ 
 
 	if (x_size > window_xsize) x_size = window_xsize;
 	if (y_size > window_ysize) y_size = window_ysize;
@@ -232,39 +232,39 @@ void nd_GsAcmDecode(
 
 
 /**************************************************************************
-	‚l‚b‚t‚©‚ç‚W‚˜‚W‚ÌƒsƒNƒZƒ‹ƒf[ƒ^‚ğ•œŒ³(ƒTƒuŠÖ”ŒQ)
+	ï¼­ï¼£ï¼µã‹ã‚‰ï¼˜ï½˜ï¼˜ã®ãƒ”ã‚¯ã‚»ãƒ«ãƒ‡ãƒ¼ã‚¿ã‚’å¾©å…ƒ(ã‚µãƒ–é–¢æ•°ç¾¤)
  **************************************************************************/
 /*
- œ‚c‚b‚aƒtƒH[ƒ}ƒbƒg
+ â—ï¼¤ï¼£ï¼¢ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆ
 
- EMCU skipcode
+ ãƒ»MCU skipcode
 	+---------------+---------------+
 	|      0xff     |      0xff     |
 	+---------------+---------------+
 
-	DCB1(U¬•ª)‚Ì‚İg—p‰Â”\BU¬•ª‚ÌDCB‚É‚±‚ÌƒR[ƒh‚ªİ’è‚³‚ê‚Ä‚¢‚½ê‡A
-	MCU‚Í‚±‚ÌƒR[ƒh‚Ì‚İ‚ÅI—¹‚µ‰æ‘œƒf[ƒ^‚ÍƒtƒŒ[ƒ€QÆæ‚©‚ç“]‘—‚·‚éB
+	DCB1(Uæˆåˆ†)ã®ã¿ä½¿ç”¨å¯èƒ½ã€‚Uæˆåˆ†ã®DCBã«ã“ã®ã‚³ãƒ¼ãƒ‰ãŒè¨­å®šã•ã‚Œã¦ã„ãŸå ´åˆã€
+	MCUã¯ã“ã®ã‚³ãƒ¼ãƒ‰ã®ã¿ã§çµ‚äº†ã—ç”»åƒãƒ‡ãƒ¼ã‚¿ã¯ãƒ•ãƒ¬ãƒ¼ãƒ å‚ç…§å…ˆã‹ã‚‰è»¢é€ã™ã‚‹ã€‚
 
 
- E0bit encoding
+ ãƒ»0bit encoding
 	+---------------+---------------+
 	|       p       |        0      |
 	+---------------+---------------+
 
 
- E1bit encoding
+ ãƒ»1bit encoding
 	+---------------+-------------+-+
 	|       p       |      n      |0|
 	+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 	|              c0               |
 	+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
-	n =	0x01 ` 0x3f : s =  +2 `  +64 (n+1)
-		0x40 ` 0x5f :     +66 ` +128 (n*2+66)
-		0x60 ` 0x7f :    +131 ` +255 (n*4+131)
+	n =	0x01 ï½ 0x3f : s =  +2 ï½  +64 (n+1)
+		0x40 ï½ 0x5f :     +66 ï½ +128 (n*2+66)
+		0x60 ï½ 0x7f :    +131 ï½ +255 (n*4+131)
 
 
- E2bit encoding
+ ãƒ»2bit encoding
 	+---------------+---------+---+-+
 	|       p       |    n    | r |1|
 	+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
@@ -273,23 +273,23 @@ void nd_GsAcmDecode(
 	|              c1               |
 	+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
-	n =	0x00 ` 0x0f : s =  +1 ` +16 (n+1)
-		0x10 ` 0x17 :     +18 ` +32 (n*2+18)
-		0x18 ` 0x1f :     +35 ` +63 (n*4+35)
+	n =	0x00 ï½ 0x0f : s =  +1 ï½ +16 (n+1)
+		0x10 ï½ 0x17 :     +18 ï½ +32 (n*2+18)
+		0x18 ï½ 0x1f :     +35 ï½ +63 (n*4+35)
 
-	r = 00 : ƒm[ƒ}ƒ‹DCB / ƒŠƒjƒAƒXƒeƒbƒsƒ“ƒO 
+	r = 00 : ãƒãƒ¼ãƒãƒ«DCB / ãƒªãƒ‹ã‚¢ã‚¹ãƒ†ãƒƒãƒ”ãƒ³ã‚° 
 			p0 <s> p1 <s> p2 <s> p3
 
-		01 : ƒm[ƒ}ƒ‹DCB / ƒmƒ“ƒŠƒjƒAƒXƒeƒbƒsƒ“ƒO 
+		01 : ãƒãƒ¼ãƒãƒ«DCB / ãƒãƒ³ãƒªãƒ‹ã‚¢ã‚¹ãƒ†ãƒƒãƒ”ãƒ³ã‚° 
 			p0 <s> p1 <s*3> p2 <s> p3
 
-		10 : k¬Y¬•ªDCB / ƒŠƒjƒAƒXƒeƒbƒsƒ“ƒO 
-			 DCB3‚Å‚Ì‚İ—LŒøA‚»‚êˆÈŠO‚Í–³‹‚³‚ê‚é
+		10 : ç¸®å°Yæˆåˆ†DCB / ãƒªãƒ‹ã‚¢ã‚¹ãƒ†ãƒƒãƒ”ãƒ³ã‚° 
+			 DCB3ã§ã®ã¿æœ‰åŠ¹ã€ãã‚Œä»¥å¤–ã¯ç„¡è¦–ã•ã‚Œã‚‹
 
-		11 : 3bit encodingw’è / ƒŠƒjƒAƒXƒeƒbƒsƒ“ƒO 
+		11 : 3bit encodingæŒ‡å®š / ãƒªãƒ‹ã‚¢ã‚¹ãƒ†ãƒƒãƒ”ãƒ³ã‚° 
 
 
- E3bit encoding
+ ãƒ»3bit encoding
 	+---------------+---------+---+-+
 	|       p       |    n    |1 1|1|
 	+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
@@ -300,13 +300,13 @@ void nd_GsAcmDecode(
 	|              c2               |
 	+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
-	n = 0x00 ` 0x1f : s = +1 ` +32 (n+1)
+	n = 0x00 ï½ 0x1f : s = +1 ï½ +32 (n+1)
 
-		ƒŠƒjƒAƒXƒeƒbƒsƒ“ƒO
+		ãƒªãƒ‹ã‚¢ã‚¹ãƒ†ãƒƒãƒ”ãƒ³ã‚°
 			p0 <s> p1 <s> p2 <s> p3 <s> p4 <s> p5 <s> p6 <s> p7
 
 
- Eraw data
+ ãƒ»raw data
 	+---------------+---------------+
 	|      0xfe     |      0xff     |
 	+---------------+---------------+
@@ -322,20 +322,20 @@ void nd_GsAcmDecode(
 
 */
 static nd_s32 dcb_decode (
-		nd_u16 *pDCB,			// ‚c‚b‚aæ“ªƒ|ƒCƒ“ƒ^ (ˆø”) 
-		nd_u8 *pQ,				// “WŠJæƒ|ƒCƒ“ƒ^ (ˆø”) 
-		int bstep)				// “WŠJæ‚ÌƒoƒCƒg‘•ª’l 
+		nd_u16 *pDCB,			// ï¼¤ï¼£ï¼¢å…ˆé ­ãƒã‚¤ãƒ³ã‚¿ (å¼•æ•°) 
+		nd_u8 *pQ,				// å±•é–‹å…ˆãƒã‚¤ãƒ³ã‚¿ (å¼•æ•°) 
+		int bstep)				// å±•é–‹å…ˆã®ãƒã‚¤ãƒˆå¢—åˆ†å€¤ 
 {
 	nd_s32 i,s,a[8];
 	nd_s32 mode,p,c0,c1,c2;
 
 
 	mode = *pDCB++;
-	p    = mode >> 8;				// Šî€“_ 
+	p    = mode >> 8;				// åŸºæº–ç‚¹ 
 
 	if (mode == 0xfeff) {
 
-	// raw data‚Ì“WŠJ 
+	// raw dataã®å±•é–‹ 
 		for(i=0 ; i<8 ; i++) {
 			*pQ = *pDCB & 0xff;
 			pQ += bstep;
@@ -347,7 +347,7 @@ static nd_s32 dcb_decode (
 
 	} else if ((mode & 0xff)== 0) {
 
-	// 0bit encoding‚Ì“WŠJ 
+	// 0bit encodingã®å±•é–‹ 
 		for(i=0 ; i<16 ; i++) {
 			*pQ = p;
 			pQ += bstep;
@@ -362,8 +362,8 @@ static nd_s32 dcb_decode (
 			if ((mode & 0x06)== 0x06) {
 				c2 = *pDCB;
 
-	// 3bit encoding‚Ì“WŠJ 
-				s = ((mode & 0xf8) >> 3) + 1;	// QÆƒe[ƒuƒ‹‚Ìì¬ 
+	// 3bit encodingã®å±•é–‹ 
+				s = ((mode & 0xf8) >> 3) + 1;	// å‚ç…§ãƒ†ãƒ¼ãƒ–ãƒ«ã®ä½œæˆ 
 
 				for(i=0 ; i<8 ; i++) {
 					if (p > 255) p = 255;
@@ -371,7 +371,7 @@ static nd_s32 dcb_decode (
 					p += s;
 				}
 
-				for(i=0 ; i<16 ; i++) {			// 3bit-CODE‚Ì“WŠJ 
+				for(i=0 ; i<16 ; i++) {			// 3bit-CODEã®å±•é–‹ 
 					s = 0;
 					if(c0 & 1) s |= (1<<0);
 					if(c1 & 1) s |= (1<<1);
@@ -387,8 +387,8 @@ static nd_s32 dcb_decode (
 
 			} else {
 
-	// 2bit encoding‚Ì“WŠJ 
-				if (mode & 0x80) {				// QÆƒe[ƒuƒ‹‚Ìì¬ 
+	// 2bit encodingã®å±•é–‹ 
+				if (mode & 0x80) {				// å‚ç…§ãƒ†ãƒ¼ãƒ–ãƒ«ã®ä½œæˆ 
 					if (mode & 0x40) {
 						s = ((mode & 0x38) >> 1) + 35;
 					} else {
@@ -398,14 +398,14 @@ static nd_s32 dcb_decode (
 					s = ((mode & 0x78) >> 3) + 1;
 				}
 
-				for(i=0 ; i<4 ; i++) {			// ƒmƒ“ƒŠƒjƒAƒXƒeƒbƒsƒ“ƒO 
+				for(i=0 ; i<4 ; i++) {			// ãƒãƒ³ãƒªãƒ‹ã‚¢ã‚¹ãƒ†ãƒƒãƒ”ãƒ³ã‚° 
 					if (p > 255) p = 255;
 					a[i] = p;
 					p += s;
-					if ((mode & 0x02)&& i==1) p += (s << 1); // ƒmƒ“ƒŠƒjƒAƒXƒeƒbƒsƒ“ƒO 
+					if ((mode & 0x02)&& i==1) p += (s << 1); // ãƒãƒ³ãƒªãƒ‹ã‚¢ã‚¹ãƒ†ãƒƒãƒ”ãƒ³ã‚° 
 				}
 
-				for(i=0 ; i<16 ; i++) {			// 2bit-CODE‚Ì“WŠJ 
+				for(i=0 ; i<16 ; i++) {			// 2bit-CODEã®å±•é–‹ 
 					s = 0;
 					if(c0 & 1) s |= (1<<0);
 					if(c1 & 1) s |= (1<<1);
@@ -419,8 +419,8 @@ static nd_s32 dcb_decode (
 			}
 		} else {
 
-	// 1bit encoding‚Ì“WŠJ 
-			if (mode & 0x80) {					// QÆƒe[ƒuƒ‹‚Ìì¬ 
+	// 1bit encodingã®å±•é–‹ 
+			if (mode & 0x80) {					// å‚ç…§ãƒ†ãƒ¼ãƒ–ãƒ«ã®ä½œæˆ 
 				if (mode & 0x40) {
 					s = ((mode & 0x3e) << 1) + 131;
 				} else {
@@ -433,7 +433,7 @@ static nd_s32 dcb_decode (
 			s += p;
 			if (s > 255) s = 255;
 
-			for(i=0 ; i<16 ; i++) {				// 1bit-CODE‚Ì“WŠJ 
+			for(i=0 ; i<16 ; i++) {				// 1bit-CODEã®å±•é–‹ 
 				if(c0 & 1) {
 					*pQ = s;
 				} else { 
@@ -452,14 +452,14 @@ static nd_s32 dcb_decode (
 
 
 /*
-œ ƒfƒR[ƒhƒAƒNƒZƒ‰ƒŒ[ƒ^–½—ß
+â— ãƒ‡ã‚³ãƒ¼ãƒ‰ã‚¢ã‚¯ã‚»ãƒ©ãƒ¬ãƒ¼ã‚¿å‘½ä»¤
 
-  YUV¨RGB‚Ì•ÏŠ·®‚Í‰º‹L‚Ì’Ê‚è
-  DCB‚ğƒfƒR[ƒh‚·‚é‚ÍAU‚ÆV‚É‚Í-128‚ÌƒIƒtƒZƒbƒg‚ğ‚Â‚¯‚é
+  YUVâ†’RGBã®å¤‰æ›å¼ã¯ä¸‹è¨˜ã®é€šã‚Š
+  DCBã‚’ãƒ‡ã‚³ãƒ¼ãƒ‰ã™ã‚‹æ™‚ã¯ã€Uã¨Vã«ã¯-128ã®ã‚ªãƒ•ã‚»ãƒƒãƒˆã‚’ã¤ã‘ã‚‹
 
-	Y =    0`255
-	U = -128`127
-	V = -128`127
+	Y =    0ï½255
+	U = -128ï½127
+	V = -128ï½127
 
 	R = 1.000Y          + 1.402V
 	G = 1.000Y - 0.344U - 0.714V
@@ -475,7 +475,7 @@ static nd_s32 dcb_decode (
 #endif
 
 #ifndef yuv422_decode
-// –½—ß‚ª–¢À‘•‚Ìê‡‚ÌƒGƒ~ƒ…ƒŒ[ƒVƒ‡ƒ“ 
+// å‘½ä»¤ãŒæœªå®Ÿè£…ã®å ´åˆã®ã‚¨ãƒŸãƒ¥ãƒ¬ãƒ¼ã‚·ãƒ§ãƒ³ 
 static nd_u32 yuv422_decode(nd_u32 ra, nd_u32 rb)
 {
 	int y0,y1,u,v,by,gy,ry,r,g,b;
@@ -515,48 +515,48 @@ static nd_u32 yuv422_decode(nd_u32 ra, nd_u32 rb)
 
 
 /*
- œ‚l‚b‚tƒtƒH[ƒ}ƒbƒg
+ â—ï¼­ï¼£ï¼µãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆ
 
-  ‚PŒÂ‚Ì‚l‚b‚t‚Å‚W‚˜‚WƒsƒNƒZƒ‹‚ÌRGB888ƒf[ƒ^‚ğ•\Œ»‚·‚é
-  ƒf[ƒ^‚ÍYUV420‚Ü‚½‚Í1/4k¬‚ÌYUV444Œ`®‚ÅŠi”[‚³‚ê‚é
-
-
- E‚l‚b‚tƒXƒLƒbƒv
-
-	+---------------+
-	|    0xffff     |  -- DCB1‚ªƒXƒLƒbƒvƒR[ƒh‚Ìê‡‚Í‚l‚b‚t“WŠJ‚È‚µ
-	+---------------+
-
-    ‚±‚ÌƒR[ƒh‚ªMCUæ“ª(DCB1)‚É‚ ‚Á‚½ê‡‚ÍAQÆƒtƒŒ[ƒ€‚ÌŠY“–‰æ‘fƒf[ƒ^‚ğ
-	‚»‚Ì‚Ü‚Üg—p‚·‚éB
+  ï¼‘å€‹ã®ï¼­ï¼£ï¼µã§ï¼˜ï½˜ï¼˜ãƒ”ã‚¯ã‚»ãƒ«ã®RGB888ãƒ‡ãƒ¼ã‚¿ã‚’è¡¨ç¾ã™ã‚‹
+  ãƒ‡ãƒ¼ã‚¿ã¯YUV420ã¾ãŸã¯1/4ç¸®å°ã®YUV444å½¢å¼ã§æ ¼ç´ã•ã‚Œã‚‹
 
 
- Ek¬‚l‚b‚t
-
-  1/4ƒTƒCƒY‚ÌRGB888ƒf[ƒ^‚ğYUV444‚É•ÏŠ·‚µA16ŒÂ‚Ìƒf[ƒ^‚²‚Æ‚É‚RŒÂ‚ÌDCB‚ÉŠi”[‚·‚é
-  DCB3‚Ìƒwƒbƒ_‚ª2bit reduced encoding‚Ìê‡‚Ì‚İ—LŒø
+ ãƒ»ï¼­ï¼£ï¼µã‚¹ã‚­ãƒƒãƒ—
 
 	+---------------+
-	|   DCB1 (U)    |   --+ 8x8ƒsƒNƒZƒ‹‚ğ1/4k¬‚µ‚½YUV444‚ª“ü‚Á‚Ä‚¢‚é 
+	|    0xffff     |  -- DCB1ãŒã‚¹ã‚­ãƒƒãƒ—ã‚³ãƒ¼ãƒ‰ã®å ´åˆã¯ï¼­ï¼£ï¼µå±•é–‹ãªã—
+	+---------------+
+
+    ã“ã®ã‚³ãƒ¼ãƒ‰ãŒMCUå…ˆé ­(DCB1)ã«ã‚ã£ãŸå ´åˆã¯ã€å‚ç…§ãƒ•ãƒ¬ãƒ¼ãƒ ã®è©²å½“ç”»ç´ ãƒ‡ãƒ¼ã‚¿ã‚’
+	ãã®ã¾ã¾ä½¿ç”¨ã™ã‚‹ã€‚
+
+
+ ãƒ»ç¸®å°ï¼­ï¼£ï¼µ
+
+  1/4ã‚µã‚¤ã‚ºã®RGB888ãƒ‡ãƒ¼ã‚¿ã‚’YUV444ã«å¤‰æ›ã—ã€16å€‹ã®ãƒ‡ãƒ¼ã‚¿ã”ã¨ã«ï¼“å€‹ã®DCBã«æ ¼ç´ã™ã‚‹
+  DCB3ã®ãƒ˜ãƒƒãƒ€ãŒ2bit reduced encodingã®å ´åˆã®ã¿æœ‰åŠ¹
+
+	+---------------+
+	|   DCB1 (U)    |   --+ 8x8ãƒ”ã‚¯ã‚»ãƒ«ã‚’1/4ç¸®å°ã—ãŸYUV444ãŒå…¥ã£ã¦ã„ã‚‹ 
 	+---------------+     |
 	|   DCB2 (V)    |     |      +----+  +----+  +----+
 	+---------------+     |      | Yr |  | U  |  | V  |
 	|   DCB3 (Yr)   |   --+      +----+  +----+  +----+
 	+---------------+
 
-    DCB3‚ªk¬‚x¬•ªƒR[ƒh‚Ìê‡i2bit reduced encoding‚Ìê‡j
-	DCB3‚ğc‰¡‚Q”{‚Éˆø‚«‰„‚Î‚µ‚Ä8x8ƒsƒNƒZƒ‹‚ğ•œŒ³‚·‚éB
-	•œŒ³‚É•âŠÔ‚ğ‚©‚¯‚é‚±‚Æ‚ª–]‚Ü‚µ‚¢‚ªAˆ—”\—Í‚ª‘«‚è‚È‚¢ê‡‚Í’PƒŠg‘å‚Å‚à‚æ‚¢B
+    DCB3ãŒç¸®å°ï¼¹æˆåˆ†ã‚³ãƒ¼ãƒ‰ã®å ´åˆï¼ˆ2bit reduced encodingã®å ´åˆï¼‰
+	DCB3ã‚’ç¸¦æ¨ªï¼’å€ã«å¼•ãå»¶ã°ã—ã¦8x8ãƒ”ã‚¯ã‚»ãƒ«ã‚’å¾©å…ƒã™ã‚‹ã€‚
+	å¾©å…ƒæ™‚ã«è£œé–“ã‚’ã‹ã‘ã‚‹ã“ã¨ãŒæœ›ã¾ã—ã„ãŒã€å‡¦ç†èƒ½åŠ›ãŒè¶³ã‚Šãªã„å ´åˆã¯å˜ç´”æ‹¡å¤§ã§ã‚‚ã‚ˆã„ã€‚
 
 
- Eƒm[ƒ}ƒ‹‚l‚b‚t
+ ãƒ»ãƒãƒ¼ãƒãƒ«ï¼­ï¼£ï¼µ
 
-  RGB888ƒf[ƒ^‚ÍYUV420ŠÔˆø‚«‚ğs‚¢A16ŒÂ‚Ìƒf[ƒ^‚²‚Æ‚É‚UŒÂ‚ÌDCB‚ÉŠi”[‚·‚é
+  RGB888ãƒ‡ãƒ¼ã‚¿ã¯YUV420é–“å¼•ãã‚’è¡Œã„ã€16å€‹ã®ãƒ‡ãƒ¼ã‚¿ã”ã¨ã«ï¼–å€‹ã®DCBã«æ ¼ç´ã™ã‚‹
 
 	+---------------+
 	|   DCB1 (U)    |   --+
 	+---------------+     |
-	|   DCB2 (V)    |     | 8x8ƒsƒNƒZƒ‹‚ğYUV420ŠÔˆø‚«‚µ‚½‚à‚Ì‚ª“ü‚Á‚Ä‚¢‚é 
+	|   DCB2 (V)    |     | 8x8ãƒ”ã‚¯ã‚»ãƒ«ã‚’YUV420é–“å¼•ãã—ãŸã‚‚ã®ãŒå…¥ã£ã¦ã„ã‚‹ 
 	+---------------+     |
 	|   DCB3 (Y0)   |     |      +----+----+  +----+  +----+
 	+---------------+     |      | Y0 | Y1 |  | U  |  | V  |
@@ -568,15 +568,15 @@ static nd_u32 yuv422_decode(nd_u32 ra, nd_u32 rb)
 	+---------------+
 
 
- E‚q‚f‚a‚Ì“WŠJƒf[ƒ^‚Íegl‚Ìset_pixelƒ}ƒNƒ‚Ås‚¤
+ ãƒ»ï¼²ï¼§ï¼¢ã®å±•é–‹ãƒ‡ãƒ¼ã‚¿ã¯eglã®set_pixelãƒã‚¯ãƒ­ã§è¡Œã†
 
 */
 #define linepixewidth	(1<<(na_VRAM_linewidth-1))
 
-nd_s32 nd_acm_mcudecode_c (			// MCU‚Ìƒ[ƒhƒTƒCƒY‚ğ•Ô‚· 
-		nd_u16 *pMCU,				// MCUƒf[ƒ^ƒ|ƒCƒ“ƒ^ 
-		nd_u16 *pVRAM,				// “WŠJæ‚Ìæ“ªƒ|ƒCƒ“ƒ^ 
-		nd_u16 *pREF)				// ƒtƒŒ[ƒ€QÆæ‚Ìæ“ªƒ|ƒCƒ“ƒ^ 
+nd_s32 nd_acm_mcudecode_c (			// MCUã®ãƒ¯ãƒ¼ãƒ‰ã‚µã‚¤ã‚ºã‚’è¿”ã™ 
+		nd_u16 *pMCU,				// MCUãƒ‡ãƒ¼ã‚¿ãƒã‚¤ãƒ³ã‚¿ 
+		nd_u16 *pVRAM,				// å±•é–‹å…ˆã®å…ˆé ­ãƒã‚¤ãƒ³ã‚¿ 
+		nd_u16 *pREF)				// ãƒ•ãƒ¬ãƒ¼ãƒ å‚ç…§å…ˆã®å…ˆé ­ãƒã‚¤ãƒ³ã‚¿ 
 {
 	nd_s32 i,n,y;
 	nd_u8  ty[16],*ptvu;
@@ -596,7 +596,7 @@ nd_s32 nd_acm_mcudecode_c (			// MCU‚Ìƒ[ƒhƒTƒCƒY‚ğ•Ô‚·
 			(4*linepixewidth+0)*2, (4*linepixewidth+4)*2 };
 
 
-	// MCUƒXƒLƒbƒv‚Ìˆ— 
+	// MCUã‚¹ã‚­ãƒƒãƒ—ã®å‡¦ç† 
 	if (*pMCU == 0xffff) {
 		pPix = (nd_u32 *)pVRAM;
 		pSrc = (nd_u32 *)pREF;
@@ -613,20 +613,20 @@ nd_s32 nd_acm_mcudecode_c (			// MCU‚Ìƒ[ƒhƒTƒCƒY‚ğ•Ô‚·
 	}
 
 
-	// U¬•ª‚ÆV¬•ª‚Ì“WŠJ 
+	// Uæˆåˆ†ã¨Væˆåˆ†ã®å±•é–‹ 
 	ptvu = (nd_u8 *)&tvu;
 
-	c = dcb_decode(pMCU, ptvu, 4);		// U¬•ª 
+	c = dcb_decode(pMCU, ptvu, 4);		// Uæˆåˆ† 
 	pMCU  += c;
 	mcu_n  = c;
 
-	c = dcb_decode(pMCU, ptvu+1, 4);	// V¬•ª 
+	c = dcb_decode(pMCU, ptvu+1, 4);	// Væˆåˆ† 
 	pMCU  += c;
 	mcu_n += c;
 
 
-	// Y¬•ª‚Ì“WŠJ‚ÆRGB•ÏŠ· 
-	if ( (*pMCU & 0x07)== 0x05) {		// k¬‚x¬•ª 
+	// Yæˆåˆ†ã®å±•é–‹ã¨RGBå¤‰æ› 
+	if ( (*pMCU & 0x07)== 0x05) {		// ç¸®å°ï¼¹æˆåˆ† 
 		c = dcb_decode(pMCU, ty, 1);
 
 		if (c != 3) {
@@ -643,7 +643,7 @@ nd_s32 nd_acm_mcudecode_c (			// MCU‚Ìƒ[ƒhƒTƒCƒY‚ğ•Ô‚·
 
 		pPix = (nd_u32 *)pVRAM;
 
-		for(y=0 ; y<4 ; y++) {			// YUV444‚ğRGB‚É•ÏŠ· 
+		for(y=0 ; y<4 ; y++) {			// YUV444ã‚’RGBã«å¤‰æ› 
 			dpix = yuv422_decode( (ty[y*4+0]<<8) | ty[y*4+0], tvu[y*4+0]);
 			*(pPix + 0        ) = dpix;
 			*(pPix + 0 + linepixewidth/2) = dpix;
@@ -672,7 +672,7 @@ nd_s32 nd_acm_mcudecode_c (			// MCU‚Ìƒ[ƒhƒTƒCƒY‚ğ•Ô‚·
 			pPix = (nd_u32 *)( (nd_u32)pVRAM + vram_offset[n] );
 			pY   = (nd_u16 *)&ty[0];
 
-			for(y=0 ; y<4 ; y++) {		// YUV420‚ğRGB‚É•ÏŠ· 
+			for(y=0 ; y<4 ; y++) {		// YUV420ã‚’RGBã«å¤‰æ› 
 				i = uv_index[n][y];
 				*(pPix + 0) = yuv422_decode(*pY++, tvu[i]);
 

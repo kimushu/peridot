@@ -14,16 +14,16 @@
 #include "mmcfs/fatfs/ff.h"
 
 
-// Ä¶ƒtƒ@ƒCƒ‹‚ªŠi”[‚³‚ê‚Ä‚¢‚éƒfƒBƒŒƒNƒgƒŠƒpƒX 
+// å†ç”Ÿãƒ•ã‚¡ã‚¤ãƒ«ãŒæ ¼ç´ã•ã‚Œã¦ã„ã‚‹ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªãƒ‘ã‚¹ 
 
 #define CKFILE_DIR		"/peridot"
 
 
 
-// ƒfƒBƒŒƒNƒgƒŠ‚ğŠJ‚¢‚ÄCKƒtƒ@ƒCƒ‹‚ğæ“¾‚·‚é 
-static FATFS fatfs_obj;					// FatFSƒVƒXƒeƒ€ƒIƒuƒWƒFƒNƒg 
-static DIR fatfs_dir;					// FatFsƒfƒBƒŒƒNƒgƒŠƒIƒuƒWƒFƒNƒg 
-static FILINFO fatfs_fno;				// FatFsƒtƒ@ƒCƒ‹î•ñƒIƒuƒWƒFƒNƒg 
+// ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã‚’é–‹ã„ã¦CKãƒ•ã‚¡ã‚¤ãƒ«ã‚’å–å¾—ã™ã‚‹ 
+static FATFS fatfs_obj;					// FatFSã‚·ã‚¹ãƒ†ãƒ ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ 
+static DIR fatfs_dir;					// FatFsãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ 
+static FILINFO fatfs_fno;				// FatFsãƒ•ã‚¡ã‚¤ãƒ«æƒ…å ±ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ 
 
 int open_ckdir(const char *path)
 {
@@ -38,14 +38,14 @@ int open_ckdir(const char *path)
 	return 0;
 }
 
-int check_extck(const char *fn)			// Šg’£q‚ª".CK"‚©‚Ç‚¤‚©’²‚×‚é 
+int check_extck(const char *fn)			// æ‹¡å¼µå­ãŒ".CK"ã‹ã©ã†ã‹èª¿ã¹ã‚‹ 
 {
 	int i;
 
 	i = strlen(fn);
 	if (i == 0) return 0;
 
-	fn += i-1;		// ˆê”ÔÅŒã‚Ì•¶š‚ÖˆÚ“® 
+	fn += i-1;		// ä¸€ç•ªæœ€å¾Œã®æ–‡å­—ã¸ç§»å‹• 
 
 	if ( *fn != 'k' && *fn != 'K') return 0;
 	fn--;
@@ -65,17 +65,17 @@ char *get_ckfilename(void)
 
 	for(;;) {
 		res = f_readdir(&fatfs_dir, &fatfs_fno);
-		if (res != FR_OK || fatfs_fno.fname[0] == 0) {	// ƒGƒ‰[‚Ü‚½‚Í‚à‚¤ƒtƒ@ƒCƒ‹‚ª‚È‚¢ 
+		if (res != FR_OK || fatfs_fno.fname[0] == 0) {	// ã‚¨ãƒ©ãƒ¼ã¾ãŸã¯ã‚‚ã†ãƒ•ã‚¡ã‚¤ãƒ«ãŒãªã„ 
 			fn = NULL;
 			break;
 		}
 
-		if (fatfs_fno.fname[0] == '.') continue;		// ƒhƒbƒgƒGƒ“ƒgƒŠ‚Ìê‡‚ÍƒŠƒgƒ‰ƒC 
+		if (fatfs_fno.fname[0] == '.') continue;		// ãƒ‰ãƒƒãƒˆã‚¨ãƒ³ãƒˆãƒªã®å ´åˆã¯ãƒªãƒˆãƒ©ã‚¤ 
 
-		if (fatfs_fno.fattrib & AM_DIR) continue;		// ƒfƒBƒŒƒNƒgƒŠ‚Ìê‡‚àƒŠƒgƒ‰ƒC 
+		if (fatfs_fno.fattrib & AM_DIR) continue;		// ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã®å ´åˆã‚‚ãƒªãƒˆãƒ©ã‚¤ 
 
 		fn = *fatfs_fno.lfname ? fatfs_fno.lfname : fatfs_fno.fname;
-		if ( !check_extck(fn) )	continue;				// .ckƒtƒ@ƒCƒ‹‚Å‚È‚¯‚ê‚ÎƒŠƒgƒ‰ƒC 
+		if ( !check_extck(fn) )	continue;				// .ckãƒ•ã‚¡ã‚¤ãƒ«ã§ãªã‘ã‚Œã°ãƒªãƒˆãƒ©ã‚¤ 
 
 		break;
 	}
@@ -86,20 +86,20 @@ char *get_ckfilename(void)
 
 
 
-// CK-codecƒtƒ@ƒCƒ‹‚Ì˜A‘±Ä¶ 
+// CK-codecãƒ•ã‚¡ã‚¤ãƒ«ã®é€£ç¶šå†ç”Ÿ 
 
 int main(void)
 {
 	FRESULT res;
-	FIL fsobj;							// FatFSƒtƒ@ƒCƒ‹ƒIƒuƒWƒFƒNƒg 
-	char fslfn[_MAX_LFN + 1];			// ƒƒ“ƒOƒtƒ@ƒCƒ‹ƒl[ƒ€Ši”[—p 
+	FIL fsobj;							// FatFSãƒ•ã‚¡ã‚¤ãƒ«ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ 
+	char fslfn[_MAX_LFN + 1];			// ãƒ­ãƒ³ã‚°ãƒ•ã‚¡ã‚¤ãƒ«ãƒãƒ¼ãƒ æ ¼ç´ç”¨ 
 	char *fn;
-	char playfile[_MAX_LFN + sizeof(CKFILE_DIR) + 1];	// Ä¶ƒtƒ@ƒCƒ‹–¼‚Ìƒtƒ‹ƒpƒX 
+	char playfile[_MAX_LFN + sizeof(CKFILE_DIR) + 1];	// å†ç”Ÿãƒ•ã‚¡ã‚¤ãƒ«åã®ãƒ•ãƒ«ãƒ‘ã‚¹ 
 	alt_u16 *pFrameBuffer;
 	int i;
 
 
-	// ƒtƒ@ƒCƒ‹ƒVƒXƒeƒ€‰Šú‰» 
+	// ãƒ•ã‚¡ã‚¤ãƒ«ã‚·ã‚¹ãƒ†ãƒ åˆæœŸåŒ– 
 	memset(&fatfs_obj, 0, sizeof(FATFS));
 	f_mount(0, &fatfs_obj);
 
@@ -107,7 +107,7 @@ int main(void)
 	fatfs_fno.lfsize = sizeof(fslfn);
 
 
-	// ƒOƒ‰ƒtƒBƒbƒN‰Šú‰» 
+	// ã‚°ãƒ©ãƒ•ã‚£ãƒƒã‚¯åˆæœŸåŒ– 
 //	nd_GsVgaInit();
 	ILI9325_init();
 
@@ -116,13 +116,13 @@ int main(void)
 		printf("[!] Framebuffer allocation fault.\n");
 		return 0;
 	}
-	memset(pFrameBuffer, 0, na_VRAM_size);		// ‘Sˆæ‚ğ•‚Å“h‚è‚Â‚Ô‚· 
+	memset(pFrameBuffer, 0, na_VRAM_size);		// å…¨åŸŸã‚’é»’ã§å¡—ã‚Šã¤ã¶ã™ 
 
 	nd_GsEglPage((nd_u32)pFrameBuffer, (nd_u32)pFrameBuffer, 0);
 //	nd_GsVgaScanOn();
 
 
-	// ck-codec Ä¶ŠJn 
+	// ck-codec å†ç”Ÿé–‹å§‹ 
 	while(1) {
 		fn = get_ckfilename();
 		if (fn == NULL) {

@@ -1,49 +1,49 @@
 /**************************************************************************
-	PROCYON ƒRƒ“ƒ\[ƒ‹ƒ‰ƒCƒuƒ‰ƒŠund_Libv (cineraria DE0 Edition)
+	PROCYON ã‚³ãƒ³ã‚½ãƒ¼ãƒ«ãƒ©ã‚¤ãƒ–ãƒ©ãƒªã€Œnd_Libã€ (cineraria DE0 Edition)
 
-		ƒvƒŠƒ~ƒeƒBƒuƒŒƒxƒ‹ƒOƒ‰ƒtƒBƒbƒNƒhƒ‰ƒCƒo
+		ãƒ—ãƒªãƒŸãƒ†ã‚£ãƒ–ãƒ¬ãƒ™ãƒ«ã‚°ãƒ©ãƒ•ã‚£ãƒƒã‚¯ãƒ‰ãƒ©ã‚¤ãƒ
 
-	2014/04/28	Cineraria/GREENBERYL—¼‘Î‰C³
+	2014/04/28	Cineraria/GREENBERYLä¸¡å¯¾å¿œä¿®æ­£
 
  **************************************************************************/
 
 #include "nd_egl.h"
 
 
-/***** ’è”Eƒ}ƒNƒ’è‹` ***************************************************/
+/***** å®šæ•°ãƒ»ãƒã‚¯ãƒ­å®šç¾© ***************************************************/
 
 #define calc_brend(_a,_b,_p)	((((_a)-(_b))*(_p) + ((_b) << 8)) >> 8)
 
-#define nd_FONTX_REPLACE_KANJI			(0x81a0)	// ‘SŠp‚Ì‘Î‰‚·‚é•¶š‚ª‚È‚¢ê‡‚Ì’u‚«Š·‚¦•¶š( ) 
+#define nd_FONTX_REPLACE_KANJI			(0x81a0)	// å…¨è§’ã®å¯¾å¿œã™ã‚‹æ–‡å­—ãŒãªã„å ´åˆã®ç½®ãæ›ãˆæ–‡å­—(â–¡) 
 
 
-/***** \‘¢‘Ì’è‹` *********************************************************/
+/***** æ§‹é€ ä½“å®šç¾© *********************************************************/
 
-typedef struct {			/* FONTXŒ`®ƒAƒXƒL[ƒtƒHƒ“ƒg */
-    char fontid[6];				// "FONTX2"‚Æ‚¢‚¤•¶š—ñ‚ª“ü‚é 
-    char name[8];				// ƒtƒHƒ“ƒg–¼(8•¶š) 
-    nd_u8 width;				// ƒtƒHƒ“ƒg‚Ì‰¡• 
-    nd_u8 height;				// ƒtƒHƒ“ƒg‚Ì‚‚³ 
-    nd_u8 codetype;				// ƒAƒXƒL[ƒtƒHƒ“ƒg‚Í0 
+typedef struct {			/* FONTXå½¢å¼ã‚¢ã‚¹ã‚­ãƒ¼ãƒ•ã‚©ãƒ³ãƒˆ */
+    char fontid[6];				// "FONTX2"ã¨ã„ã†æ–‡å­—åˆ—ãŒå…¥ã‚‹ 
+    char name[8];				// ãƒ•ã‚©ãƒ³ãƒˆå(8æ–‡å­—) 
+    nd_u8 width;				// ãƒ•ã‚©ãƒ³ãƒˆã®æ¨ªå¹… 
+    nd_u8 height;				// ãƒ•ã‚©ãƒ³ãƒˆã®é«˜ã• 
+    nd_u8 codetype;				// ã‚¢ã‚¹ã‚­ãƒ¼ãƒ•ã‚©ãƒ³ãƒˆã¯0 
 } __attribute__ ((packed)) nd_FONTX_ASCII_header;
 
-typedef struct {			/* FONTXŒ`®Š¿šƒtƒHƒ“ƒg */
-    char fontid[6];				// "FONTX2"‚Æ‚¢‚¤•¶š—ñ‚ª“ü‚é 
-    char name[8];				// ƒtƒHƒ“ƒg–¼(8•¶š) 
-    nd_u8 width;				// ƒtƒHƒ“ƒg‚Ì‰¡• 
-    nd_u8 height;				// ƒtƒHƒ“ƒg‚Ì‚‚³ 
-    nd_u8 codetype;				// Š¿šƒtƒHƒ“ƒg‚Í1 
-    nd_u8 tnum;					// •¶šƒR[ƒhƒe[ƒuƒ‹‚ÌƒGƒ“ƒgƒŠ” 
+typedef struct {			/* FONTXå½¢å¼æ¼¢å­—ãƒ•ã‚©ãƒ³ãƒˆ */
+    char fontid[6];				// "FONTX2"ã¨ã„ã†æ–‡å­—åˆ—ãŒå…¥ã‚‹ 
+    char name[8];				// ãƒ•ã‚©ãƒ³ãƒˆå(8æ–‡å­—) 
+    nd_u8 width;				// ãƒ•ã‚©ãƒ³ãƒˆã®æ¨ªå¹… 
+    nd_u8 height;				// ãƒ•ã‚©ãƒ³ãƒˆã®é«˜ã• 
+    nd_u8 codetype;				// æ¼¢å­—ãƒ•ã‚©ãƒ³ãƒˆã¯1 
+    nd_u8 tnum;					// æ–‡å­—ã‚³ãƒ¼ãƒ‰ãƒ†ãƒ¼ãƒ–ãƒ«ã®ã‚¨ãƒ³ãƒˆãƒªæ•° 
     struct {
-		nd_u16 begin;			// —Ìˆæ‚Ìn‚Ü‚è‚Ì•¶šƒR[ƒh 
-		nd_u16 end;				// —Ìˆæ‚ÌI‚í‚è‚Ì•¶šƒR[ƒh 
+		nd_u16 begin;			// é ˜åŸŸã®å§‹ã¾ã‚Šã®æ–‡å­—ã‚³ãƒ¼ãƒ‰ 
+		nd_u16 end;				// é ˜åŸŸã®çµ‚ã‚ã‚Šã®æ–‡å­—ã‚³ãƒ¼ãƒ‰ 
     } codetable[];
 } __attribute__ ((packed)) nd_FONTX_KANJI_header;
 
 
 
 /**************************************************************************
-	VGAƒRƒ“ƒgƒ[ƒ‰§Œä
+	VGAã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ©åˆ¶å¾¡
  **************************************************************************/
 volatile nd_u32 nd_GsVgaVsyncCount;
 volatile nd_u32 nd_GsVgaVsyncFlag;
@@ -111,7 +111,7 @@ void nd_GsVgaScanOn(void)
 
 	status = IORD(np_VGAIO, 0);
 	status |= vga_scan_enable;
-//	status |= (vga_scan_enable | vga_dither_enable);	// DE0‚ÌVGAo—Í‚ğg‚¤ê‡ 
+//	status |= (vga_scan_enable | vga_dither_enable);	// DE0ã®VGAå‡ºåŠ›ã‚’ä½¿ã†å ´åˆ 
 	IOWR(np_VGAIO, 0, status);
 
 #elif defined(LCDC_BASE)
@@ -138,10 +138,10 @@ void nd_GsVgaScanOff(void)
 void nd_GsVgaSetBuffer(nd_u32 base)
 {
 #if defined(VGA_BASE)
-	IOWR(np_VGAIO, 1, base & 0x7fffffffUL);		// ƒAƒ“ƒLƒƒƒbƒVƒ…—Ìˆæ¨•¨—ƒAƒhƒŒƒX•ÏŠ· 
+	IOWR(np_VGAIO, 1, base & 0x7fffffffUL);		// ã‚¢ãƒ³ã‚­ãƒ£ãƒƒã‚·ãƒ¥é ˜åŸŸâ†’ç‰©ç†ã‚¢ãƒ‰ãƒ¬ã‚¹å¤‰æ› 
 
 #elif defined(LCDC_BASE)
-	IOWR(np_LCDCIO, 2, base & 0x7fffffffUL);	// ƒAƒ“ƒLƒƒƒbƒVƒ…—Ìˆæ¨•¨—ƒAƒhƒŒƒX•ÏŠ· 
+	IOWR(np_LCDCIO, 2, base & 0x7fffffffUL);	// ã‚¢ãƒ³ã‚­ãƒ£ãƒƒã‚·ãƒ¥é ˜åŸŸâ†’ç‰©ç†ã‚¢ãƒ‰ãƒ¬ã‚¹å¤‰æ› 
 
 #endif
 }
@@ -149,7 +149,7 @@ void nd_GsVgaSetBuffer(nd_u32 base)
 
 void nd_GsVgaInit(void)
 {
-	nd_GsVgaVsync_isrdisable();				// Šù‚É‹N“®’†‚¾‚Á‚½ê‡‚Ìˆ— 
+	nd_GsVgaVsync_isrdisable();				// æ—¢ã«èµ·å‹•ä¸­ã ã£ãŸå ´åˆã®å‡¦ç† 
 	nd_GsVgaScanOff();
 
 	nd_GsVgaVsyncCount = 0;
@@ -167,7 +167,7 @@ void nd_GsVgaWaitVsync(void)
 #elif defined(LCDC_BASE)
 	nd_u32 status;
 
-	if ( IORD(np_LCDCIO, 0) & lcdc_vsyncirq_enable ) {	// VSYNCŠ„‚è‚İ‚Å“®ì’† 
+	if ( IORD(np_LCDCIO, 0) & lcdc_vsyncirq_enable ) {	// VSYNCå‰²ã‚Šè¾¼ã¿ã§å‹•ä½œä¸­ 
 		nd_GsVgaVsyncFlag = 0;
 		while( !nd_GsVgaVsyncFlag ) {}
 
@@ -184,14 +184,14 @@ void nd_GsVgaWaitVsync(void)
 nd_u32 nd_GsVgaVsync_getcount(void)
 {
 #if defined(VGA_BASE)
-	if ( IORD(np_VGAIO, 0) & vga_vsyncirq_enable ) {	// VSYNCŠ„‚è‚İ‚Å“®ì’† 
+	if ( IORD(np_VGAIO, 0) & vga_vsyncirq_enable ) {	// VSYNCå‰²ã‚Šè¾¼ã¿ã§å‹•ä½œä¸­ 
 		return ( nd_GsVgaVsyncCount );
 	} else {
 		return ( IORD(np_VGAIO, 2) );
 	}
 
 #elif defined(LCDC_BASE)
-	if ( IORD(np_LCDCIO, 0) & lcdc_vsyncirq_enable ) {	// VSYNCŠ„‚è‚İ‚Å“®ì’† 
+	if ( IORD(np_LCDCIO, 0) & lcdc_vsyncirq_enable ) {	// VSYNCå‰²ã‚Šè¾¼ã¿ã§å‹•ä½œä¸­ 
 		return ( nd_GsVgaVsyncCount );
 	} else {
 		return ( IORD(np_LCDCIO, 3) );
@@ -203,14 +203,14 @@ nd_u32 nd_GsVgaVsync_getcount(void)
 void nd_GsVgaVsync_setcount(nd_u32 count)
 {
 #if defined(VGA_BASE)
-	if ( IORD(np_VGAIO, 0) & vga_vsyncirq_enable ) {	// VSYNCŠ„‚è‚İ‚Å“®ì’† 
+	if ( IORD(np_VGAIO, 0) & vga_vsyncirq_enable ) {	// VSYNCå‰²ã‚Šè¾¼ã¿ã§å‹•ä½œä¸­ 
 		nd_GsVgaVsyncCount = count;
 	} else {
 		IOWR(np_VGAIO, 2, count);
 	}
 
 #elif defined(LCDC_BASE)
-	if ( IORD(np_LCDCIO, 0) & lcdc_vsyncirq_enable ) {	// VSYNCŠ„‚è‚İ‚Å“®ì’† 
+	if ( IORD(np_LCDCIO, 0) & lcdc_vsyncirq_enable ) {	// VSYNCå‰²ã‚Šè¾¼ã¿ã§å‹•ä½œä¸­ 
 		nd_GsVgaVsyncCount = count;
 	} else {
 		IOWR(np_LCDCIO, 3, count);
@@ -222,17 +222,17 @@ void nd_GsVgaVsync_setcount(nd_u32 count)
 
 
 /**************************************************************************
-	ƒJƒŒƒ“ƒgƒy[ƒW‚ğƒZƒbƒg
+	ã‚«ãƒ¬ãƒ³ãƒˆãƒšãƒ¼ã‚¸ã‚’ã‚»ãƒƒãƒˆ
  **************************************************************************/
 /*
-  Œ`® 
+  å½¢å¼ 
 	void nd_GsEglPage(nd_u32 viewpage, nd_u32 drawpage, nd_u32 vs)
 
-  ‹@”\
-	•\¦ƒy[ƒW‚Æ•`‰æƒy[ƒW‚ğƒZƒbƒg‚·‚é
-		viewpage : •\¦ƒtƒŒ[ƒ€ƒoƒbƒtƒ@ƒAƒhƒŒƒX 
-		drawpage : •`‰æƒtƒŒ[ƒ€ƒoƒbƒtƒ@ƒAƒhƒŒƒX 
-		vs       : Ø‚è‘Ö‚¦ƒ‚[ƒh(0:‘¦Ø‚èŠ·‚¦ / !0:VSYNC‚ğ‘Ò‚Á‚ÄØ‚è‘Ö‚¦) 
+  æ©Ÿèƒ½
+	è¡¨ç¤ºãƒšãƒ¼ã‚¸ã¨æç”»ãƒšãƒ¼ã‚¸ã‚’ã‚»ãƒƒãƒˆã™ã‚‹
+		viewpage : è¡¨ç¤ºãƒ•ãƒ¬ãƒ¼ãƒ ãƒãƒƒãƒ•ã‚¡ã‚¢ãƒ‰ãƒ¬ã‚¹ 
+		drawpage : æç”»ãƒ•ãƒ¬ãƒ¼ãƒ ãƒãƒƒãƒ•ã‚¡ã‚¢ãƒ‰ãƒ¬ã‚¹ 
+		vs       : åˆ‡ã‚Šæ›¿ãˆãƒ¢ãƒ¼ãƒ‰(0:å³æ™‚åˆ‡ã‚Šæ›ãˆ / !0:VSYNCã‚’å¾…ã£ã¦åˆ‡ã‚Šæ›¿ãˆ) 
 */
 
 nd_u32 nd_GsEglDrawBuffer;
@@ -249,17 +249,17 @@ void nd_GsEglPage(
 
 
 /**************************************************************************
-	ƒJƒ‰[‚ğƒZƒbƒg
+	ã‚«ãƒ©ãƒ¼ã‚’ã‚»ãƒƒãƒˆ
  **************************************************************************/
 /*
-  Œ`® 
+  å½¢å¼ 
 	void nd_GsEglColor(nd_u32 color, nd_u32 bg_color, nd_u32 pastel)
 
-  ‹@”\
-	ƒAƒNƒeƒBƒuƒJƒ‰[‚ğİ’è‚·‚é
-		color    : ‘OŒiF (0x0000`0xffff)
-		bg_color : ”wŒiF (0x0000`0xffff)
-		pastel   : ¬‡”ä (0`256)
+  æ©Ÿèƒ½
+	ã‚¢ã‚¯ãƒ†ã‚£ãƒ–ã‚«ãƒ©ãƒ¼ã‚’è¨­å®šã™ã‚‹
+		color    : å‰æ™¯è‰² (0x0000ï½0xffff)
+		bg_color : èƒŒæ™¯è‰² (0x0000ï½0xffff)
+		pastel   : æ··åˆæ¯” (0ï½256)
 */
 
 static nd_u32 nd_color;
@@ -277,14 +277,14 @@ void nd_GsEglColor(
 
 
 /**************************************************************************
-	‚u‚q‚`‚l‚É“_‚ğ•`‰æ
+	ï¼¶ï¼²ï¼¡ï¼­ã«ç‚¹ã‚’æç”»
  **************************************************************************/
 /*
-  Œ`® 
+  å½¢å¼ 
 	void nd_GsEglPset(nd_s32 x, nd_s32 y)
 
-  ‹@”\
-	VRAM‚Ì(x,y)‚Écolor‚Åw’è‚µ‚½“_‚ğ•`‰æ‚·‚é
+  æ©Ÿèƒ½
+	VRAMã®(x,y)ã«colorã§æŒ‡å®šã—ãŸç‚¹ã‚’æç”»ã™ã‚‹
 */
 
 void nd_GsEglPset(
@@ -315,14 +315,14 @@ void nd_GsEglPset(
 
 
 /**************************************************************************
-	‹éŒ`“h‚è‚Â‚Ô‚µ
+	çŸ©å½¢å¡—ã‚Šã¤ã¶ã—
  **************************************************************************/
 /*
-  Œ`® 
+  å½¢å¼ 
 	void nd_GsEglBoxfill(nd_s32 x1, nd_s32 y1, nd_s32 x2, nd_s32 y2)
 
-  ‹@”\
-	VRAM‚Ì(x1,y1)-(x2,y2)‚Ì‹éŒ`“à‚ğ‘OŒiF‚Åw’è‚µ‚½F‚Å“h‚è‚Â‚Ô‚·
+  æ©Ÿèƒ½
+	VRAMã®(x1,y1)-(x2,y2)ã®çŸ©å½¢å†…ã‚’å‰æ™¯è‰²ã§æŒ‡å®šã—ãŸè‰²ã§å¡—ã‚Šã¤ã¶ã™
 */
 
 void nd_GsEglBoxfill(
@@ -376,14 +376,14 @@ void nd_GsEglBox(
 
 
 /**************************************************************************
-	ƒ~ƒbƒ`ƒFƒi[ƒAƒ‹ƒSƒŠƒYƒ€‚É‚æ‚é‚‘¬ƒT[ƒNƒ‹•`‰æ
+	ãƒŸãƒƒãƒã‚§ãƒŠãƒ¼ã‚¢ãƒ«ã‚´ãƒªã‚ºãƒ ã«ã‚ˆã‚‹é«˜é€Ÿã‚µãƒ¼ã‚¯ãƒ«æç”»
  **************************************************************************/
 /*
-  Œ`® 
+  å½¢å¼ 
 	void nd_GsEglCircle(nd_s32 x, nd_s32 y, nd_s32 r)
 
-  ‹@”\
-	VRAM‚Ì(x,y)‚ğ’†S‚É‘OŒiF‚Åw’è‚µ‚½F‚Å”¼Œar‚Ì‰~‚ğ•`‰æ‚·‚é
+  æ©Ÿèƒ½
+	VRAMã®(x,y)ã‚’ä¸­å¿ƒã«å‰æ™¯è‰²ã§æŒ‡å®šã—ãŸè‰²ã§åŠå¾„rã®å††ã‚’æç”»ã™ã‚‹
 */
 
 void nd_GsEglCircle(
@@ -423,14 +423,14 @@ void nd_GsEglCircle(
 
 
 /**************************************************************************
-	ƒuƒŒƒ[ƒ“ƒnƒ€ƒAƒ‹ƒSƒŠƒYƒ€‚É‚æ‚é‚‘¬ƒ‰ƒCƒ“•`‰æ
+	ãƒ–ãƒ¬ã‚¼ãƒ³ãƒãƒ ã‚¢ãƒ«ã‚´ãƒªã‚ºãƒ ã«ã‚ˆã‚‹é«˜é€Ÿãƒ©ã‚¤ãƒ³æç”»
  **************************************************************************/
 /*
-  Œ`® 
+  å½¢å¼ 
 	viod nd_GsEglLine(nd_s32 x1, nd_s32 y1, nd_s32 x2, nd_s32 y2)
 
-  ‹@”\
-	VRAM‚Ì(x1,y1)-(x2,y2)‚É‘OŒiF‚Åw’è‚µ‚½F‚Åƒ‰ƒCƒ“‚ğ•`‰æ‚·‚é
+  æ©Ÿèƒ½
+	VRAMã®(x1,y1)-(x2,y2)ã«å‰æ™¯è‰²ã§æŒ‡å®šã—ãŸè‰²ã§ãƒ©ã‚¤ãƒ³ã‚’æç”»ã™ã‚‹
 */
 
 void nd_GsEglLine(
@@ -488,14 +488,14 @@ void nd_GsEglLine(
 
 
 /**************************************************************************
-	FONTXŒ`®ƒtƒHƒ“ƒg•`‰æƒ‰ƒCƒuƒ‰ƒŠ
+	FONTXå½¢å¼ãƒ•ã‚©ãƒ³ãƒˆæç”»ãƒ©ã‚¤ãƒ–ãƒ©ãƒª
  **************************************************************************/
 
-static nd_u8 *pFONTX_kanji_top;		// ƒJƒŒƒ“ƒg‚ÌŠ¿šƒtƒHƒ“ƒg 
-static nd_u8 *pFONTX_ascii_top;		// ƒJƒŒƒ“ƒg‚ÌƒAƒXƒL[•¶šƒtƒHƒ“ƒg 
+static nd_u8 *pFONTX_kanji_top;		// ã‚«ãƒ¬ãƒ³ãƒˆã®æ¼¢å­—ãƒ•ã‚©ãƒ³ãƒˆ 
+static nd_u8 *pFONTX_ascii_top;		// ã‚«ãƒ¬ãƒ³ãƒˆã®ã‚¢ã‚¹ã‚­ãƒ¼æ–‡å­—ãƒ•ã‚©ãƒ³ãƒˆ 
 
-// SJIS•¶šƒR[ƒh‚©‚çƒrƒbƒgƒ}ƒbƒv‚ÌƒIƒtƒZƒbƒg‚ğŒvZ 
-// ŠY“–ƒrƒbƒgƒ}ƒbƒv‚ª–³‚¢ê‡Ana_null‚ğ•Ô‚· 
+// SJISæ–‡å­—ã‚³ãƒ¼ãƒ‰ã‹ã‚‰ãƒ“ãƒƒãƒˆãƒãƒƒãƒ—ã®ã‚ªãƒ•ã‚»ãƒƒãƒˆã‚’è¨ˆç®— 
+// è©²å½“ãƒ“ãƒƒãƒˆãƒãƒƒãƒ—ãŒç„¡ã„å ´åˆã€na_nullã‚’è¿”ã™ 
 static nd_u8 *nd_GsEglFontx_putkanji(nd_s32 kcode,nd_FONTX_KANJI_header *pFont)
 {
 	nd_s32 i,csize,cb,ce;
@@ -522,7 +522,7 @@ static nd_u8 *nd_GsEglFontx_putkanji(nd_s32 kcode,nd_FONTX_KANJI_header *pFont)
 	return pKanji;
 }
 
-// ASCII•¶šƒR[ƒh‚©‚çƒrƒbƒgƒ}ƒbƒv‚ÌƒIƒtƒZƒbƒg‚ğŒvZ 
+// ASCIIæ–‡å­—ã‚³ãƒ¼ãƒ‰ã‹ã‚‰ãƒ“ãƒƒãƒˆãƒãƒƒãƒ—ã®ã‚ªãƒ•ã‚»ãƒƒãƒˆã‚’è¨ˆç®— 
 static nd_u8 *nd_GsEglFontx_ascii(nd_s32 acode,nd_FONTX_ASCII_header *pFont)
 {
 	nd_s32 csize;
@@ -534,9 +534,9 @@ static nd_u8 *nd_GsEglFontx_ascii(nd_s32 acode,nd_FONTX_ASCII_header *pFont)
 	return pAscii;
 }
 
-// ‚P•¶š•`‰æ 
-//  0x0000`0x00ff‚Ì”ÍˆÍ‚ÍACSII(”¼Šp)A0x8000`‚ÍKANJI(‘SŠp)‚Å•`‰æ‚·‚é 
-//  •Ô’l‚Æ‚µ‚ÄAƒtƒHƒ“ƒg‚Ì‰¡•‚ğ•Ô‚· 
+// ï¼‘æ–‡å­—æç”» 
+//  0x0000ï½0x00ffã®ç¯„å›²ã¯ACSII(åŠè§’)ã€0x8000ï½ã¯KANJI(å…¨è§’)ã§æç”»ã™ã‚‹ 
+//  è¿”å€¤ã¨ã—ã¦ã€ãƒ•ã‚©ãƒ³ãƒˆã®æ¨ªå¹…ã‚’è¿”ã™ 
 nd_s32 nd_GsEglPutcharFont(
 		nd_s32 x,nd_s32 y,
 		nd_u16 c)
@@ -547,7 +547,7 @@ nd_s32 nd_GsEglPutcharFont(
 	nd_s32 i,j,w,h;
 	nd_u8 *p,cbit = 0;
 
-	if (c <= 0xff) {		// ”¼Šp 
+	if (c <= 0xff) {		// åŠè§’ 
 		pFA = (nd_FONTX_ASCII_header *)pFONTX_ascii_top;
 		if (pFA == na_null) return 0;
 
@@ -555,7 +555,7 @@ nd_s32 nd_GsEglPutcharFont(
 		w = pFA->width;
 		h = pFA->height;
 
-	} else {				// ‘SŠp 
+	} else {				// å…¨è§’ 
 		pFK = (nd_FONTX_KANJI_header *)pFONTX_kanji_top;
 		if (pFK == na_null) return 0;
 
@@ -581,7 +581,7 @@ nd_s32 nd_GsEglPutcharFont(
 	return w;
 }
 
-void nd_GsEglPutstrFont(		// •¶š—ñ•`‰æ 
+void nd_GsEglPutstrFont(		// æ–‡å­—åˆ—æç”» 
 		nd_s32 x,nd_s32 y,
 		char *pStr)
 {
@@ -600,7 +600,7 @@ void nd_GsEglPutstrFont(		// •¶š—ñ•`‰æ
 
 }
 
-void nd_GsEglSetFont(			// ƒJƒŒƒ“ƒg•¶šƒtƒHƒ“ƒg‚ğƒZƒbƒg 
+void nd_GsEglSetFont(			// ã‚«ãƒ¬ãƒ³ãƒˆæ–‡å­—ãƒ•ã‚©ãƒ³ãƒˆã‚’ã‚»ãƒƒãƒˆ 
 		void *pAscii,
 		void *pKanji)
 {
@@ -611,22 +611,22 @@ void nd_GsEglSetFont(			// ƒJƒŒƒ“ƒg•¶šƒtƒHƒ“ƒg‚ğƒZƒbƒg
 
 
 /**************************************************************************
-	‚WƒhƒbƒgƒtƒHƒ“ƒg•`‰æƒ‰ƒCƒuƒ‰ƒŠ
+	ï¼˜ãƒ‰ãƒƒãƒˆãƒ•ã‚©ãƒ³ãƒˆæç”»ãƒ©ã‚¤ãƒ–ãƒ©ãƒª
  **************************************************************************/
 /*
-  Œ`® 
+  å½¢å¼ 
 	void nd_GsEglPutchar(nd_s32 x, nd_s32 y, char *pStr)
 
-  ‹@”\
-	VRAM‚Ì(x,y)‚©‚ç‘OŒiF‚Åw’è‚µ‚½F‚ÆƒtƒHƒ“ƒg‚ÅASCII•¶š—ñ‚ğ•`‰æ‚·‚éB
-	‚WƒhƒbƒgƒtƒHƒ“ƒg‚ÍƒJƒŒƒ“ƒgƒtƒHƒ“ƒg‚ğ‚Éw’è‚µ‚Ä‚¨‚­
+  æ©Ÿèƒ½
+	VRAMã®(x,y)ã‹ã‚‰å‰æ™¯è‰²ã§æŒ‡å®šã—ãŸè‰²ã¨ãƒ•ã‚©ãƒ³ãƒˆã§ASCIIæ–‡å­—åˆ—ã‚’æç”»ã™ã‚‹ã€‚
+	ï¼˜ãƒ‰ãƒƒãƒˆãƒ•ã‚©ãƒ³ãƒˆã¯ã‚«ãƒ¬ãƒ³ãƒˆãƒ•ã‚©ãƒ³ãƒˆã‚’ã«æŒ‡å®šã—ã¦ãŠã
 */
-extern const nd_u8 nd_GsEglRomFont[];					// ƒtƒHƒ“ƒg’è‹` 
+extern const nd_u8 nd_GsEglRomFont[];					// ãƒ•ã‚©ãƒ³ãƒˆå®šç¾© 
 
-//static nd_u8 *pFONT8_ascii_top = &nd_GsEglRomFont[0];	// ƒJƒŒƒ“ƒg‚Ì8ƒhƒbƒg•¶šƒtƒHƒ“ƒg 
+//static nd_u8 *pFONT8_ascii_top = &nd_GsEglRomFont[0];	// ã‚«ãƒ¬ãƒ³ãƒˆã®8ãƒ‰ãƒƒãƒˆæ–‡å­—ãƒ•ã‚©ãƒ³ãƒˆ 
 #define pFONT8_ascii_top		nd_GsEglRomFont
 
-void nd_GsEglPutchar(			// ‚P•¶š•`‰æ 
+void nd_GsEglPutchar(			// ï¼‘æ–‡å­—æç”» 
 		nd_s32 x,nd_s32 y,
 		char s)
 {
@@ -640,7 +640,7 @@ void nd_GsEglPutchar(			// ‚P•¶š•`‰æ
 	}
 }
 
-void nd_GsEglPutstr(			// •¶š—ñ•`‰æ 
+void nd_GsEglPutstr(			// æ–‡å­—åˆ—æç”» 
 		nd_s32 x,nd_s32 y,
 		char *pStr)
 {
@@ -652,7 +652,7 @@ void nd_GsEglPutstr(			// •¶š—ñ•`‰æ
 
 }
 
-void nd_GsEglPutdec(			// 10i”•`‰æ 
+void nd_GsEglPutdec(			// 10é€²æ•°æç”» 
 		nd_s32 x,nd_s32 y,
 		nd_s32 c)
 {
@@ -674,7 +674,7 @@ void nd_GsEglPutdec(			// 10i”•`‰æ
 	nd_GsEglPutstr(x,y, &numstr[i]);
 }
 
-void nd_GsEglPuthex2(			// 8bitƒoƒCƒiƒŠ•`‰æ 
+void nd_GsEglPuthex2(			// 8bitãƒã‚¤ãƒŠãƒªæç”» 
 		nd_s32 x, nd_s32 y,
 		nd_u32 c)
 {
@@ -682,7 +682,7 @@ void nd_GsEglPuthex2(			// 8bitƒoƒCƒiƒŠ•`‰æ
 	nd_GsEglPutchar(x+8, y, (char)(c & 0x0f));
 }
 
-void nd_GsEglPuthex8(			// 32bitƒoƒCƒiƒŠ•`‰æ 
+void nd_GsEglPuthex8(			// 32bitãƒã‚¤ãƒŠãƒªæç”» 
 		nd_s32 x,nd_s32 y,
 		nd_u32 c)
 {
@@ -696,7 +696,7 @@ void nd_GsEglPuthex8(			// 32bitƒoƒCƒiƒŠ•`‰æ
 
 
 /**************************************************************************
-	•W€‚WƒhƒbƒgƒtƒHƒ“ƒgƒpƒ^[ƒ“
+	æ¨™æº–ï¼˜ãƒ‰ãƒƒãƒˆãƒ•ã‚©ãƒ³ãƒˆãƒ‘ã‚¿ãƒ¼ãƒ³
  **************************************************************************/
 
 const nd_u8 nd_GsEglRomFont[] = {

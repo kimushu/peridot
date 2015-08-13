@@ -1,10 +1,10 @@
 /**************************************************************************
-	PROCYON ƒRƒ“ƒ\[ƒ‹ƒ‰ƒCƒuƒ‰ƒŠund_Libv (PERIDOT LCD Edition)
+	PROCYON ã‚³ãƒ³ã‚½ãƒ¼ãƒ«ãƒ©ã‚¤ãƒ–ãƒ©ãƒªã€Œnd_Libã€ (PERIDOT LCD Edition)
 
-		ƒvƒŠƒ~ƒeƒBƒuƒŒƒxƒ‹ƒOƒ‰ƒtƒBƒbƒNƒhƒ‰ƒCƒo
+		ãƒ—ãƒªãƒŸãƒ†ã‚£ãƒ–ãƒ¬ãƒ™ãƒ«ã‚°ãƒ©ãƒ•ã‚£ãƒƒã‚¯ãƒ‰ãƒ©ã‚¤ãƒ
 
-	2014/04/28	Cineraria/GREENBERYL—¼‘Î‰C³
-	2014/05/13	PERIDOT LCDƒ†ƒjƒbƒg—pC³
+	2014/04/28	Cineraria/GREENBERYLä¸¡å¯¾å¿œä¿®æ­£
+	2014/05/13	PERIDOT LCDãƒ¦ãƒ‹ãƒƒãƒˆç”¨ä¿®æ­£
 
  **************************************************************************/
 #ifndef __nd_egl_lib_
@@ -18,17 +18,17 @@
 //#define PIXELCOLOR_RGB565
 #define PIXELCOLOR_RGB555		// MORGEN,AMETHYST,TURQUOISE,DE0
 //#define PIXELCOLOR_BGR555		// TOURMALINE,GREENBERYL
-//#define PISELCOLOR_YUV422		// ƒ‚ƒmƒNƒ
+//#define PISELCOLOR_YUV422		// ãƒ¢ãƒã‚¯ãƒ­
 
 
-/***** ’è”Eƒ}ƒNƒ’è‹` ***************************************************/
+/***** å®šæ•°ãƒ»ãƒã‚¯ãƒ­å®šç¾© ***************************************************/
 
-typedef int				nd_s32;				// •„†•t‚«32bit®” 
-typedef short			nd_s16;				// •„†•t‚«16bit®” 
-typedef char			nd_s8;				// •„†•t‚«8bit®” 
-typedef unsigned long	nd_u32;				// •„†–³‚µ32bit®” 
-typedef unsigned short	nd_u16;				// •„†–³‚µ16bit®” 
-typedef unsigned char	nd_u8;				// •„†–³‚µ8bit®” 
+typedef int				nd_s32;				// ç¬¦å·ä»˜ã32bitæ•´æ•° 
+typedef short			nd_s16;				// ç¬¦å·ä»˜ã16bitæ•´æ•° 
+typedef char			nd_s8;				// ç¬¦å·ä»˜ã8bitæ•´æ•° 
+typedef unsigned long	nd_u32;				// ç¬¦å·ç„¡ã—32bitæ•´æ•° 
+typedef unsigned short	nd_u16;				// ç¬¦å·ç„¡ã—16bitæ•´æ•° 
+typedef unsigned char	nd_u8;				// ç¬¦å·ç„¡ã—8bitæ•´æ•° 
 
 #ifndef na_null
 #ifdef NULL
@@ -99,7 +99,7 @@ typedef unsigned char	nd_u8;				// •„†–³‚µ8bit®”
 #define nd_color(_cc,_cb,_p)			nd_GsEglColor((_cc),(_cb),(_p))
 
 
-/***** \‘¢‘Ì’è‹` *********************************************************/
+/***** æ§‹é€ ä½“å®šç¾© *********************************************************/
 /*
 #ifdef VGA_BASE
  #define np_VGAIO				(VGA_BASE)
@@ -133,7 +133,7 @@ typedef unsigned char	nd_u8;				// •„†–³‚µ8bit®”
 #endif
 */
 
-/***** ƒvƒƒgƒ^ƒCƒvéŒ¾ ***************************************************/
+/***** ãƒ—ãƒ­ãƒˆã‚¿ã‚¤ãƒ—å®£è¨€ ***************************************************/
 
 extern nd_u32 nd_GsEglDrawBuffer;
 /*

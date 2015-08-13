@@ -12,12 +12,12 @@
 #define lcdc_regdata	(1<<18)
 
 
-/* ƒŒƒWƒXƒ^‚Öƒf[ƒ^‘‚«‚İ */
+/* ãƒ¬ã‚¸ã‚¹ã‚¿ã¸ãƒ‡ãƒ¼ã‚¿æ›¸ãè¾¼ã¿ */
 void Trans_Dat(unsigned int index, unsigned int data)
 {
 	const alt_u32 dev_lcdc = LCDC_BASE;
 
-	// ƒŒƒWƒXƒ^ƒAƒhƒŒƒX‚ğİ’è 
+	// ãƒ¬ã‚¸ã‚¹ã‚¿ã‚¢ãƒ‰ãƒ¬ã‚¹ã‚’è¨­å®š 
 
 	while( (IORD(dev_lcdc, 0) & (1<<31)) ) {}
 	IOWR(dev_lcdc, 0, lcdc_wrreq | lcdc_select | lcdc_regaddr |((index>>8) & 0xff));
@@ -25,7 +25,7 @@ void Trans_Dat(unsigned int index, unsigned int data)
 	while( (IORD(dev_lcdc, 0) & (1<<31)) ) {}
 	IOWR(dev_lcdc, 0, lcdc_wrreq | lcdc_select | lcdc_regaddr |((index>>0) & 0xff));
 
-	// ƒf[ƒ^‚ğİ’è 
+	// ãƒ‡ãƒ¼ã‚¿ã‚’è¨­å®š 
 
 	while( (IORD(dev_lcdc, 0) & (1<<31)) ) {}
 	IOWR(dev_lcdc, 0, lcdc_wrreq | lcdc_select | lcdc_regdata |((data>>8) & 0xff));
@@ -33,14 +33,14 @@ void Trans_Dat(unsigned int index, unsigned int data)
 	while( (IORD(dev_lcdc, 0) & (1<<31)) ) {}
 	IOWR(dev_lcdc, 0, lcdc_wrreq | lcdc_select | lcdc_regdata |((data>>0) & 0xff));
 
-	// I—¹ 
+	// çµ‚äº† 
 
 	while( (IORD(dev_lcdc, 0) & (1<<31)) ) {}
 	IOWR(dev_lcdc, 0, 0);
 }
 
 
-/* LCDƒpƒlƒ‹‰Šú‰» */
+/* LCDãƒ‘ãƒãƒ«åˆæœŸåŒ– */
 void ILI9325_init(void)
 {
 	const alt_u32 dev_lcdc = LCDC_BASE;
@@ -119,21 +119,21 @@ void ILI9325_init(void)
 }
 
 
-/* ƒtƒŒ[ƒ€ƒoƒbƒtƒ@ƒAƒbƒvƒf[ƒg */
+/* ãƒ•ãƒ¬ãƒ¼ãƒ ãƒãƒƒãƒ•ã‚¡ã‚¢ãƒƒãƒ—ãƒ‡ãƒ¼ãƒˆ */
 void ILI9325_updatefb(const alt_u16 *pFb_top)
 {
 	const alt_u32 dev_lcdc = LCDC_BASE;
 
-	// “]‘—I—¹‚ğ‘Ò‚Â 
+	// è»¢é€çµ‚äº†ã‚’å¾…ã¤ 
 
 	while( (IORD(dev_lcdc, 2) & (1<<0)) ) {}
 
-	// GRAMƒ|ƒCƒ“ƒ^‰Šú‰» 
+	// GRAMãƒã‚¤ãƒ³ã‚¿åˆæœŸåŒ– 
 
 	Trans_Dat(0x0020,0x0000);
 	Trans_Dat(0x0021,0x0000);
 
-	// GRAM‚ÖDMAŠJn 
+	// GRAMã¸DMAé–‹å§‹ 
 
 	while( (IORD(dev_lcdc, 0) & (1<<31)) ) {}
 	IOWR(dev_lcdc, 0, lcdc_wrreq | lcdc_select | lcdc_regaddr | 0x00);

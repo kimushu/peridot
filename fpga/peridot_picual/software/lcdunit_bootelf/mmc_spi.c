@@ -1,12 +1,12 @@
 /**************************************************************************
-	MMC/SDƒJ[ƒhSPIƒAƒNƒZƒXƒyƒŠƒtƒFƒ‰ƒ‹
-		ƒfƒoƒCƒXƒTƒ|[ƒgŠÖ” (Cineraria DE0/DE0-nano version)
+	MMC/SDã‚«ãƒ¼ãƒ‰SPIã‚¢ã‚¯ã‚»ã‚¹ãƒšãƒªãƒ•ã‚§ãƒ©ãƒ«
+		ãƒ‡ãƒã‚¤ã‚¹ã‚µãƒãƒ¼ãƒˆé–¢æ•° (Cineraria DE0/DE0-nano version)
 
 	UPDATE	2010/12/11
-			2011/12/24 100us‘Ò‚¿’Ç‰Á(Petit FatFs‘Î‰) 
-			2011/12/28 1stƒŠƒŠ[ƒX”Å 
+			2011/12/24 100uså¾…ã¡è¿½åŠ (Petit FatFså¯¾å¿œ) 
+			2011/12/28 1stãƒªãƒªãƒ¼ã‚¹ç‰ˆ 
 
-			2013/04/03 “à‘ ƒƒ‚ƒŠƒ}ƒNƒ”ÅC³ 
+			2013/04/03 å†…è”µãƒ¡ãƒ¢ãƒªãƒã‚¯ãƒ­ç‰ˆä¿®æ­£ 
  **************************************************************************/
 
 // ---------------------------------------------------------------------- //
@@ -24,11 +24,11 @@
 #include <io.h>
 #include "mmc_spi.h"
 
-static alt_u32 mmc_spi_reg;		// MMC_SPIƒyƒŠƒtƒFƒ‰ƒ‹ƒŒƒWƒXƒ^ƒAƒhƒŒƒX 
-static alt_u32 mmc_spi_ncs;		// nCSƒRƒ“ƒgƒ[ƒ‹ 
+static alt_u32 mmc_spi_reg;		// MMC_SPIãƒšãƒªãƒ•ã‚§ãƒ©ãƒ«ãƒ¬ã‚¸ã‚¹ã‚¿ã‚¢ãƒ‰ãƒ¬ã‚¹ 
+static alt_u32 mmc_spi_ncs;		// nCSã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ« 
 
 
-/* MMC CSƒAƒT[ƒg */
+/* MMC CSã‚¢ã‚µãƒ¼ãƒˆ */
 void mmc_spi_SetCardSelect(void)
 {
 	mmc_spi_ncs = mmc_selassert;
@@ -36,7 +36,7 @@ void mmc_spi_SetCardSelect(void)
 }
 
 
-/* MMC CSƒlƒQ[ƒg */
+/* MMC CSãƒã‚²ãƒ¼ãƒˆ */
 void mmc_spi_SetCardDeselect(void)
 {
 	mmc_spi_ncs = mmc_selnegete;
@@ -44,7 +44,7 @@ void mmc_spi_SetCardDeselect(void)
 }
 
 
-/* MMC‚Ö1ƒoƒCƒg‘—M */
+/* MMCã¸1ãƒã‚¤ãƒˆé€ä¿¡ */
 void mmc_spi_Sendbyte(alt_u8 data)
 {
 	while( !(IORD(mmc_spi_reg, mmcreg_status) & mmc_commexit) ) {}
@@ -52,7 +52,7 @@ void mmc_spi_Sendbyte(alt_u8 data)
 }
 
 
-/* MMC‚©‚ç1ƒoƒCƒgóM */
+/* MMCã‹ã‚‰1ãƒã‚¤ãƒˆå—ä¿¡ */
 alt_u8 mmc_spi_Recvbyte(void)
 {
 	alt_u32 res;
@@ -68,7 +68,7 @@ alt_u8 mmc_spi_Recvbyte(void)
 }
 
 
-/* MMC‚©‚çw’èƒoƒCƒgóM(2`512ƒoƒCƒg) */
+/* MMCã‹ã‚‰æŒ‡å®šãƒã‚¤ãƒˆå—ä¿¡(2ï½512ãƒã‚¤ãƒˆ) */
 #ifdef _USE_MMCDMA
 int mmc_spi_DmaRecv(alt_u8 wc, alt_u8 *buff)
 {
@@ -94,7 +94,7 @@ int mmc_spi_DmaRecv(alt_u8 wc, alt_u8 *buff)
 
 	dnum = 0;
 
-	if ( ((alt_u32)buff & 3) == 0) {		// ‚SƒoƒCƒgƒAƒ‰ƒCƒ“‚Ì“]‘— 
+	if ( ((alt_u32)buff & 3) == 0) {		// ï¼”ãƒã‚¤ãƒˆã‚¢ãƒ©ã‚¤ãƒ³ã®è»¢é€ 
 		pdst32 = (alt_u32 *)buff;
 
 		while(cycle > 3) {
@@ -106,7 +106,7 @@ int mmc_spi_DmaRecv(alt_u8 wc, alt_u8 *buff)
 		}
 	}
 
-	while(cycle > 0) {						// c‚è‚ ‚é‚¢‚Í”ñƒAƒ‰ƒCƒ“‚Ìê‡‚Ì“]‘— 
+	while(cycle > 0) {						// æ®‹ã‚Šã‚ã‚‹ã„ã¯éã‚¢ãƒ©ã‚¤ãƒ³ã®å ´åˆã®è»¢é€ 
 		if ( (cycle & 3)== 0 ) {
 			data32 = IORD(mmc_spi_reg, mmcreg_readbuff+dnum);
 			dnum++;
@@ -122,63 +122,63 @@ int mmc_spi_DmaRecv(alt_u8 wc, alt_u8 *buff)
 #endif
 
 
-/* ƒJ[ƒh‘}“üó‘ÔŒŸo */
-/* ¦ƒJ[ƒh‘}“üó‘Ô‚ğŒŸo‚Å‚«‚È‚¢ƒn[ƒhƒEƒFƒA‚Ìê‡‚ÍAí return 1 ‚Æ‚·‚é */
+/* ã‚«ãƒ¼ãƒ‰æŒ¿å…¥çŠ¶æ…‹æ¤œå‡º */
+/* â€»ã‚«ãƒ¼ãƒ‰æŒ¿å…¥çŠ¶æ…‹ã‚’æ¤œå‡ºã§ããªã„ãƒãƒ¼ãƒ‰ã‚¦ã‚§ã‚¢ã®å ´åˆã¯ã€å¸¸æ™‚ return 1 ã¨ã™ã‚‹ */
 int mmc_spi_CheckCardDetect(void)
 {
 	if ( !(IORD(mmc_spi_reg, mmcreg_status) & mmc_cd_bitmask) ) {
-		return 1;	/* ƒJ[ƒh‘}“üó‘Ô */
+		return 1;	/* ã‚«ãƒ¼ãƒ‰æŒ¿å…¥çŠ¶æ…‹ */
 	} else {
-		return 0;	/* ƒJ[ƒh‚È‚µ */
+		return 0;	/* ã‚«ãƒ¼ãƒ‰ãªã— */
 	}
 }
 
 
-/* ƒJ[ƒhƒ‰ƒCƒgƒvƒƒeƒNƒgƒXƒCƒbƒ`ó‘ÔŒŸo */
-/* ¦ƒJ[ƒh‘}“üó‘Ô‚ğŒŸo‚Å‚«‚È‚¢ƒn[ƒhƒEƒFƒA‚Ìê‡‚ÍAí return 0 ‚Æ‚·‚é */
+/* ã‚«ãƒ¼ãƒ‰ãƒ©ã‚¤ãƒˆãƒ—ãƒ­ãƒ†ã‚¯ãƒˆã‚¹ã‚¤ãƒƒãƒçŠ¶æ…‹æ¤œå‡º */
+/* â€»ã‚«ãƒ¼ãƒ‰æŒ¿å…¥çŠ¶æ…‹ã‚’æ¤œå‡ºã§ããªã„ãƒãƒ¼ãƒ‰ã‚¦ã‚§ã‚¢ã®å ´åˆã¯ã€å¸¸æ™‚ return 0 ã¨ã™ã‚‹ */
 int mmc_spi_CheckWritePortect(void)
 {
 	if( mmc_spi_CheckCardDetect() && (IORD(mmc_spi_reg, mmcreg_status) & mmc_wp_bitmask) ) {
-		return 0;	/* ‘‚«‚İ‰Â */
+		return 0;	/* æ›¸ãè¾¼ã¿å¯ */
 	} else {
-		return 1;	/* ƒJ[ƒh‚ª“ü‚Á‚Ä‚È‚¢‚©Aƒ‰ƒCƒgƒvƒƒeƒNƒgƒXƒCƒbƒ`‚ªON */
+		return 1;	/* ã‚«ãƒ¼ãƒ‰ãŒå…¥ã£ã¦ãªã„ã‹ã€ãƒ©ã‚¤ãƒˆãƒ—ãƒ­ãƒ†ã‚¯ãƒˆã‚¹ã‚¤ãƒƒãƒãŒON */
 	}
 }
 
 
-/* MMC SPIƒNƒƒbƒN‚ğ‚o‚oiƒJ[ƒh”FØƒ‚[ƒhj‚Éİ’è */
+/* MMC SPIã‚¯ãƒ­ãƒƒã‚¯ã‚’ï¼°ï¼°ï¼ˆã‚«ãƒ¼ãƒ‰èªè¨¼ãƒ¢ãƒ¼ãƒ‰ï¼‰ã«è¨­å®š */
 void mmc_spi_SetIdentClock(void)
 {
-	IOWR(mmc_spi_reg, mmcreg_clkdiv, (mmc_clock_freq /(mmc_ppmode_freq * 2)));	/* 400kHz‚É‚·‚é */
+	IOWR(mmc_spi_reg, mmcreg_clkdiv, (mmc_clock_freq /(mmc_ppmode_freq * 2)));	/* 400kHzã«ã™ã‚‹ */
 }
 
 
-/* MMC SPIƒNƒƒbƒN‚ğ‚c‚ciƒf[ƒ^“]‘—ƒ‚[ƒhj‚Éİ’è */
+/* MMC SPIã‚¯ãƒ­ãƒƒã‚¯ã‚’ï¼¤ï¼¤ï¼ˆãƒ‡ãƒ¼ã‚¿è»¢é€ãƒ¢ãƒ¼ãƒ‰ï¼‰ã«è¨­å®š */
 void mmc_spi_SetTransClock(void)
 {
-	IOWR(mmc_spi_reg, mmcreg_clkdiv, (mmc_clock_freq /(mmc_ddmode_freq * 2)));	/* Å‘å‘¬“x‚Í20MHz */
+	IOWR(mmc_spi_reg, mmcreg_clkdiv, (mmc_clock_freq /(mmc_ddmode_freq * 2)));	/* æœ€å¤§é€Ÿåº¦ã¯20MHz */
 }
 
 
-/* ƒ^ƒCƒ€ƒAƒEƒgƒ^ƒCƒ}İ’èi1ms’PˆÊj*/
+/* ã‚¿ã‚¤ãƒ ã‚¢ã‚¦ãƒˆã‚¿ã‚¤ãƒè¨­å®šï¼ˆ1mså˜ä½ï¼‰*/
 void mmc_spi_SetTimer(const alt_u32 timeout)
 {
 	IOWR(mmc_spi_reg, mmcreg_timer, mmc_timecount_1ms * timeout);
 }
 
 
-/* ƒ^ƒCƒ€ƒAƒEƒgƒ`ƒFƒbƒN */
+/* ã‚¿ã‚¤ãƒ ã‚¢ã‚¦ãƒˆãƒã‚§ãƒƒã‚¯ */
 int mmc_spi_CheckTimer(void)
 {
 	if( IORD(mmc_spi_reg, mmcreg_timer) ) {
-		return 1;		/* ƒ^ƒCƒ}“®ì’† */
+		return 1;		/* ã‚¿ã‚¤ãƒå‹•ä½œä¸­ */
 	} else {
-		return 0;		/* ƒ^ƒCƒ€ƒAƒEƒg */
+		return 0;		/* ã‚¿ã‚¤ãƒ ã‚¢ã‚¦ãƒˆ */
 	}
 }
 
 
-/* 100usƒ^ƒCƒ} */
+/* 100usã‚¿ã‚¤ãƒ */
 void mmc_spi_Wait100us(void)
 {
 	IOWR(mmc_spi_reg, mmcreg_timer, mmc_timecount_100us);
@@ -187,7 +187,7 @@ void mmc_spi_Wait100us(void)
 }
 
 
-/* MMCƒ\ƒPƒbƒgƒCƒ“ƒ^[ƒtƒF[ƒX‰Šú‰» */
+/* MMCã‚½ã‚±ãƒƒãƒˆã‚¤ãƒ³ã‚¿ãƒ¼ãƒ•ã‚§ãƒ¼ã‚¹åˆæœŸåŒ– */
 void mmc_spi_InitSocket(void)
 {
 	mmc_spi_reg = (alt_u32)MMC_REGBASE;

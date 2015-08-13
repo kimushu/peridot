@@ -1,10 +1,10 @@
 /**************************************************************************
 	PROCYON IPL - Cineraria DE0/DE0-nano Edition
 
-		ƒAƒuƒ\ƒŠƒ…[ƒgÀselfƒtƒ@ƒCƒ‹‚Ìƒ[ƒh•Às 
+		ã‚¢ãƒ–ã‚½ãƒªãƒ¥ãƒ¼ãƒˆå®Ÿè¡Œelfãƒ•ã‚¡ã‚¤ãƒ«ã®ãƒ­ãƒ¼ãƒ‰ï¼†å®Ÿè¡Œ 
 
-	UPDATE	2011/12/28 : FatFS¨PetitFatFS‚É•ÏX 
-	UPDATE  2013/04/03 : NiosII SBT—p‚É•ÏXA“à‘ ƒƒ‚ƒŠƒ}ƒNƒ‰» 
+	UPDATE	2011/12/28 : FatFSâ†’PetitFatFSã«å¤‰æ›´ 
+	UPDATE  2013/04/03 : NiosII SBTç”¨ã«å¤‰æ›´ã€å†…è”µãƒ¡ãƒ¢ãƒªãƒã‚¯ãƒ­åŒ– 
  **************************************************************************/
 
 // ---------------------------------------------------------------------- //
@@ -19,69 +19,69 @@
 // ---------------------------------------------------------------------- //
 
 /*
-y@‹@”\@z
-	SDƒJ[ƒh‚©‚çelfƒtƒ@ƒCƒ‹‚ğƒƒ‚ƒŠ‚Éƒ[ƒh‚µ‚ÄÀs‚·‚é
+ã€ã€€æ©Ÿèƒ½ã€€ã€‘
+	SDã‚«ãƒ¼ãƒ‰ã‹ã‚‰elfãƒ•ã‚¡ã‚¤ãƒ«ã‚’ãƒ¡ãƒ¢ãƒªã«ãƒ­ãƒ¼ãƒ‰ã—ã¦å®Ÿè¡Œã™ã‚‹
 
-y•K{ƒŠƒ\[ƒXz
-	ENiosII‚ÌƒŠƒZƒbƒgƒxƒNƒ^‚Æ‚µ‚Ä8kƒoƒCƒg‚Ì“à‘ ƒƒ‚ƒŠƒ}ƒNƒ
-	EƒvƒƒOƒ‰ƒ€‚ğŠO•”RAM‚É“WŠJ‚µ‚ÄÀs‚Å‚«‚éƒoƒX\¬ 
-	ESD/MMC‚ÉƒAƒNƒZƒX‚Å‚«‚éSPIƒyƒŠƒtƒFƒ‰ƒ‹(MMC_SPI‚Ü‚½‚ÍMMCDMAƒyƒŠƒtƒFƒ‰ƒ‹‚ğ‘z’è)
-	E‚P“”ˆÈã‚ÌLED(PIOƒyƒŠƒtƒFƒ‰ƒ‹‚ğ‘z’è)
+ã€å¿…é ˆãƒªã‚½ãƒ¼ã‚¹ã€‘
+	ãƒ»NiosIIã®ãƒªã‚»ãƒƒãƒˆãƒ™ã‚¯ã‚¿ã¨ã—ã¦8kãƒã‚¤ãƒˆã®å†…è”µãƒ¡ãƒ¢ãƒªãƒã‚¯ãƒ­
+	ãƒ»ãƒ—ãƒ­ã‚°ãƒ©ãƒ ã‚’å¤–éƒ¨RAMã«å±•é–‹ã—ã¦å®Ÿè¡Œã§ãã‚‹ãƒã‚¹æ§‹æˆ 
+	ãƒ»SD/MMCã«ã‚¢ã‚¯ã‚»ã‚¹ã§ãã‚‹SPIãƒšãƒªãƒ•ã‚§ãƒ©ãƒ«(MMC_SPIã¾ãŸã¯MMCDMAãƒšãƒªãƒ•ã‚§ãƒ©ãƒ«ã‚’æƒ³å®š)
+	ãƒ»ï¼‘ç¯ä»¥ä¸Šã®LED(PIOãƒšãƒªãƒ•ã‚§ãƒ©ãƒ«ã‚’æƒ³å®š)
 
-yƒyƒŠƒtƒFƒ‰ƒ‹–¼z
-	E“à‘ ƒƒ‚ƒŠƒ}ƒNƒ : ipl_memory
-	ESDƒJ[ƒhI/F      : mmc_spi ‚Ü‚½‚Í mmcdma
-	ELEDƒyƒŠƒtƒFƒ‰ƒ‹  : led
-	EDE0‚Ì7ƒZƒOLED    : led_7seg (ƒIƒvƒVƒ‡ƒ“)
+ã€ãƒšãƒªãƒ•ã‚§ãƒ©ãƒ«åã€‘
+	ãƒ»å†…è”µãƒ¡ãƒ¢ãƒªãƒã‚¯ãƒ­ : ipl_memory
+	ãƒ»SDã‚«ãƒ¼ãƒ‰I/F      : mmc_spi ã¾ãŸã¯ mmcdma
+	ãƒ»LEDãƒšãƒªãƒ•ã‚§ãƒ©ãƒ«  : led
+	ãƒ»DE0ã®7ã‚»ã‚°LED    : led_7seg (ã‚ªãƒ—ã‚·ãƒ§ãƒ³)
 
-yBSPİ’èz
-ŸMainƒ^ƒu
-@œ Settings->Commmon->hal
-	E  enable_gprof
-	E¡ enable_reduced_device_drivers (ƒ`ƒFƒbƒN)
-	E  enable_sim_optimize
-	E¡ enable_small_c_library (ƒ`ƒFƒbƒN)
-	Estderr/stdin/stdout‚ÍJTAG-UART
-	Esys_clk_timer/timestamp_timer‚Ínone (¦•K‚¸none‚É‚·‚é‚±‚Æ)
+ã€BSPè¨­å®šã€‘
+â—†Mainã‚¿ãƒ–
+ã€€â— Settings->Commmon->hal
+	ãƒ»â–¡ enable_gprof
+	ãƒ»â–  enable_reduced_device_drivers (ãƒã‚§ãƒƒã‚¯)
+	ãƒ»â–¡ enable_sim_optimize
+	ãƒ»â–  enable_small_c_library (ãƒã‚§ãƒƒã‚¯)
+	ãƒ»stderr/stdin/stdoutã¯JTAG-UART
+	ãƒ»sys_clk_timer/timestamp_timerã¯none (â€»å¿…ãšnoneã«ã™ã‚‹ã“ã¨)
 
-@œ Settings->Commmon->hal.make
-	Ebsp_cflags_debug‚Í-gƒIƒvƒVƒ‡ƒ“‚Ì‚Ü‚Ü
-	Ebsp_cflags_optimization‚ğ-Os‚É‚·‚é
+ã€€â— Settings->Commmon->hal.make
+	ãƒ»bsp_cflags_debugã¯-gã‚ªãƒ—ã‚·ãƒ§ãƒ³ã®ã¾ã¾
+	ãƒ»bsp_cflags_optimizationã‚’-Osã«ã™ã‚‹
 
-@œ Settings->Advanced->hal
-	Ecustom_newlib_flags‚Ínone‚Ì‚Ü‚Ü
-	E  enable_c_plus_plus
-	E  enable_clean_exit
-	E  enable_exit
-	E  enable_instruction_related_exception_api
-	E¡ enable_lightweight_device_driver_api (ƒ`ƒFƒbƒN)
-	E  enable_mul_div_emulation (NiosII/e‚Ìê‡‚Í©“®“I‚Éƒ`ƒFƒbƒN‚ª“ü‚é)
-	E  enable_runtime_stack_checking
-	E¡ enable_sopc_sysid_check (ƒ`ƒFƒbƒN)
+ã€€â— Settings->Advanced->hal
+	ãƒ»custom_newlib_flagsã¯noneã®ã¾ã¾
+	ãƒ»â–¡ enable_c_plus_plus
+	ãƒ»â–¡ enable_clean_exit
+	ãƒ»â–¡ enable_exit
+	ãƒ»â–¡ enable_instruction_related_exception_api
+	ãƒ»â–  enable_lightweight_device_driver_api (ãƒã‚§ãƒƒã‚¯)
+	ãƒ»â–¡ enable_mul_div_emulation (NiosII/eã®å ´åˆã¯è‡ªå‹•çš„ã«ãƒã‚§ãƒƒã‚¯ãŒå…¥ã‚‹)
+	ãƒ»â–¡ enable_runtime_stack_checking
+	ãƒ»â–  enable_sopc_sysid_check (ãƒã‚§ãƒƒã‚¯)
 
-@œ Settings->Advanced->hal.linker
-	E¡ allow_code_at_reset (ƒ`ƒFƒbƒN)
-	E  enable_alt_load
-	E  enable_alt_load_copy_exceptions
-	E  enable_alt_load_copy_rodata
-	E¡ enable_alt_load_copy_rwdata (ƒ`ƒFƒbƒN)
+ã€€â— Settings->Advanced->hal.linker
+	ãƒ»â–  allow_code_at_reset (ãƒã‚§ãƒƒã‚¯)
+	ãƒ»â–¡ enable_alt_load
+	ãƒ»â–¡ enable_alt_load_copy_exceptions
+	ãƒ»â–¡ enable_alt_load_copy_rodata
+	ãƒ»â–  enable_alt_load_copy_rwdata (ãƒã‚§ãƒƒã‚¯)
 
-ŸDriversƒ^ƒu
-	EJTAG-UART(‚Ü‚½‚ÍUART)ALED—p‚ÌPIOASYSIDANiosII FPU(g‚Á‚Ä‚éê‡‚Ì‚İ)ˆÈŠO‚Ìƒhƒ‰ƒCƒo‚ğŠO‚·
-		 (Enable‚Ìƒ`ƒFƒbƒN‚ğŠO‚·)
+â—†Driversã‚¿ãƒ–
+	ãƒ»JTAG-UART(ã¾ãŸã¯UART)ã€LEDç”¨ã®PIOã€SYSIDã€NiosII FPU(ä½¿ã£ã¦ã‚‹å ´åˆã®ã¿)ä»¥å¤–ã®ãƒ‰ãƒ©ã‚¤ãƒã‚’å¤–ã™
+		 (Enableã®ãƒã‚§ãƒƒã‚¯ã‚’å¤–ã™)
 
-@œ Settings->Advanced->altera_avalon_jtag_uart_driver
-	E¡ enable_small_driver (ƒ`ƒFƒbƒN)
+ã€€â— Settings->Advanced->altera_avalon_jtag_uart_driver
+	ãƒ»â–  enable_small_driver (ãƒã‚§ãƒƒã‚¯)
 
-@œ Settings->Advanced->altera_avalon_uart_driver (UART‚ğg‚¤ê‡)
-	E  enable_ioctl
-	E¡ enable_small_driver (ƒ`ƒFƒbƒN)
+ã€€â— Settings->Advanced->altera_avalon_uart_driver (UARTã‚’ä½¿ã†å ´åˆ)
+	ãƒ»â–¡ enable_ioctl
+	ãƒ»â–  enable_small_driver (ãƒã‚§ãƒƒã‚¯)
 
-ŸLinker Scriptƒ^ƒu
-	E‘S‚Ä‚ÌƒZƒNƒVƒ‡ƒ“‚ÌLinker Region Name‚ğ“à‘ ƒƒ‚ƒŠƒ}ƒNƒ(ipl_memory)‚É‚·‚é
+â—†Linker Scriptã‚¿ãƒ–
+	ãƒ»å…¨ã¦ã®ã‚»ã‚¯ã‚·ãƒ§ãƒ³ã®Linker Region Nameã‚’å†…è”µãƒ¡ãƒ¢ãƒªãƒã‚¯ãƒ­(ipl_memory)ã«ã™ã‚‹
 
-yƒAƒvƒŠƒP[ƒVƒ‡ƒ“İ’èz
-	ENiosII->Properties‚Ì"NiosII Application Properties"‚ÌOptimization level‚ğ"Size"‚Éİ’è
+ã€ã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³è¨­å®šã€‘
+	ãƒ»NiosII->Propertiesã®"NiosII Application Properties"ã®Optimization levelã‚’"Size"ã«è¨­å®š
 
 */
 
@@ -89,37 +89,37 @@
 #include <io.h>
 #include <sys/alt_cache.h>
 #include "pff.h"
-#include "mmc_spi.h" // mmc_clock_freq‚Ì’l‚ÍŠÂ‹«‚É‚ ‚í‚¹‚ÄC³‚·‚é‚±‚Æ(ƒfƒtƒHƒ‹ƒg‚Å‚Í40MHz) 
+#include "mmc_spi.h" // mmc_clock_freqã®å€¤ã¯ç’°å¢ƒã«ã‚ã‚ã›ã¦ä¿®æ­£ã™ã‚‹ã“ã¨(ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã§ã¯40MHz) 
 
 
-// elf_loader‚ª”z’u‚³‚ê‚éƒƒ‚ƒŠƒAƒhƒŒƒX 
+// elf_loaderãŒé…ç½®ã•ã‚Œã‚‹ãƒ¡ãƒ¢ãƒªã‚¢ãƒ‰ãƒ¬ã‚¹ 
 #define ELFLOADER_SECTION			IPL_MEMORY_BASE
 #define ELFLOADER_PROC_BEGIN        ((IPL_MEMORY_BASE+0) | (1<<31))
 #define ELFLOADER_PROC_END          ((IPL_MEMORY_BASE+IPL_MEMORY_SPAN) | (1<<31))
 
-// •\¦—p‚ÌLEDƒyƒŠƒtƒFƒ‰ƒ‹
+// è¡¨ç¤ºç”¨ã®LEDãƒšãƒªãƒ•ã‚§ãƒ©ãƒ«
 #define ELFLOADER_LED				LED_BASE
-#define ELFLOADER_LED_ON()			IOWR(ELFLOADER_LED, 0, ~0)		// LED‚Ì“_“” 
-#define ELFLOADER_LED_OFF()			IOWR(ELFLOADER_LED, 0, 0)		// LED‚ÌÁ“” 
+#define ELFLOADER_LED_ON()			IOWR(ELFLOADER_LED, 0, ~0)		// LEDã®ç‚¹ç¯ 
+#define ELFLOADER_LED_OFF()			IOWR(ELFLOADER_LED, 0, 0)		// LEDã®æ¶ˆç¯ 
 
-// DE0‚Ìê‡‚Í7ƒZƒOLED‚É•\¦‚·‚é 
+// DE0ã®å ´åˆã¯7ã‚»ã‚°LEDã«è¡¨ç¤ºã™ã‚‹ 
 #ifdef LED_7SEG_BASE
  #define SET_7SEGLED(_x)			IOWR(LED_7SEG_BASE, 0, (_x))
 #else
  #define SET_7SEGLED(_x)
 #endif
 
-// ƒu[ƒgƒvƒƒOƒ‰ƒ€ƒtƒ@ƒCƒ‹–¼ 
+// ãƒ–ãƒ¼ãƒˆãƒ—ãƒ­ã‚°ãƒ©ãƒ ãƒ•ã‚¡ã‚¤ãƒ«å 
 #define ELFLOADER_BOOT_FILE			"/PERIDOT/boot.elf"
 
 
-// ƒfƒoƒbƒO—p•\¦ 
+// ãƒ‡ãƒãƒƒã‚°ç”¨è¡¨ç¤º 
 //#define _DEBUG_
 
 
-/***** ELFƒtƒ@ƒCƒ‹Œ^’è‹` **************************************************/
+/***** ELFãƒ•ã‚¡ã‚¤ãƒ«å‹å®šç¾© **************************************************/
 
-// ELFƒtƒ@ƒCƒ‹‚Ì•Ï”Œ^éŒ¾ 
+// ELFãƒ•ã‚¡ã‚¤ãƒ«ã®å¤‰æ•°å‹å®£è¨€ 
 
 typedef void*			ELF32_Addr;
 typedef unsigned short	ELF32_Half;
@@ -128,50 +128,50 @@ typedef long			ELF32_Sword;
 typedef unsigned long	ELF32_Word;
 typedef unsigned char	ELF32_Char;
 
-// ELFƒtƒ@ƒCƒ‹ƒwƒbƒ_\‘¢‘Ì 
+// ELFãƒ•ã‚¡ã‚¤ãƒ«ãƒ˜ãƒƒãƒ€æ§‹é€ ä½“ 
 typedef struct {
-	ELF32_Char		elf_id[16];		// ƒtƒ@ƒCƒ‹ID 
-	ELF32_Half		elf_type;		// ƒIƒuƒWƒFƒNƒgƒtƒ@ƒCƒ‹ƒ^ƒCƒv 
-	ELF32_Half		elf_machine;	// ƒ^[ƒQƒbƒgƒA[ƒLƒeƒNƒ`ƒƒ 
-	ELF32_Word		elf_version;	// ELFƒtƒ@ƒCƒ‹ƒo[ƒWƒ‡ƒ“(Œ»İ‚Í1) 
-	ELF32_Addr		elf_entry;		// ƒGƒ“ƒgƒŠƒAƒhƒŒƒX(ƒGƒ“ƒgƒŠ–³‚µ‚È‚ç0) 
-	ELF32_Off		elf_phoff;		// Programƒwƒbƒ_ƒe[ƒuƒ‹‚Ìƒtƒ@ƒCƒ‹æ“ª‚©‚ç‚ÌƒIƒtƒZƒbƒg 
-	ELF32_Off		elf_shoff;		// Às–¢g—p
-	ELF32_Word		elf_flags;		// ƒvƒƒZƒbƒTŒÅ—L‚Ìƒtƒ‰ƒO 
-	ELF32_Half		elf_ehsize;		// ELFƒwƒbƒ_‚ÌƒTƒCƒY 
-	ELF32_Half		elf_phentsize;	// Programƒwƒbƒ_ƒe[ƒuƒ‹‚Ì1—v‘f‚ ‚½‚è‚ÌƒTƒCƒY 
-	ELF32_Half		elf_phnum;		// Programƒwƒbƒ_ƒe[ƒuƒ‹‚Ì—v‘f” 
-	ELF32_Half		elf_shentsize;	// Às–¢g—p
-	ELF32_Half		elf_shnum;		// Às–¢g—p
-	ELF32_Half		elf_shstrndx;	// Às–¢g—p
+	ELF32_Char		elf_id[16];		// ãƒ•ã‚¡ã‚¤ãƒ«ID 
+	ELF32_Half		elf_type;		// ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆãƒ•ã‚¡ã‚¤ãƒ«ã‚¿ã‚¤ãƒ— 
+	ELF32_Half		elf_machine;	// ã‚¿ãƒ¼ã‚²ãƒƒãƒˆã‚¢ãƒ¼ã‚­ãƒ†ã‚¯ãƒãƒ£ 
+	ELF32_Word		elf_version;	// ELFãƒ•ã‚¡ã‚¤ãƒ«ãƒãƒ¼ã‚¸ãƒ§ãƒ³(ç¾åœ¨ã¯1) 
+	ELF32_Addr		elf_entry;		// ã‚¨ãƒ³ãƒˆãƒªã‚¢ãƒ‰ãƒ¬ã‚¹(ã‚¨ãƒ³ãƒˆãƒªç„¡ã—ãªã‚‰0) 
+	ELF32_Off		elf_phoff;		// Programãƒ˜ãƒƒãƒ€ãƒ†ãƒ¼ãƒ–ãƒ«ã®ãƒ•ã‚¡ã‚¤ãƒ«å…ˆé ­ã‹ã‚‰ã®ã‚ªãƒ•ã‚»ãƒƒãƒˆ 
+	ELF32_Off		elf_shoff;		// å®Ÿè¡Œæ™‚æœªä½¿ç”¨
+	ELF32_Word		elf_flags;		// ãƒ—ãƒ­ã‚»ãƒƒã‚µå›ºæœ‰ã®ãƒ•ãƒ©ã‚° 
+	ELF32_Half		elf_ehsize;		// ELFãƒ˜ãƒƒãƒ€ã®ã‚µã‚¤ã‚º 
+	ELF32_Half		elf_phentsize;	// Programãƒ˜ãƒƒãƒ€ãƒ†ãƒ¼ãƒ–ãƒ«ã®1è¦ç´ ã‚ãŸã‚Šã®ã‚µã‚¤ã‚º 
+	ELF32_Half		elf_phnum;		// Programãƒ˜ãƒƒãƒ€ãƒ†ãƒ¼ãƒ–ãƒ«ã®è¦ç´ æ•° 
+	ELF32_Half		elf_shentsize;	// å®Ÿè¡Œæ™‚æœªä½¿ç”¨
+	ELF32_Half		elf_shnum;		// å®Ÿè¡Œæ™‚æœªä½¿ç”¨
+	ELF32_Half		elf_shstrndx;	// å®Ÿè¡Œæ™‚æœªä½¿ç”¨
 } __attribute__ ((packed)) ELF32_HEADER;
 
-// Programƒwƒbƒ_\‘¢‘Ì 
+// Programãƒ˜ãƒƒãƒ€æ§‹é€ ä½“ 
 typedef struct {
-	ELF32_Word		p_type;			// ƒZƒOƒƒ“ƒg‚ÌƒGƒ“ƒgƒŠƒ^ƒCƒv 
-	ELF32_Off		p_offset;		// ‘Î‰‚·‚éƒZƒOƒƒ“ƒg‚Ìƒtƒ@ƒCƒ‹æ“ª‚©‚ç‚ÌƒIƒtƒZƒbƒg 
-	ELF32_Addr		p_vaddr;		// ƒƒ‚ƒŠã‚Å‚ÌƒZƒOƒƒ“ƒg‚Ì‘æˆêƒoƒCƒg‚Ì‰¼‘zƒAƒhƒŒƒX 
-	ELF32_Addr		p_paddr;		// •¨—”Ô’nw’è‚ª“KØ‚ÈƒVƒXƒeƒ€‚Ìˆ×‚É—\–ñ(p_vaddr‚Æ“¯’l)
-	ELF32_Word		p_filesz;		// ‘Î‰‚·‚éƒZƒOƒƒ“ƒg‚Ìƒtƒ@ƒCƒ‹‚Å‚ÌƒTƒCƒY(0‚à‰Â)
-	ELF32_Word		p_memsz;		// ‘Î‰‚·‚éƒZƒOƒƒ“ƒg‚Ìƒƒ‚ƒŠã‚É“WŠJ‚³‚ê‚½‚ÌƒTƒCƒY(0‚à‰Â)
-	ELF32_Word		p_flags;		// ‘Î‰‚·‚éƒZƒOƒƒ“ƒg‚É“KØ‚Èƒtƒ‰ƒO 
-	ELF32_Word		p_align;		// ƒAƒ‰ƒCƒƒ“ƒg(p_offset‚Æp_vaddr‚ğ‚±‚Ì’l‚ÅŠ„‚Á‚½—]‚è‚Í“™‚µ‚¢)
+	ELF32_Word		p_type;			// ã‚»ã‚°ãƒ¡ãƒ³ãƒˆã®ã‚¨ãƒ³ãƒˆãƒªã‚¿ã‚¤ãƒ— 
+	ELF32_Off		p_offset;		// å¯¾å¿œã™ã‚‹ã‚»ã‚°ãƒ¡ãƒ³ãƒˆã®ãƒ•ã‚¡ã‚¤ãƒ«å…ˆé ­ã‹ã‚‰ã®ã‚ªãƒ•ã‚»ãƒƒãƒˆ 
+	ELF32_Addr		p_vaddr;		// ãƒ¡ãƒ¢ãƒªä¸Šã§ã®ã‚»ã‚°ãƒ¡ãƒ³ãƒˆã®ç¬¬ä¸€ãƒã‚¤ãƒˆã®ä»®æƒ³ã‚¢ãƒ‰ãƒ¬ã‚¹ 
+	ELF32_Addr		p_paddr;		// ç‰©ç†ç•ªåœ°æŒ‡å®šãŒé©åˆ‡ãªã‚·ã‚¹ãƒ†ãƒ ã®ç‚ºã«äºˆç´„(p_vaddrã¨åŒå€¤)
+	ELF32_Word		p_filesz;		// å¯¾å¿œã™ã‚‹ã‚»ã‚°ãƒ¡ãƒ³ãƒˆã®ãƒ•ã‚¡ã‚¤ãƒ«ã§ã®ã‚µã‚¤ã‚º(0ã‚‚å¯)
+	ELF32_Word		p_memsz;		// å¯¾å¿œã™ã‚‹ã‚»ã‚°ãƒ¡ãƒ³ãƒˆã®ãƒ¡ãƒ¢ãƒªä¸Šã«å±•é–‹ã•ã‚ŒãŸæ™‚ã®ã‚µã‚¤ã‚º(0ã‚‚å¯)
+	ELF32_Word		p_flags;		// å¯¾å¿œã™ã‚‹ã‚»ã‚°ãƒ¡ãƒ³ãƒˆã«é©åˆ‡ãªãƒ•ãƒ©ã‚° 
+	ELF32_Word		p_align;		// ã‚¢ãƒ©ã‚¤ãƒ¡ãƒ³ãƒˆ(p_offsetã¨p_vaddrã‚’ã“ã®å€¤ã§å‰²ã£ãŸä½™ã‚Šã¯ç­‰ã—ã„)
 } __attribute__ ((packed)) ELF32_PHEADER;
 
-// ELFƒIƒuƒWƒFƒNƒgƒtƒ@ƒCƒ‹ƒ^ƒCƒv‚Ì’è”éŒ¾ 
-#define ELF_ET_EXEC		(2)			// Às‰Â”\‚ÈƒIƒuƒWƒFƒNƒgƒtƒ@ƒCƒ‹ 
+// ELFã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆãƒ•ã‚¡ã‚¤ãƒ«ã‚¿ã‚¤ãƒ—ã®å®šæ•°å®£è¨€ 
+#define ELF_ET_EXEC		(2)			// å®Ÿè¡Œå¯èƒ½ãªã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆãƒ•ã‚¡ã‚¤ãƒ« 
 #define ELF_EM_NIOS2	(0x0071)	// Altera NiosII Processor
-#define ELF_PT_LOAD		(1)			// Às‚Éƒ[ƒh‚³‚ê‚éƒZƒOƒƒ“ƒg 
+#define ELF_PT_LOAD		(1)			// å®Ÿè¡Œæ™‚ã«ãƒ­ãƒ¼ãƒ‰ã•ã‚Œã‚‹ã‚»ã‚°ãƒ¡ãƒ³ãƒˆ 
 
 
 /**************************************************************************
-	ƒAƒuƒ\ƒŠƒ…[ƒgelfƒtƒ@ƒCƒ‹‚Ìƒ[ƒh 
+	ã‚¢ãƒ–ã‚½ãƒªãƒ¥ãƒ¼ãƒˆelfãƒ•ã‚¡ã‚¤ãƒ«ã®ãƒ­ãƒ¼ãƒ‰ 
  **************************************************************************/
 
 /* Petit-FatFs work area */
 FATFS g_fatfs_work;
 
-/* ƒfƒoƒbƒO—pprintf */
+/* ãƒ‡ãƒãƒƒã‚°ç”¨printf */
 #ifdef _DEBUG_
  #include <stdio.h>
  #define dgb_printf printf
@@ -180,9 +180,9 @@ FATFS g_fatfs_work;
 #endif
 
 
-/* elfƒtƒ@ƒCƒ‹‚ğƒƒ‚ƒŠ‚É“WŠJ */
-static ELF32_HEADER eh;		// elfƒtƒ@ƒCƒ‹ƒwƒbƒ_	(¦ƒƒ‚ƒŠg—p—ÌˆæŠm”F‚Ì‚½‚ßstack‚©‚çŠO‚µ‚Ä‚¢‚é) 
-static ELF32_PHEADER ph;	// elfƒZƒNƒVƒ‡ƒ“ƒwƒbƒ_	(¦ƒƒ‚ƒŠg—p—ÌˆæŠm”F‚Ì‚½‚ßstack‚©‚çŠO‚µ‚Ä‚¢‚é) 
+/* elfãƒ•ã‚¡ã‚¤ãƒ«ã‚’ãƒ¡ãƒ¢ãƒªã«å±•é–‹ */
+static ELF32_HEADER eh;		// elfãƒ•ã‚¡ã‚¤ãƒ«ãƒ˜ãƒƒãƒ€	(â€»ãƒ¡ãƒ¢ãƒªä½¿ç”¨é ˜åŸŸç¢ºèªã®ãŸã‚stackã‹ã‚‰å¤–ã—ã¦ã„ã‚‹) 
+static ELF32_PHEADER ph;	// elfã‚»ã‚¯ã‚·ãƒ§ãƒ³ãƒ˜ãƒƒãƒ€	(â€»ãƒ¡ãƒ¢ãƒªä½¿ç”¨é ˜åŸŸç¢ºèªã®ãŸã‚stackã‹ã‚‰å¤–ã—ã¦ã„ã‚‹) 
 
 static int nd_elfload(alt_u32 *entry_addr)
 {
@@ -192,38 +192,38 @@ static int nd_elfload(alt_u32 *entry_addr)
 	DWORD f_pos;
 
 
-	/* elfƒwƒbƒ_ƒtƒ@ƒCƒ‹‚Ìƒ`ƒFƒbƒN */
+	/* elfãƒ˜ãƒƒãƒ€ãƒ•ã‚¡ã‚¤ãƒ«ã®ãƒã‚§ãƒƒã‚¯ */
 
 	if (pf_lseek(0) != FR_OK) return (-1);
 	if (pf_read(&eh, sizeof(ELF32_HEADER), &res_byte) != FR_OK) return (-1);
 
-	if (eh.elf_id[0] != 0x7f ||				// ELFƒwƒbƒ_‚Ìƒ`ƒFƒbƒN 
+	if (eh.elf_id[0] != 0x7f ||				// ELFãƒ˜ãƒƒãƒ€ã®ãƒã‚§ãƒƒã‚¯ 
 			eh.elf_id[1] != 'E' ||
 			eh.elf_id[2] != 'L' ||
 			eh.elf_id[3] != 'F') {
 		return(-2);
 	}
-	if (eh.elf_type != ELF_ET_EXEC) {		// ƒIƒuƒWƒFƒNƒgƒ^ƒCƒv‚Ìƒ`ƒFƒbƒN 
+	if (eh.elf_type != ELF_ET_EXEC) {		// ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚¿ã‚¤ãƒ—ã®ãƒã‚§ãƒƒã‚¯ 
 		return(-2);
 	}
-	if (eh.elf_machine != ELF_EM_NIOS2) {	// ƒ^[ƒQƒbƒgCPU‚Ìƒ`ƒFƒbƒN 
+	if (eh.elf_machine != ELF_EM_NIOS2) {	// ã‚¿ãƒ¼ã‚²ãƒƒãƒˆCPUã®ãƒã‚§ãƒƒã‚¯ 
 		return(-2);
 	}
 
-	*entry_addr = (alt_u32)eh.elf_entry;	// ƒGƒ“ƒgƒŠƒAƒhƒŒƒX‚Ìæ“¾ 
+	*entry_addr = (alt_u32)eh.elf_entry;	// ã‚¨ãƒ³ãƒˆãƒªã‚¢ãƒ‰ãƒ¬ã‚¹ã®å–å¾— 
 
 
-	/* ƒZƒNƒVƒ‡ƒ“ƒf[ƒ^‚ğƒ[ƒh */
+	/* ã‚»ã‚¯ã‚·ãƒ§ãƒ³ãƒ‡ãƒ¼ã‚¿ã‚’ãƒ­ãƒ¼ãƒ‰ */
 
 	f_pos = (DWORD)eh.elf_ehsize;
 	for (phnum=1 ; phnum<=eh.elf_phnum ; phnum++) {
 
-		// Programƒwƒbƒ_‚ğ“Ç‚İ‚Ş 
+		// Programãƒ˜ãƒƒãƒ€ã‚’èª­ã¿è¾¼ã‚€ 
 		if (pf_lseek(f_pos) != FR_OK) return (-1);
 		if (pf_read(&ph, eh.elf_phentsize, &res_byte) != FR_OK) return (-1);
 		f_pos += eh.elf_phentsize;
 
-		// ƒZƒNƒVƒ‡ƒ“ƒf[ƒ^‚ğƒƒ‚ƒŠ‚É“WŠJ 
+		// ã‚»ã‚¯ã‚·ãƒ§ãƒ³ãƒ‡ãƒ¼ã‚¿ã‚’ãƒ¡ãƒ¢ãƒªã«å±•é–‹ 
 		if(ph.p_type == ELF_PT_LOAD && ph.p_filesz > 0) {
 			dgb_printf("- Section %d -----\n",phnum);
 			dgb_printf("  Mem address : 0x%08x\n",(unsigned int)ph.p_vaddr);
@@ -237,7 +237,7 @@ static int nd_elfload(alt_u32 *entry_addr)
 			sec_size = ph.p_filesz;
 
 			while(sec_size > 0) {
-				if (sec_size >= 32768) {		// 32kƒoƒCƒg’PˆÊ‚Å“Ç‚İ‚Ş 
+				if (sec_size >= 32768) {		// 32kãƒã‚¤ãƒˆå˜ä½ã§èª­ã¿è¾¼ã‚€ 
 					load_byte = 32768;
 					sec_size -= 32768;
 				} else {
@@ -258,7 +258,7 @@ static int nd_elfload(alt_u32 *entry_addr)
 }
 
 
-/* elfƒtƒ@ƒCƒ‹‚Ìƒ[ƒh‚ÆÀs */
+/* elfãƒ•ã‚¡ã‚¤ãƒ«ã®ãƒ­ãƒ¼ãƒ‰ã¨å®Ÿè¡Œ */
 
 int main(void)
 {
@@ -267,16 +267,16 @@ int main(void)
 	alt_u32 ledcode=0, entry_addr=0;
 	char *elf_fname;
 
-	SET_7SEGLED(~0x7c5c5c78);					// boot•\¦ 
+	SET_7SEGLED(~0x7c5c5c78);					// bootè¡¨ç¤º 
 	ELFLOADER_LED_OFF();
 
 
-	/* ELFƒtƒ@ƒCƒ‹–¼‚Ìæ“¾ */
+	/* ELFãƒ•ã‚¡ã‚¤ãƒ«åã®å–å¾— */
 
 	elf_fname = ELFLOADER_BOOT_FILE;
 
 
-	/* FatFsƒ‚ƒWƒ…[ƒ‹‰Šú‰» */
+	/* FatFsãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«åˆæœŸåŒ– */
 
 	dgb_printf("\n*** ELF LOADING ***\n");
 	dgb_printf("Disk initialize... ");
@@ -285,13 +285,13 @@ int main(void)
 	if (res != FR_OK) {
 		dgb_printf("fail(%d)",(int)res);
 
-		ledcode = ~0x7950d006;					// ƒfƒBƒXƒN‰Šú‰»ƒGƒ‰[ Err.1 
+		ledcode = ~0x7950d006;					// ãƒ‡ã‚£ã‚¹ã‚¯åˆæœŸåŒ–ã‚¨ãƒ©ãƒ¼ Err.1 
 		goto BOOT_FAILED;
 	}
 	dgb_printf("done.\n");
 
 
-	/* ƒtƒ@ƒCƒ‹‚ğŠJ‚­ */
+	/* ãƒ•ã‚¡ã‚¤ãƒ«ã‚’é–‹ã */
 
 	dgb_printf("Open \"%s\"\n",elf_fname);
 
@@ -299,27 +299,27 @@ int main(void)
 	if (res != FR_OK) {
 		dgb_printf("[!] f_open fail(%d)\n", (int)res);
 
-		ledcode = ~0x7950d05b;					// ƒtƒ@ƒCƒ‹ƒI[ƒvƒ“ƒGƒ‰[ Err.2 
+		ledcode = ~0x7950d05b;					// ãƒ•ã‚¡ã‚¤ãƒ«ã‚ªãƒ¼ãƒ—ãƒ³ã‚¨ãƒ©ãƒ¼ Err.2 
 		goto BOOT_FAILED;
 	}
 
 
-	/* ELFƒtƒ@ƒCƒ‹‚Ì“Ç‚İ‚İ */
+	/* ELFãƒ•ã‚¡ã‚¤ãƒ«ã®èª­ã¿è¾¼ã¿ */
 
 	if (nd_elfload(&entry_addr) != 0) {
 		dgb_printf("[!] elf-file read error.\n");
 
-		ledcode = ~0x7950d04f;					// ƒtƒ@ƒCƒ‹ƒŠ[ƒhƒGƒ‰[ Err.3 
+		ledcode = ~0x7950d04f;					// ãƒ•ã‚¡ã‚¤ãƒ«ãƒªãƒ¼ãƒ‰ã‚¨ãƒ©ãƒ¼ Err.3 
 		goto BOOT_FAILED;
 	}
 
 
-	/* elfƒtƒ@ƒCƒ‹Às */
+	/* elfãƒ•ã‚¡ã‚¤ãƒ«å®Ÿè¡Œ */
 
 	dgb_printf("Entry address : 0x%08x\n",entry_addr);
 	dgb_printf("elf file execute.\n\n");
 
-	SET_7SEGLED(~0x501c5400);					// run•\¦ 
+	SET_7SEGLED(~0x501c5400);					// runè¡¨ç¤º 
 
 	pProc = (void (*)())entry_addr;
 
@@ -328,11 +328,11 @@ int main(void)
 	(*pProc)();
 
 
-	/* ƒu[ƒg¸”s */
+	/* ãƒ–ãƒ¼ãƒˆå¤±æ•— */
 
   BOOT_FAILED:
 	while(1) {
-		SET_7SEGLED(~0);						// ƒGƒ‰[ƒR[ƒh‚ğ“_–Å•\¦ 
+		SET_7SEGLED(~0);						// ã‚¨ãƒ©ãƒ¼ã‚³ãƒ¼ãƒ‰ã‚’ç‚¹æ»…è¡¨ç¤º 
 		ELFLOADER_LED_OFF();
 		mmc_spi_SetTimer(200);
 		while( mmc_spi_CheckTimer() ) {}

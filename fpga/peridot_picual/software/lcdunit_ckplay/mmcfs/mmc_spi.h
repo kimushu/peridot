@@ -1,10 +1,10 @@
 /**************************************************************************
-	MMC/SDƒJ[ƒhSPIƒAƒNƒZƒXƒyƒŠƒtƒFƒ‰ƒ‹
-		ƒfƒoƒCƒXƒTƒ|[ƒgŠÖ” (Cineraria DE0 version)
+	MMC/SDã‚«ãƒ¼ãƒ‰SPIã‚¢ã‚¯ã‚»ã‚¹ãƒšãƒªãƒ•ã‚§ãƒ©ãƒ«
+		ãƒ‡ãƒã‚¤ã‚¹ã‚µãƒãƒ¼ãƒˆé–¢æ•° (Cineraria DE0 version)
 
 	UPDATE	2010/12/11
-			2011/12/24 100us‘Ò‚¿’Ç‰Á(Petit FatFs‘Î‰) 
-			2011/12/28 1stƒŠƒŠ[ƒX”Å 
+			2011/12/24 100uså¾…ã¡è¿½åŠ (Petit FatFså¯¾å¿œ) 
+			2011/12/28 1stãƒªãƒªãƒ¼ã‚¹ç‰ˆ 
  **************************************************************************/
 #ifndef __mmc_spi_h_
 #define __mmc_spi_h_
@@ -13,11 +13,11 @@
 #include <alt_types.h>
 
 
-// MMC_SPIƒyƒŠƒtƒFƒ‰ƒ‹‹ì“®ƒNƒƒbƒN(ƒ†[ƒU[’è‹`) 
+// MMC_SPIãƒšãƒªãƒ•ã‚§ãƒ©ãƒ«é§†å‹•ã‚¯ãƒ­ãƒƒã‚¯(ãƒ¦ãƒ¼ã‚¶ãƒ¼å®šç¾©) 
 //#define mmc_clock_freq          (40000000)
 
 
-/***** ’è”Eƒ}ƒNƒ’è‹` ***************************************************/
+/***** å®šæ•°ãƒ»ãƒã‚¯ãƒ­å®šç¾© ***************************************************/
 
 #ifdef MMCDMA_BASE
  #define _USE_MMCDMA
@@ -58,41 +58,41 @@
 #define mmc_ddmode_freq			(20 * 1000 * 1000)	// DDmode = 20MHz 
 
 
-/***** \‘¢‘Ì’è‹` *********************************************************/
+/***** æ§‹é€ ä½“å®šç¾© *********************************************************/
 
 
 
-/***** ƒvƒƒgƒ^ƒCƒvéŒ¾ ***************************************************/
+/***** ãƒ—ãƒ­ãƒˆã‚¿ã‚¤ãƒ—å®£è¨€ ***************************************************/
 
-/* MMCƒ\ƒPƒbƒgƒCƒ“ƒ^[ƒtƒF[ƒX‰Šú‰» */
+/* MMCã‚½ã‚±ãƒƒãƒˆã‚¤ãƒ³ã‚¿ãƒ¼ãƒ•ã‚§ãƒ¼ã‚¹åˆæœŸåŒ– */
 void mmc_spi_InitSocket(void);
 
-/* MMC SPIƒNƒƒbƒNİ’è */
+/* MMC SPIã‚¯ãƒ­ãƒƒã‚¯è¨­å®š */
 void mmc_spi_SetIdentClock(void);
 void mmc_spi_SetTransClock(void);
 
-/* MMC ƒ^ƒCƒ€ƒAƒEƒgƒJƒEƒ“ƒ^İ’è */
+/* MMC ã‚¿ã‚¤ãƒ ã‚¢ã‚¦ãƒˆã‚«ã‚¦ãƒ³ã‚¿è¨­å®š */
 void mmc_spi_Wait100us(void);
 void mmc_spi_SetTimer(const alt_u32);
 int mmc_spi_CheckTimer(void);
 
-/* ƒJ[ƒh‘}“üó‘ÔŒŸo */
+/* ã‚«ãƒ¼ãƒ‰æŒ¿å…¥çŠ¶æ…‹æ¤œå‡º */
 int mmc_spi_CheckCardDetect(void);
 
-/* ƒJ[ƒhƒ‰ƒCƒgƒvƒƒeƒNƒgƒXƒCƒbƒ`ó‘ÔŒŸo */
+/* ã‚«ãƒ¼ãƒ‰ãƒ©ã‚¤ãƒˆãƒ—ãƒ­ãƒ†ã‚¯ãƒˆã‚¹ã‚¤ãƒƒãƒçŠ¶æ…‹æ¤œå‡º */
 int mmc_spi_CheckWritePortect(void);
 
-/* MMC CS§Œä */
+/* MMC CSåˆ¶å¾¡ */
 void mmc_spi_SetCardSelect(void);
 void mmc_spi_SetCardDeselect(void);
 
-/* MMC‚Ö1ƒoƒCƒg‘—M */
+/* MMCã¸1ãƒã‚¤ãƒˆé€ä¿¡ */
 void mmc_spi_Sendbyte(alt_u8);
 
-/* MMC‚©‚ç1ƒoƒCƒgóM */
+/* MMCã‹ã‚‰1ãƒã‚¤ãƒˆå—ä¿¡ */
 alt_u8 mmc_spi_Recvbyte(void);
 
-/* MMC‚©‚çw’èƒoƒCƒgóM(2`512ƒoƒCƒg) */
+/* MMCã‹ã‚‰æŒ‡å®šãƒã‚¤ãƒˆå—ä¿¡(2ï½512ãƒã‚¤ãƒˆ) */
 #ifdef _USE_MMCDMA
 int mmc_spi_DmaRecv(alt_u8, alt_u8 *);
 #endif

@@ -1,33 +1,33 @@
 #=================================================
-#  ACM�f�R�[�h�֐�
+#  ACMデコード関数
 #     Cineraria PIXELSIMD custom instruction ver.
 #
-#  2009/01/30 : miki�R�A�p�쐬(TOURMALINE)
-#  2009/07/23 : kotori�R�A�p�C��(GREENBERYL)
-#  2010/12/17 : cineraria�R�A�p�C��(DE0)
-#  2014/04/28 : NiosII SBT 13.1�Ή��C��
+#  2009/01/30 : mikiコア用作成(TOURMALINE)
+#  2009/07/23 : kotoriコア用修正(GREENBERYL)
+#  2010/12/17 : cinerariaコア用修正(DE0)
+#  2014/04/28 : NiosII SBT 13.1対応修正
 #=================================================
 
 #====================================
-#  �R���t�B�O���[�V����
+#  コンフィグレーション
 #====================================
 
-	.equ ALT_CI_PIXELSIMD_N,			0	# PIXELSIMD�J�X�^�����߂�����ꍇ�ɖ��߃R�[�h��ݒ肷�� 
+	.equ ALT_CI_PIXELSIMD_N,			0	# PIXELSIMDカスタム命令がある場合に命令コードを設定する 
 
-#	.equ ALT_CI_YUV_DECODE_INST_N,		0	# YUV_DECODE�J�X�^�����߂�����ꍇ�ɖ��߃R�[�h��ݒ肷�� 
+#	.equ ALT_CI_YUV_DECODE_INST_N,		0	# YUV_DECODEカスタム命令がある場合に命令コードを設定する 
 
-#	.equ ALT_CI_CUSTOM_SATSAL_INST_N,	0	# CUSTOM_SATSAL�J�X�^�����߂�����ꍇ�ɖ��߃R�[�h��ݒ肷�� 
+#	.equ ALT_CI_CUSTOM_SATSAL_INST_N,	0	# CUSTOM_SATSALカスタム命令がある場合に命令コードを設定する 
 
-#	.equ ALT_AVALON_ONCHIP_MEMORY,		0	# ��ƕϐ���onchip_memory�Z�N�V�����Ƀ}�b�s���O����ꍇ�ɐݒ肷�� 
+#	.equ ALT_AVALON_ONCHIP_MEMORY,		0	# 作業変数をonchip_memoryセクションにマッピングする場合に設定する 
 
-#	.equ SUBPIXEL_ALIGN_BGR,			0	# VRAM�̐F���т�BGR�̏ꍇ�ɐݒ肷��(�f�t�H���g��RGB)
+#	.equ SUBPIXEL_ALIGN_BGR,			0	# VRAMの色並びがBGRの場合に設定する(デフォルトはRGB)
 
-#	.equ VRAM_LINE_PIXEL_LENGTH,		512	# VRAM�̂P���C���̃s�N�Z������ݒ肷��(�f�t�H���g��1024)
+#	.equ VRAM_LINE_PIXEL_LENGTH,		512	# VRAMの１ラインのピクセル数を設定する(デフォルトは1024)
 
 
 
 #====================================
-#  �J�X�^�����ߐݒ�
+#  カスタム命令設定
 #====================================
 
 	.ifdef ALT_CI_PIXELSIMD_N
@@ -56,11 +56,11 @@
 
 
 #====================================
-#  �ϐ�
+#  変数
 #====================================
 
 	.ifndef VRAM_LINE_PIXEL_LENGTH
-		linepixelsize = 1024		# �t���[���o�b�t�@�̃��C���s�N�Z���� 
+		linepixelsize = 1024		# フレームバッファのラインピクセル数 
 	.else
 		linepixelsize = VRAM_LINE_PIXEL_LENGTH
 	.endif
@@ -82,12 +82,12 @@
 	val_size	= (tvu_top + (16*2))
 
 
-	uvindex_0	= (  0*2 )			# �����l�f�[�^(UV�e�[�u���C���f�b�N�X) 
+	uvindex_0	= (  0*2 )			# 初期値データ(UVテーブルインデックス) 
 	uvindex_1	= (  2*2 )
 	uvindex_2	= (  8*2 )
 	uvindex_3	= ( 10*2 )
 
-	vramoffs_0	= ( (0*linepixelsize+0)*2 )	# �����l�f�[�^(VRAM�I�t�Z�b�g) 
+	vramoffs_0	= ( (0*linepixelsize+0)*2 )	# 初期値データ(VRAMオフセット) 
 	vramoffs_1	= ( (0*linepixelsize+4)*2 )
 	vramoffs_2	= ( (4*linepixelsize+0)*2 )
 	vramoffs_3	= ( (4*linepixelsize+4)*2 )
@@ -103,10 +103,10 @@
 
 
 #====================================
-#  �}�N���錾
+#  マクロ宣言
 #====================================
 
-	.macro	YUV_DECODE 					# �f�R�[�h���߃u�����` 
+	.macro	YUV_DECODE 					# デコード命令ブランチ 
 	.ifdef YUV_DECODE_INSTRUCTION_N
 		custom	YUV_DECODE_INSTRUCTION_N, r2, r8, r9
 	.else
@@ -114,7 +114,7 @@
 	.endif
 	.endm
 
-	.macro	SUADD reg1, reg2, reg3		# 8bit�O�a���Z���߃u�����` 
+	.macro	SUADD reg1, reg2, reg3		# 8bit飽和加算命令ブランチ 
 	.ifdef SUADD_INSTRUCTION_N
 		custom	SUADD_INSTRUCTION_N, \reg1, \reg1, \reg2
 	.else
@@ -125,7 +125,7 @@
 	.endif
 	.endm
 
-	.macro	SLLOR reg1, reg2, reg3		# ���]���r�b�g�A�����߃u�����` 
+	.macro	SLLOR reg1, reg2, reg3		# 式評価ビット連結命令ブランチ 
 	.ifdef SLLOR_INSTRUCTION_N
 		custom	SLLOR_INSTRUCTION_N, \reg1, \reg2, \reg3
 	.else
@@ -136,7 +136,7 @@
 	.endm
 
 
-	.macro	SATZ reg1, reg3				# �w�����l�ƃ[���ŖO�a����AND(�����t)
+	.macro	SATZ reg1, reg3				# 指定上限値とゼロで飽和してAND(符号付)
 		ble		\reg1, \reg3, __satz_macro_le_\@
 		mov		\reg1, \reg3
 		br		__satz_macro_end_\@
@@ -151,17 +151,17 @@
 
 
 #====================================
-#  �l�b�t�f�R�[�h
+#  ＭＣＵデコード
 #====================================
 
-# r4 *pMCU		: MCU�̐擪�|�C���^ 
-# r5 *pVRAM		: �W�J���VRAM�|�C���^ 
-# r6 *pREF		: �t���[���Q�Ɛ��VRAM�|�C���^ 
-# r2			: MCU�̃��[�h�� 
+# r4 *pMCU		: MCUの先頭ポインタ 
+# r5 *pVRAM		: 展開先のVRAMポインタ 
+# r6 *pREF		: フレーム参照先のVRAMポインタ 
+# r2			: MCUのワード数 
 
-# r4			: DCB�|�C���^(�������p)
-# r5			: �����i�[�A����уA�h���X�|�C���^�ėp 
-# r6			: �t���[���Q�ƃA�h���X�|�C���^ 
+# r4			: DCBポインタ(引数兼用)
+# r5			: 引数格納、およびアドレスポインタ汎用 
+# r6			: フレーム参照アドレスポインタ 
 # r8			: tmp
 # r9			: tmp
 # r10			: tmp
@@ -171,9 +171,9 @@
 # r14			: tmp
 # r15			: tmp
 
-# r20			: Y�u���b�N�J�E���^ 
-# r21			: pVRAM�|�C���^(r5�R�s�[)
-# r22			: �ϐ��|�C���^(�����������Q��)
+# r20			: Yブロックカウンタ 
+# r21			: pVRAMポインタ(r5コピー)
+# r22			: 変数ポインタ(内部メモリ参照)
 
 	.section .text
 
@@ -197,31 +197,31 @@ nd_acm_mcudecode_asm:
 		movhi	r22, %hi(__nram_workmemory)
 		ori		r22, r22, %lo(__nram_workmemory)
 	.endif
-									# r22 = �ϐ��̈�|�C���^ 
+									# r22 = 変数領域ポインタ 
 
-	ldhu	r2, 0(r4)				# MCU�X�L�b�v�R�[�h�̃`�F�b�N 
+	ldhu	r2, 0(r4)				# MCUスキップコードのチェック 
 	ori		r8, zero, 0xffff
 	beq		r2, r8, __mcu_skip_block
 
 
 	mov		r21, r5					# r21 = pVRAM_top
 
-	movi	r6, 2					# r6 : �W�J�o�C�g�A���C�����g 
+	movi	r6, 2					# r6 : 展開バイトアライメント 
 	addi	r5, r22, tvu_top
-	call _nd_acm_dcbdecode			# U�����̃f�R�[�h 
+	call _nd_acm_dcbdecode			# U成分のデコード 
 	add		r4, r4, r2
 
 	addi	r5, r22, tvu_top + 1
-	call _nd_acm_dcbdecode			# V�����̃f�R�[�h 
+	call _nd_acm_dcbdecode			# V成分のデコード 
 	add		r4, r4, r2
 
 
-	ldbu	r2, 0(r4)				# �k��Y�u���b�N�̃`�F�b�N 
+	ldbu	r2, 0(r4)				# 縮小Yブロックのチェック 
 	movi	r8, 0x05
 	andi	r2, r2, 0x07
 	beq		r2, r8, __mcu_reduced_yblock
 
-	movhi	r8, vramoffs_0			# index�e�[�u�������� 
+	movhi	r8, vramoffs_0			# indexテーブル初期化 
 	ori		r8, r8, uvindex_0
 	stw		r8, (index_top + 0)(r22)
 	movhi	r8, vramoffs_1
@@ -235,25 +235,25 @@ nd_acm_mcudecode_asm:
 	stw		r8, (index_top + 12)(r22)
 
 
- __mcu_normal_yblock:				### Y�u���b�N�̃f�R�[�h ###
-	movi	r6, 1						# r6  : �W�J�o�C�g�A���C�����g 
-	mov		r20, zero					# r20 : ���[�v�J�E���^ 
+ __mcu_normal_yblock:				### Yブロックのデコード ###
+	movi	r6, 1						# r6  : 展開バイトアライメント 
+	mov		r20, zero					# r20 : ループカウンタ 
 
   __decode_y_loop:
 	movi	r10, 16
 	beq		r20, r10, __mcu_decode_exit
 
 	addi	r5, r22, ty_top
-	call _nd_acm_dcbdecode				# Y�����̃f�R�[�h 
+	call _nd_acm_dcbdecode				# Y成分のデコード 
 	add		r4, r4, r2
 
 	add		r8, r20, r22
-	ldhu	r11, (index_top + 0)(r8)	# UV�C���f�b�N�X�I�t�Z�b�g 
+	ldhu	r11, (index_top + 0)(r8)	# UVインデックスオフセット 
 	add		r11, r11, r22
-	ldhu	r12, (index_top + 2)(r8)	# VRAM�I�t�Z�b�g 
+	ldhu	r12, (index_top + 2)(r8)	# VRAMオフセット 
 	add		r12, r12, r21
 
-	ldhu	r8, (ty_top + 0)(r22)		#�P���C���� 
+	ldhu	r8, (ty_top + 0)(r22)		#１ライン目 
 	ldhu	r9, (tvu_top + 0*2)(r11)
 	YUV_DECODE
 	stw		r2, ((0*linepixelsize+0)*2)(r12)
@@ -262,7 +262,7 @@ nd_acm_mcudecode_asm:
 	YUV_DECODE
 	stw		r2, ((0*linepixelsize+2)*2)(r12)
 
-	ldhu	r8, (ty_top + 4)(r22)		#�Q���C���� 
+	ldhu	r8, (ty_top + 4)(r22)		#２ライン目 
 	ldhu	r9, (tvu_top + 0*2)(r11)
 	YUV_DECODE
 	stw		r2, ((1*linepixelsize+0)*2)(r12)
@@ -271,7 +271,7 @@ nd_acm_mcudecode_asm:
 	YUV_DECODE
 	stw		r2, ((1*linepixelsize+2)*2)(r12)
 
-	ldhu	r8, (ty_top + 8)(r22)		#�R���C���� 
+	ldhu	r8, (ty_top + 8)(r22)		#３ライン目 
 	ldhu	r9, (tvu_top + 4*2)(r11)
 	YUV_DECODE
 	stw		r2, ((2*linepixelsize+0)*2)(r12)
@@ -280,7 +280,7 @@ nd_acm_mcudecode_asm:
 	YUV_DECODE
 	stw		r2, ((2*linepixelsize+2)*2)(r12)
 
-	ldhu	r8, (ty_top + 12)(r22)		#�S���C���� 
+	ldhu	r8, (ty_top + 12)(r22)		#４ライン目 
 	ldhu	r9, (tvu_top + 4*2)(r11)
 	YUV_DECODE
 	stw		r2, ((3*linepixelsize+0)*2)(r12)
@@ -293,10 +293,10 @@ nd_acm_mcudecode_asm:
 	br		__decode_y_loop
 
 
- __mcu_reduced_yblock:				### �k��Y�u���b�N�̃f�R�[�h ###
-	movi	r6, 1						# r6  : �W�J�o�C�g�A���C�����g 
+ __mcu_reduced_yblock:				### 縮小Yブロックのデコード ###
+	movi	r6, 1						# r6  : 展開バイトアライメント 
 	addi	r5, r22, ty_top
-	call _nd_acm_dcbdecode				# Y�����̃f�R�[�h 
+	call _nd_acm_dcbdecode				# Y成分のデコード 
 	add		r4, r4, r2
 
 	mov		r11, r22
@@ -305,7 +305,7 @@ nd_acm_mcudecode_asm:
   __decode_yr_loop:
 	beq		r11, r12, __mcu_decode_exit
 
-	ldbu	r2, (ty_top + 0)(r11)		#�P���C�����̊g�又�� 
+	ldbu	r2, (ty_top + 0)(r11)		#１ライン分の拡大処理 
 	slli	r8, r2, 8
 	or		r8, r8, r2
 	ldhu	r9, (tvu_top + 0*2)(r22)
@@ -343,10 +343,10 @@ nd_acm_mcudecode_asm:
 	br		__decode_yr_loop
 
 
- __mcu_skip_block:					### MCU�X�L�b�v�R�[�h�̏��� ###
+ __mcu_skip_block:					### MCUスキップコードの処理 ###
 	addi	r9, r5, ((8*linepixelsize+0)*2)
 
-  __pixel_trans_loop:					# 1���C��(8�s�N�Z��)���R�s�[ 
+  __pixel_trans_loop:					# 1ライン(8ピクセル)をコピー 
 	ldw		r15, (0*2)(r6)
 	stw		r15, (0*2)(r5)
 	ldw		r15, (2*2)(r6)
@@ -379,7 +379,7 @@ nd_acm_mcudecode_asm:
 	ldw		r22, 24(sp)
 
 	sub		r2, r2, r4
-	srli	r2, r2, 1				# �Ԃ�l��mcu_n���Z�b�g
+	srli	r2, r2, 1				# 返り値にmcu_nをセット
 	addi	sp, sp, 28
 
 	ret
@@ -387,20 +387,20 @@ nd_acm_mcudecode_asm:
 
 
 #====================================
-#  �c�b�a�f�R�[�h
+#  ＤＣＢデコード
 #====================================
 
-# r4  *pDCB		: DCB�̐擪�|�C���^ 
-# r5  *pQ		: �W�J��|�C���^ 
-# r6			: �W�J�o�C�g�A���C�����g�� 
-# r2			: DCB�̃f�[�^�o�C�g�� 
+# r4  *pDCB		: DCBの先頭ポインタ 
+# r5  *pQ		: 展開先ポインタ 
+# r6			: 展開バイトアライメント数 
+# r2			: DCBのデータバイト数 
 
-# r22			: �ϐ��̈�̐擪�|�C���^ 
+# r22			: 変数領域の先頭ポインタ 
 
 # r8			: tmp, s
 # r9			: tmp, loop
 # r10			: tmp, *pQ
-# r11			: ���g�p
+# r11			: 未使用
 # r12			: c2
 # r13			: c1
 # r14			: c0
@@ -435,7 +435,7 @@ _nd_acm_dcbdecode:
 __3bit_coding:
 	ldhu	r12, 6(r4)				# r12 = c2
 
-	andi	r8, r15, 0xf8			### 3bit-coding �f�R�[�h�e�[�u���̍쐬 ###
+	andi	r8, r15, 0xf8			### 3bit-coding デコードテーブルの作成 ###
 	srli	r8, r8, 3
 	addi	r8, r8, 1				# r8 = ((mode & 0xf8) >> 3) + 1
 	srli	r15, r15, 8				# r15 = p
@@ -459,10 +459,10 @@ __3bit_coding:
 
 
 	mov		r10, r5					# r10 = pQ
-	movi	r8, 1					# r8 : �r�b�g�}�X�N 
-	movhi	r9, 1					# r9 : �I���r�b�g (1<<16 ���Z�b�g���Ă���)
+	movi	r8, 1					# r8 : ビットマスク 
+	movhi	r9, 1					# r9 : 終了ビット (1<<16 をセットしている)
 
-  __3bit_coding_loop:				### 3bit-coding �f�R�[�h���[�v ###
+  __3bit_coding_loop:				### 3bit-coding デコードループ ###
 	and		r15, r12, r8
 	cmpne	r2, r15, zero
 	and		r15, r13, r8
@@ -483,7 +483,7 @@ __3bit_coding:
 
 
 __2bit_coding:
-	andi	r2, r15, 0x80			### 2bit-coding �f�R�[�h�e�[�u���̍쐬 ###
+	andi	r2, r15, 0x80			### 2bit-coding デコードテーブルの作成 ###
 	beq		r2, zero, __2bit_coding_table_1
 	andi	r2, r15, 0x40
 	beq		r2, zero, __2bit_coding_table_2
@@ -508,7 +508,7 @@ __2bit_coding:
   __2bit_coding_table_exit:
 	mov		r9, r8
 
-	andi	r2, r15, 0x02			# i==1���̃X�e�b�v�l������ 
+	andi	r2, r15, 0x02			# i==1時のステップ値を決定 
 	beq		r2, zero, __2bit_liner_coding:
 	slli	r9, r8, 1
 	add		r9, r9, r8				# r9 = s*3
@@ -526,10 +526,10 @@ __2bit_coding:
 
 
 	mov		r10, r5					# r10 = pQ
-	movi	r8, 1					# r8 : �r�b�g�}�X�N 
-	movhi	r9, 1					# r9 : �I���r�b�g (1<<16 ���Z�b�g���Ă���)
+	movi	r8, 1					# r8 : ビットマスク 
+	movhi	r9, 1					# r9 : 終了ビット (1<<16 をセットしている)
 
-  __2bit_coding_loop:				### 2bit-coding �f�R�[�h���[�v ###
+  __2bit_coding_loop:				### 2bit-coding デコードループ ###
 	and		r15, r13, r8
 	cmpne	r2, r15, zero
 	and		r15, r14, r8
@@ -548,7 +548,7 @@ __2bit_coding:
 
 
 __1bit_coding:
-	andi	r2, r15, 0x80			### 1bit-coding �f�R�[�h�e�[�u���̍쐬 ###
+	andi	r2, r15, 0x80			### 1bit-coding デコードテーブルの作成 ###
 	beq		r2, zero, __1bit_coding_table_1
 	andi	r2, r15, 0x40
 	beq		r2, zero, __1bit_coding_table_2
@@ -576,20 +576,20 @@ __1bit_coding:
 	SUADD	r8, r15, r10			# r8  = s
 
 	mov		r10, r5					# r10 = pQ
-	movi	r12, 1					# r12 : �r�b�g�}�X�N 
-	movhi	r9, 1					# r9  : �I���r�b�g (1<<16 ���Z�b�g���Ă���)
+	movi	r12, 1					# r12 : ビットマスク 
+	movhi	r9, 1					# r9  : 終了ビット (1<<16 をセットしている)
 
-  __1bit_coding_loop:				### 1bit-coding �f�R�[�h���[�v ###
+  __1bit_coding_loop:				### 1bit-coding デコードループ ###
 	beq		r12, r9, __1bit_coding_loop_exit
 	and		r2, r14, r12
 	slli	r12, r12, 1
 
 	bne		r2, zero, __1bit_code_br1
-	stb		r15, 0(r10)				# cy == 0�̎� r15(p)
+	stb		r15, 0(r10)				# cy == 0の時 r15(p)
 	add		r10, r10, r6
 	br		__1bit_coding_loop
   __1bit_code_br1:
-	stb		r8, 0(r10)				# cy == 1�̎� r8(s)
+	stb		r8, 0(r10)				# cy == 1の時 r8(s)
 	add		r10, r10, r6
 	br		__1bit_coding_loop
 
@@ -604,7 +604,7 @@ __0bit_coding:
 	mov		r10, r5					# r10 = pQ
 	movi	r8, 16
 
-  __0bit_coding_loop:				### 0bit-coding �f�R�[�h���[�v(4��A�����[��) ###
+  __0bit_coding_loop:				### 0bit-coding デコードループ(4回アンロール) ###
 	stb		r15, 0(r10)
 	add		r10, r10, r6
 	stb		r15, 0(r10)
@@ -626,7 +626,7 @@ __raw_data:
 	mov		r8, r4					# r8  = pDCM
 	addi	r9, r4, 16				# r9  = pDCM + 16
 
-  __raw_data_loop:					### ���f�[�^�]�����[�v(4��A�����[��) ###
+  __raw_data_loop:					### 生データ転送ループ(4回アンロール) ###
 	ldbu	r2, 2(r8)
 	stb		r2, 0(r10)
 	add		r10, r10, r6
@@ -649,18 +649,18 @@ __raw_data:
 
 
 #====================================
-#  YUV�f�R�[�h���߃G�~�����[�V����
+#  YUVデコード命令エミュレーション
 #====================================
 
-# r8  y0,y1		: �P�x���� ( (Y1<<8) | Y0 ) 
-# r9  u,v		: �F������ ( ((V+128)<<8) | (U+128) )
-# r2			: �s�N�Z���f�[�^�Ԓl ( (PIX1<<16) | PIX0 )
+# r8  y0,y1		: 輝度成分 ( (Y1<<8) | Y0 ) 
+# r9  u,v		: 色差成分 ( ((V+128)<<8) | (U+128) )
+# r2			: ピクセルデータ返値 ( (PIX1<<16) | PIX0 )
 
-# r5			: ����}�X�N 
+# r5			: 上限マスク 
 # r10			: tmp, V
-# r13			: tmp, B-Y����
-# r14			: tmp, R-Y����
-# r15			: tmp, G-Y����
+# r13			: tmp, B-Y成分
+# r14			: tmp, R-Y成分
+# r15			: tmp, G-Y成分
 
 
 .ifdef DECODE_INSTRUCTION_EMULATE
@@ -668,9 +668,9 @@ _yuv_decode_emulation:
 
 	srli	r10, r9, 8
 	andi	r10, r10, 0xff
-	addi	r10, r10, -128			# r10 = V���� 
+	addi	r10, r10, -128			# r10 = V成分 
 	andi	r9, r9, 0xff
-	addi	r9, r9, -128			# r9  = U���� 
+	addi	r9, r9, -128			# r9  = U成分 
 
 	mov		r14, r10
 	slli	r10, r10, 1
@@ -690,7 +690,7 @@ _yuv_decode_emulation:
 	add		r15, r15, r10			# r15 = 0_1011_0111(183) * V
 	slli	r10, r10, 1
 
-	add		r14, r14, r10			# r14 = 1_0110_0111(359) * V : R-Y���� 
+	add		r14, r14, r10			# r14 = 1_0110_0111(359) * V : R-Y成分 
 
 
 	slli	r9, r9, 1
@@ -709,11 +709,11 @@ _yuv_decode_emulation:
 	add		r13, r13, r9
 	slli	r9, r9, 1
 
-	add		r13, r13, r9			# r13 = 1_1100_0110(454) * U : B-Y���� 
+	add		r13, r13, r9			# r13 = 1_1100_0110(454) * U : B-Y成分 
 
 
 	sub		r15, zero, r15
-	sub		r15, r15, r10			# r15 = -183 * V - 88 * U    : G-Y���� 
+	sub		r15, r15, r10			# r15 = -183 * V - 88 * U    : G-Y成分 
 
 
 	andi	r9, r8, 0xff
@@ -761,7 +761,7 @@ _yuv_decode_emulation:
 
   .else
 	_satsal_emulation:
-	ori		r5, zero, 0xf800		# �������уr�b�g�}�X�N 
+	ori		r5, zero, 0xf800		# 上限およびビットマスク 
 
 	add		r2, r15, r9				# G0
 	SATZ	r2, r5
@@ -816,48 +816,48 @@ _yuv_decode_emulation:
 	.endfunc
 
 /*
- ���l�b�t�t�H�[�}�b�g
+ ●ＭＣＵフォーマット
 
-  �P�̂l�b�t�łW���W�s�N�Z����RGB888�f�[�^��\������
-  �f�[�^��YUV420�܂���1/4�k����YUV444�`���Ŋi�[�����
-
-
- �E�l�b�t�X�L�b�v
-
-	+---------------+
-	|    0xffff     |  -- DCB1���X�L�b�v�R�[�h�̏ꍇ�͂l�b�t�W�J�Ȃ�
-	+---------------+
-
-    ���̃R�[�h��MCU�擪(DCB1)�ɂ������ꍇ�́A�Q�ƃt���[���̊Y����f�f�[�^��
-	���̂܂܎g�p����B
+  １個のＭＣＵで８ｘ８ピクセルのRGB888データを表現する
+  データはYUV420または1/4縮小のYUV444形式で格納される
 
 
- �E�k���l�b�t
-
-  1/4�T�C�Y��RGB888�f�[�^��YUV444�ɕϊ����A16�̃f�[�^���ƂɂR��DCB�Ɋi�[����
-  DCB3�̃w�b�_��2bit reduced encoding�̏ꍇ�̂ݗL��
+ ・ＭＣＵスキップ
 
 	+---------------+
-	|   DCB1 (U)    |   --+ 8x8�s�N�Z����1/4�k������YUV444�������Ă��� 
+	|    0xffff     |  -- DCB1がスキップコードの場合はＭＣＵ展開なし
+	+---------------+
+
+    このコードがMCU先頭(DCB1)にあった場合は、参照フレームの該当画素データを
+	そのまま使用する。
+
+
+ ・縮小ＭＣＵ
+
+  1/4サイズのRGB888データをYUV444に変換し、16個のデータごとに３個のDCBに格納する
+  DCB3のヘッダが2bit reduced encodingの場合のみ有効
+
+	+---------------+
+	|   DCB1 (U)    |   --+ 8x8ピクセルを1/4縮小したYUV444が入っている 
 	+---------------+     |
 	|   DCB2 (V)    |     |      +----+  +----+  +----+
 	+---------------+     |      | Yr |  | U  |  | V  |
 	|   DCB3 (Yr)   |   --+      +----+  +----+  +----+
 	+---------------+
 
-    DCB3���k���x�����R�[�h�̏ꍇ�i2bit reduced encoding�̏ꍇ�j
-	DCB3���c���Q�{�Ɉ������΂���8x8�s�N�Z���𕜌�����B
-	�������ɕ�Ԃ������邱�Ƃ��]�܂������A�����\�͂�����Ȃ��ꍇ�͒P���g��ł��悢�B
+    DCB3が縮小Ｙ成分コードの場合（2bit reduced encodingの場合）
+	DCB3を縦横２倍に引き延ばして8x8ピクセルを復元する。
+	復元時に補間をかけることが望ましいが、処理能力が足りない場合は単純拡大でもよい。
 
 
- �E�m�[�}���l�b�t
+ ・ノーマルＭＣＵ
 
-  RGB888�f�[�^��YUV420�Ԉ������s���A16�̃f�[�^���ƂɂU��DCB�Ɋi�[����
+  RGB888データはYUV420間引きを行い、16個のデータごとに６個のDCBに格納する
 
 	+---------------+
 	|   DCB1 (U)    |   --+
 	+---------------+     |
-	|   DCB2 (V)    |     | 8x8�s�N�Z����YUV420�Ԉ����������̂������Ă��� 
+	|   DCB2 (V)    |     | 8x8ピクセルをYUV420間引きしたものが入っている 
 	+---------------+     |
 	|   DCB3 (Y0)   |     |      +----+----+  +----+  +----+
 	+---------------+     |      | Y0 | Y1 |  | U  |  | V  |
@@ -869,21 +869,21 @@ _yuv_decode_emulation:
 	+---------------+
 
 
- ����f�ϊ�
+ ●画素変換
 
-  YUV��RGB�̕ϊ����͉��L�̒ʂ�
-  DCB�̃f�R�[�h�f�[�^��0�`255�͈̔͂ƂȂ邽�߁AU��V�ɂ�-128�̃I�t�Z�b�g������
+  YUV→RGBの変換式は下記の通り
+  DCBのデコードデータは0～255の範囲となるため、UとVには-128のオフセットをつける
 
-	Y =    0�`255
-	U = -128�`127
-	V = -128�`127
+	Y =    0～255
+	U = -128～127
+	V = -128～127
 
 	R = 1.000Y          + 1.402V
 	G = 1.000Y - 0.344U - 0.714V
 	B = 1.000Y + 1.772U
 
 
-  �s�N�Z���̃G���R�[�h��RGB555�ŁA�r�b�g�t�H�[�}�b�g�͉��L�̒ʂ�
+  ピクセルのエンコードはRGB555で、ビットフォーマットは下記の通り
 
   bit15                                            0
 	+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
@@ -891,36 +891,36 @@ _yuv_decode_emulation:
 	+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
 
 
- ���c�b�a�t�H�[�}�b�g
+ ●ＤＣＢフォーマット
 
- �EMCU skipcode
+ ・MCU skipcode
 	+---------------+---------------+
 	|      0xff     |      0xff     |
 	+---------------+---------------+
 
-	MCU�擪(U����)�̂ݎg�p�\�BU������DCB�ɂ��̃R�[�h���ݒ肳��Ă����ꍇ�A
-	MCU�͂��̃R�[�h�݂̂ŏI�����摜�f�[�^�̓t���[���Q�Ɛ悩��]������B
+	MCU先頭(U成分)のみ使用可能。U成分のDCBにこのコードが設定されていた場合、
+	MCUはこのコードのみで終了し画像データはフレーム参照先から転送する。
 
 
- �E0bit encoding
+ ・0bit encoding
 	+---------------+---------------+
 	|       p       |        0      |
 	+---------------+---------------+
 
 
- �E1bit encoding
+ ・1bit encoding
 	+---------------+-------------+-+
 	|       p       |      n      |0|
 	+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 	|              c0               |
 	+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
-	n =	0x01 �` 0x3f : s =  +2 �`  +64 (n+1)
-		0x40 �` 0x5f :     +66 �` +128 (n*2+66)
-		0x60 �` 0x7f :    +131 �` +255 (n*4+131)
+	n =	0x01 ～ 0x3f : s =  +2 ～  +64 (n+1)
+		0x40 ～ 0x5f :     +66 ～ +128 (n*2+66)
+		0x60 ～ 0x7f :    +131 ～ +255 (n*4+131)
 
 
- �E2bit encoding
+ ・2bit encoding
 	+---------------+---------+---+-+
 	|       p       |    n    | r |1|
 	+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
@@ -929,23 +929,23 @@ _yuv_decode_emulation:
 	|              c1               |
 	+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
-	n =	0x00 �` 0x0f : s =  +1 �` +16 (n+1)
-		0x10 �` 0x17 :     +18 �` +32 (n*2+18)
-		0x18 �` 0x1f :     +35 �` +63 (n*4+35)
+	n =	0x00 ～ 0x0f : s =  +1 ～ +16 (n+1)
+		0x10 ～ 0x17 :     +18 ～ +32 (n*2+18)
+		0x18 ～ 0x1f :     +35 ～ +63 (n*4+35)
 
-	r = 00 : �m�[�}��DCB / ���j�A�X�e�b�s���O 
+	r = 00 : ノーマルDCB / リニアステッピング 
 			p0 <s> p1 <s> p2 <s> p3
 
-		01 : �m�[�}��DCB / �m�����j�A�X�e�b�s���O 
+		01 : ノーマルDCB / ノンリニアステッピング 
 			p0 <s> p1 <s*3> p2 <s> p3
 
-		10 : �k��Y����DCB / ���j�A�X�e�b�s���O 
-			 DCB3�ł̂ݗL���A����ȊO�̓m�[�}��DCB�Ƃ݂Ȃ����
+		10 : 縮小Y成分DCB / リニアステッピング 
+			 DCB3でのみ有効、それ以外はノーマルDCBとみなされる
 
-		11 : 3bit encoding�w�� / ���j�A�X�e�b�s���O 
+		11 : 3bit encoding指定 / リニアステッピング 
 
 
- �E3bit encoding
+ ・3bit encoding
 	+---------------+---------+---+-+
 	|       p       |    n    |1 1|1|
 	+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
@@ -956,13 +956,13 @@ _yuv_decode_emulation:
 	|              c2               |
 	+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
-	n = 0x00 �` 0x1f : s = +1 �` +32 (n+1)
+	n = 0x00 ～ 0x1f : s = +1 ～ +32 (n+1)
 
-		���j�A�X�e�b�s���O
+		リニアステッピング
 			p0 <s> p1 <s> p2 <s> p3 <s> p4 <s> p5 <s> p6 <s> p7
 
 
- �Eraw data
+ ・raw data
 	+---------------+---------------+
 	|      0xfe     |      0xff     |
 	+---------------+---------------+

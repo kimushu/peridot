@@ -1,9 +1,9 @@
 /**************************************************************************
-	MMC/SDƒJ[ƒhSPIƒAƒNƒZƒXƒyƒŠƒtƒFƒ‰ƒ‹
-		ƒtƒ@ƒCƒ‹ƒTƒuƒVƒXƒeƒ€EƒfƒoƒCƒXƒhƒ‰ƒCƒoŠÖ” (NiosII HAL version)
+	MMC/SDã‚«ãƒ¼ãƒ‰SPIã‚¢ã‚¯ã‚»ã‚¹ãƒšãƒªãƒ•ã‚§ãƒ©ãƒ«
+		ãƒ•ã‚¡ã‚¤ãƒ«ã‚µãƒ–ã‚·ã‚¹ãƒ†ãƒ ãƒ»ãƒ‡ãƒã‚¤ã‚¹ãƒ‰ãƒ©ã‚¤ãƒé–¢æ•° (NiosII HAL version)
 
-		UPDATE	2011/12/10 : ƒfƒoƒbƒO”Å
-				2011/12/28 : 1stƒŠƒŠ[ƒX 
+		UPDATE	2011/12/10 : ãƒ‡ãƒãƒƒã‚°ç‰ˆ
+				2011/12/28 : 1stãƒªãƒªãƒ¼ã‚¹ 
  **************************************************************************/
 
 #include <stdio.h>
@@ -21,25 +21,25 @@
 #include "mmcfs.h"
 
 
-/* ƒtƒ@ƒCƒ‹ƒfƒXƒNƒŠƒvƒ^ƒe[ƒuƒ‹ */
+/* ãƒ•ã‚¡ã‚¤ãƒ«ãƒ‡ã‚¹ã‚¯ãƒªãƒ—ã‚¿ãƒ†ãƒ¼ãƒ–ãƒ« */
 
 #ifndef MMCFS_FD_MAXNUM
   #define MMCFS_FD_MAXNUM	ALT_MAX_FD
 #endif
 
-static int dev_mmcfs_fd_num;					// ƒtƒ@ƒCƒ‹ƒfƒXƒNƒŠƒvƒ^ƒXƒ^ƒbƒN 
+static int dev_mmcfs_fd_num;					// ãƒ•ã‚¡ã‚¤ãƒ«ãƒ‡ã‚¹ã‚¯ãƒªãƒ—ã‚¿ã‚¹ã‚¿ãƒƒã‚¯ 
 static int dev_mmcfs_fd[ MMCFS_FD_MAXNUM ];
-static FIL dev_mmcfs_table[ MMCFS_FD_MAXNUM ];	// ƒtƒ@ƒCƒ‹ƒIƒuƒWƒFƒNƒgƒe[ƒuƒ‹ 
+static FIL dev_mmcfs_table[ MMCFS_FD_MAXNUM ];	// ãƒ•ã‚¡ã‚¤ãƒ«ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆãƒ†ãƒ¼ãƒ–ãƒ« 
 
 
 
-/* ƒtƒ@ƒCƒ‹ƒI[ƒvƒ“ */
+/* ãƒ•ã‚¡ã‚¤ãƒ«ã‚ªãƒ¼ãƒ—ãƒ³ */
 
 int dev_mmcfs_open(
 		alt_fd *fd,
 		const char *name,
-		int flags,			// ƒtƒ@ƒCƒ‹ƒI[ƒvƒ“ƒtƒ‰ƒO 
-		int mode)			// g—p‚µ‚È‚¢ 
+		int flags,			// ãƒ•ã‚¡ã‚¤ãƒ«ã‚ªãƒ¼ãƒ—ãƒ³ãƒ•ãƒ©ã‚° 
+		int mode)			// ä½¿ç”¨ã—ãªã„ 
 {
 	FIL fsobj;
 	FRESULT fatfs_res;
@@ -49,10 +49,10 @@ int dev_mmcfs_open(
 
 	str_offset = strlen(fd->dev->name);
 
-	// ƒtƒ@ƒCƒ‹ƒfƒXƒNƒŠƒvƒ^‚ÌŠm”F 
+	// ãƒ•ã‚¡ã‚¤ãƒ«ãƒ‡ã‚¹ã‚¯ãƒªãƒ—ã‚¿ã®ç¢ºèª 
 	if( dev_mmcfs_fd_num == 0 ) return -ENFILE;
 
-	// ƒI[ƒvƒ“ƒ‚[ƒh‚Ì•ÏŠ· 
+	// ã‚ªãƒ¼ãƒ—ãƒ³ãƒ¢ãƒ¼ãƒ‰ã®å¤‰æ› 
 	switch( flags & 3 ) {
 	default:
 		return -EINVAL;
@@ -80,11 +80,11 @@ int dev_mmcfs_open(
 		break;
 	}
 
-	// ƒtƒ@ƒCƒ‹ƒI[ƒvƒ“ 
+	// ãƒ•ã‚¡ã‚¤ãƒ«ã‚ªãƒ¼ãƒ—ãƒ³ 
 	fatfs_res = f_open(&fsobj, name+str_offset, fatfs_mode);
 	if( fatfs_res != FR_OK ) return -ENOENT;
 
-	// ƒtƒ@ƒCƒ‹ƒfƒXƒNƒŠƒvƒ^æ“¾ 
+	// ãƒ•ã‚¡ã‚¤ãƒ«ãƒ‡ã‚¹ã‚¯ãƒªãƒ—ã‚¿å–å¾— 
 	dev_mmcfs_fd_num--;
 	fd_num = dev_mmcfs_fd[dev_mmcfs_fd_num];
 	dev_mmcfs_table[fd_num] = fsobj;
@@ -98,7 +98,7 @@ int dev_mmcfs_open(
 
 
 
-/* ƒtƒ@ƒCƒ‹ƒNƒ[ƒY */
+/* ãƒ•ã‚¡ã‚¤ãƒ«ã‚¯ãƒ­ãƒ¼ã‚º */
 
 int dev_mmcfs_close(
 		alt_fd *fd)
@@ -107,14 +107,14 @@ int dev_mmcfs_close(
 	FRESULT fatfs_res;
 	int fd_num;
 
-	// ƒtƒ@ƒCƒ‹ƒNƒ[ƒY 
+	// ãƒ•ã‚¡ã‚¤ãƒ«ã‚¯ãƒ­ãƒ¼ã‚º 
 	fp = (FIL *)fd->priv;
 	fd_num = fd->fd_flags;
 
 	fatfs_res = f_close(fp);
 	if( fatfs_res != FR_OK ) return -EIO;
 
-	// ƒtƒ@ƒCƒ‹ƒfƒXƒNƒŠƒvƒ^•Ô‹p 
+	// ãƒ•ã‚¡ã‚¤ãƒ«ãƒ‡ã‚¹ã‚¯ãƒªãƒ—ã‚¿è¿”å´ 
 	dev_mmcfs_fd[dev_mmcfs_fd_num] = fd_num;
 	dev_mmcfs_fd_num++;
 
@@ -126,7 +126,7 @@ int dev_mmcfs_close(
 
 
 
-/* ƒtƒ@ƒCƒ‹ƒŠ[ƒh */
+/* ãƒ•ã‚¡ã‚¤ãƒ«ãƒªãƒ¼ãƒ‰ */
 
 int dev_mmcfs_read(
 		alt_fd *fd,
@@ -147,7 +147,7 @@ int dev_mmcfs_read(
 
 
 
-/* ƒtƒ@ƒCƒ‹ƒ‰ƒCƒg */
+/* ãƒ•ã‚¡ã‚¤ãƒ«ãƒ©ã‚¤ãƒˆ */
 
 int dev_mmcfs_write(
 		alt_fd *fd,
@@ -168,7 +168,7 @@ int dev_mmcfs_write(
 
 
 
-/* ƒtƒ@ƒCƒ‹ƒV[ƒN */
+/* ãƒ•ã‚¡ã‚¤ãƒ«ã‚·ãƒ¼ã‚¯ */
 
 int dev_mmcfs_lseek(
 		alt_fd *fd,
@@ -198,7 +198,7 @@ int dev_mmcfs_lseek(
 		break;
 	}
 
-	// ƒtƒ@ƒCƒ‹ƒV[ƒNÀs 
+	// ãƒ•ã‚¡ã‚¤ãƒ«ã‚·ãƒ¼ã‚¯å®Ÿè¡Œ 
 	fatfs_res = f_lseek(fp, fpos);
 	if( fatfs_res != FR_OK ) return -EINVAL;
 
@@ -207,7 +207,7 @@ int dev_mmcfs_lseek(
 
 
 
-/* ƒtƒ@ƒCƒ‹ƒXƒe[ƒ^ƒX */
+/* ãƒ•ã‚¡ã‚¤ãƒ«ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹ */
 
 int dev_mmcfs_fstat(
 		alt_fd *fd,
@@ -231,38 +231,38 @@ int dev_mmcfs_fstat(
 
 
 
-/* ƒfƒoƒCƒXƒCƒ“ƒXƒ^ƒ“ƒX */
+/* ãƒ‡ãƒã‚¤ã‚¹ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ */
 
-static FATFS dev_mmc_fatfsobj;					// FatFSƒVƒXƒeƒ€ƒIƒuƒWƒFƒNƒg 
+static FATFS dev_mmc_fatfsobj;					// FatFSã‚·ã‚¹ãƒ†ãƒ ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ 
 
 static alt_dev dev_mmcfs_inst = {
-	ALT_LLIST_ENTRY,	// “à•”g—p 
-	"mmcfs:",			// ƒfƒoƒCƒX–¼ 
-	dev_mmcfs_open,		// ƒtƒ@ƒCƒ‹ƒI[ƒvƒ“ 
-	dev_mmcfs_close,	// ƒtƒ@ƒCƒ‹ƒNƒ[ƒY 
-	dev_mmcfs_read,		// ƒtƒ@ƒCƒ‹ƒŠ[ƒh 
-	dev_mmcfs_write,	// ƒtƒ@ƒCƒ‹ƒ‰ƒCƒg 
-	dev_mmcfs_lseek,	// ƒtƒ@ƒCƒ‹ƒV[ƒN 
-	dev_mmcfs_fstat,	// ƒtƒ@ƒCƒ‹ƒfƒoƒCƒXƒXƒe[ƒ^ƒX 
-	NULL				// ƒtƒ@ƒCƒ‹I/OƒRƒ“ƒgƒ[ƒ‹ 
+	ALT_LLIST_ENTRY,	// å†…éƒ¨ä½¿ç”¨ 
+	"mmcfs:",			// ãƒ‡ãƒã‚¤ã‚¹å 
+	dev_mmcfs_open,		// ãƒ•ã‚¡ã‚¤ãƒ«ã‚ªãƒ¼ãƒ—ãƒ³ 
+	dev_mmcfs_close,	// ãƒ•ã‚¡ã‚¤ãƒ«ã‚¯ãƒ­ãƒ¼ã‚º 
+	dev_mmcfs_read,		// ãƒ•ã‚¡ã‚¤ãƒ«ãƒªãƒ¼ãƒ‰ 
+	dev_mmcfs_write,	// ãƒ•ã‚¡ã‚¤ãƒ«ãƒ©ã‚¤ãƒˆ 
+	dev_mmcfs_lseek,	// ãƒ•ã‚¡ã‚¤ãƒ«ã‚·ãƒ¼ã‚¯ 
+	dev_mmcfs_fstat,	// ãƒ•ã‚¡ã‚¤ãƒ«ãƒ‡ãƒã‚¤ã‚¹ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹ 
+	NULL				// ãƒ•ã‚¡ã‚¤ãƒ«I/Oã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ« 
 };
 
 int mmcfs_setup(void)
 {
 	int ret_code;
 
-	// FatFs‰Šú‰» 
+	// FatFsåˆæœŸåŒ– 
 	memset(&dev_mmc_fatfsobj, 0, sizeof(FATFS));	/* Invalidate file system */
 	f_mount(0, &dev_mmc_fatfsobj);					/* Assign object memory to the FatFs module */
 
-	// ƒtƒ@ƒCƒ‹ƒfƒXƒNƒŠƒvƒ^ŠÇ—ƒe[ƒuƒ‹‰Šú‰» 
+	// ãƒ•ã‚¡ã‚¤ãƒ«ãƒ‡ã‚¹ã‚¯ãƒªãƒ—ã‚¿ç®¡ç†ãƒ†ãƒ¼ãƒ–ãƒ«åˆæœŸåŒ– 
 	dev_mmcfs_fd_num = 0;
 	do {
 		dev_mmcfs_fd[dev_mmcfs_fd_num] = dev_mmcfs_fd_num;
 		dev_mmcfs_fd_num++;
 	} while( dev_mmcfs_fd_num < MMCFS_FD_MAXNUM );
 
-	// ƒtƒ@ƒCƒ‹ƒVƒXƒeƒ€ƒfƒoƒCƒX“o˜^ 
+	// ãƒ•ã‚¡ã‚¤ãƒ«ã‚·ã‚¹ãƒ†ãƒ ãƒ‡ãƒã‚¤ã‚¹ç™»éŒ² 
 	ret_code = alt_fs_reg(&dev_mmcfs_inst);
 
 	return ret_code;
