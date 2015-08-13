@@ -121,14 +121,14 @@ architecture RTL of avalonif_sound is
 		empty		: OUT STD_LOGIC ;
 		full		: OUT STD_LOGIC ;
 		q		: OUT STD_LOGIC_VECTOR (7 DOWNTO 0);
-		usedw		: OUT STD_LOGIC_VECTOR (8 DOWNTO 0)
+		usedw		: OUT STD_LOGIC_VECTOR (10 DOWNTO 0)
 	);
 	end component;
 	signal fifowrdata_sig	: std_logic_vector(7 downto 0);
 	signal fifowrreq_sig	: std_logic;
 	signal fifoempty_sig	: std_logic;
 	signal fifofull_sig		: std_logic;
-	signal fifousedw_sig	: std_logic_vector(8 downto 0);
+	signal fifousedw_sig	: std_logic_vector(10 downto 0);
 	signal fifoq_sig		: std_logic_vector(7 downto 0);
 	signal wavedata_sig		: std_logic_vector(fifoq_sig'length downto 0);
 	signal fifoirq_sig		: std_logic;
