@@ -25,11 +25,11 @@ use IEEE.std_logic_arith.all;
 
 entity lcdc_component is
 	port(
-	--==== AvalonƒoƒXM†ü ==========================================
+	--==== Avalonãƒã‚¹ä¿¡å·ç·š ==========================================
 		csi_clk				: in  std_logic;
 		csi_reset			: in  std_logic;
 
-		----- AvalonMMƒXƒŒ[ƒuM† -----------
+		----- AvalonMMã‚¹ãƒ¬ãƒ¼ãƒ–ä¿¡å· -----------
 		avs_s1_address		: in  std_logic_vector(3 downto 2);
 		avs_s1_read			: in  std_logic;
 		avs_s1_readdata		: out std_logic_vector(31 downto 0);
@@ -39,7 +39,7 @@ entity lcdc_component is
 
 		ins_s1_irq			: out std_logic;
 
-		----- AvalonMMƒ}ƒXƒ^M† -----------
+		----- AvalonMMãƒã‚¹ã‚¿ä¿¡å· -----------
 		avm_m1_address		: out std_logic_vector(30 downto 0);
 		avm_m1_waitrequest	: in  std_logic;
 		avm_m1_burstcount	: out std_logic_vector(3 downto 0);
@@ -47,12 +47,12 @@ entity lcdc_component is
 		avm_m1_readdata		: in  std_logic_vector(15 downto 0);
 		avm_m1_readdatavalid: in  std_logic;
 
-		----- PROCYON_GPUM† -----------
+		----- PROCYON_GPUä¿¡å· -----------
 --		coe_gpucrtc_send	: out std_logic_vector(24 downto 0);
 --		coe_gpucrtc_recv	: in  std_logic_vector(16 downto 0);
 
 
-	--==== ILI9325M†ü(i80-8bitÚ‘±) ===============================
+	--==== ILI9325ä¿¡å·ç·š(i80-8bitæ¥ç¶š) ===============================
 		coe_lcd_rst_n		: out std_logic;
 		coe_lcd_cs_n		: out std_logic;
 		coe_lcd_rs			: out std_logic;
@@ -168,9 +168,9 @@ architecture RTL of lcdc_component is
 
 begin
 
---==== ƒ‚ƒWƒ…[ƒ‹ƒCƒ“ƒXƒ^ƒ“ƒX ========================================
+--==== ãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ ========================================
 
-	-- AvalonMM¨PROCYON_GPU‚ÌM†•ÏŠ· 
+	-- AvalonMMâ†’PROCYON_GPUã®ä¿¡å·å¤‰æ› 
 
 --	gpucrtcaddr_sig(30 downto 24) <= (others=>'0');
 --	gpucrtcaddr_sig(23 downto 10) <= dma_topaddr_sig(23 downto 10);
@@ -195,7 +195,7 @@ begin
 --	end process;
 
 
-	-- ƒŒƒWƒXƒ^ƒ‚ƒWƒ…[ƒ‹ 
+	-- ãƒ¬ã‚¸ã‚¹ã‚¿ãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ« 
 
 	U0 : lcdc_regs
 	port map(
@@ -223,7 +223,7 @@ begin
 	);
 
 
-	-- VRAM DMAƒ‚ƒWƒ…[ƒ‹ 
+	-- VRAM DMAãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ« 
 
 	U1 : lcdc_dma
 	generic map(
@@ -236,7 +236,7 @@ begin
 		reset			=> csi_reset,
 
 		topaddr			=> dma_topaddr_sig,
---		topaddr			=> gpucrtcaddr_sig,		-- PROCYON_GPU—p 
+--		topaddr			=> gpucrtcaddr_sig,		-- PROCYON_GPUç”¨ 
 		start			=> dma_start_sig,
 		ready			=> dma_ready_sig,
 		wrreq			=> dma_wrreq_sig,
@@ -250,7 +250,7 @@ begin
 		readdata		=> avm_m1_readdata,
 		readdatavalid	=> avm_m1_readdatavalid
 
---		address			=> avm_address_sig,		-- PROCYON_GPU—p 
+--		address			=> avm_address_sig,		-- PROCYON_GPUç”¨ 
 --		waitrequest		=> '0',
 --		burstcount		=> open,
 --		read			=> avm_read_sig,
@@ -258,10 +258,10 @@ begin
 --		readdatavalid	=> avm_rdvalid_sig
 	);
 
-	dma_regsel_sig <= '1';	-- DMA‚ÍRS=1‚ÅŒÅ’è 
+	dma_regsel_sig <= '1';	-- DMAæ™‚ã¯RS=1ã§å›ºå®š 
 
 
-	-- ‘‚«‚İŒ³ƒZƒŒƒNƒ^ 
+	-- æ›¸ãè¾¼ã¿å…ƒã‚»ãƒ¬ã‚¯ã‚¿ 
 
 	lcdc_wrreq_sig <= dma_wrreq_sig when(dma_ready_sig = '0') else cpu_wrreq_sig;
 	dma_wrack_sig <= lcdc_wrack_sig when(dma_ready_sig = '0') else '0';
@@ -271,7 +271,7 @@ begin
 	lcdc_data_sig <= dma_data_sig when(dma_ready_sig = '0') else cpu_data_sig;
 
 
-	-- LCDCƒAƒNƒZƒXƒ‚ƒWƒ…[ƒ‹ 
+	-- LCDCã‚¢ã‚¯ã‚»ã‚¹ãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ« 
 
 	coe_lcd_rst_n <= not lcd_reset_sig;
 	coe_lcd_cs_n  <= not lcd_select_sig;

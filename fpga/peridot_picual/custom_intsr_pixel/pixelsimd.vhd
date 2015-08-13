@@ -93,7 +93,7 @@ architecture RTL of pixelsimd is
 
 begin
 
---==== ƒJƒXƒ^ƒ€–½—ßƒXƒe[ƒg§Œä =====================================
+--==== ã‚«ã‚¹ã‚¿ãƒ å‘½ä»¤ã‚¹ãƒ†ãƒ¼ãƒˆåˆ¶å¾¡ =====================================
 
 	with n select result <=
 		resultyuv_sig   when "000",		-- 3clock latency
@@ -135,7 +135,7 @@ begin
 
 
 
---==== ƒoƒCƒgƒŒ[ƒ“‰‰ŽZ–½—ßŒQ =======================================
+--==== ãƒã‚¤ãƒˆãƒ¬ãƒ¼ãƒ³æ¼”ç®—å‘½ä»¤ç¾¤ =======================================
 
 	process (clk) begin
 		if (clk'event and clk='1') then
@@ -151,7 +151,7 @@ begin
 	end process;
 
 
-	-- –O˜a‰ÁŽZA–O˜aŒ¸ŽZ–½—ß(paddb,psubb) 
+	-- é£½å’ŒåŠ ç®—ã€é£½å’Œæ¸›ç®—å‘½ä»¤(paddb,psubb) 
 
 	sat_u0 : pixelsimd_sat_u8
 	port map (
@@ -186,7 +186,7 @@ begin
 	);
 
 
---==== ƒf[ƒ^ƒpƒbƒLƒ“ƒO–½—ßŒQ =======================================
+--==== ãƒ‡ãƒ¼ã‚¿ãƒ‘ãƒƒã‚­ãƒ³ã‚°å‘½ä»¤ç¾¤ =======================================
 
 	process (clk) begin
 		if (clk'event and clk='1') then
@@ -194,9 +194,9 @@ begin
 			when "001" =>
 				resultpack_reg <= ppack_sig;
 			when "010" =>
-				resultpack_reg <= punpack_sig;		-- ‰ºˆÊƒ[ƒh‚ðƒAƒ“ƒpƒbƒN 
+				resultpack_reg <= punpack_sig;		-- ä¸‹ä½ãƒ¯ãƒ¼ãƒ‰ã‚’ã‚¢ãƒ³ãƒ‘ãƒƒã‚¯ 
 			when "011" =>
-				resultpack_reg <= punpack_sig;		-- ãˆÊƒ[ƒh‚ðƒAƒ“ƒpƒbƒN 
+				resultpack_reg <= punpack_sig;		-- ä¸Šä½ãƒ¯ãƒ¼ãƒ‰ã‚’ã‚¢ãƒ³ãƒ‘ãƒƒã‚¯ 
 			when others=>
 				resultpack_reg <= (others=>'X');
 			end case;
@@ -204,7 +204,7 @@ begin
 	end process;
 
 
-	-- ƒsƒNƒZƒ‹ƒpƒbƒN–½—ß(ppack) 
+	-- ãƒ”ã‚¯ã‚»ãƒ«ãƒ‘ãƒƒã‚¯å‘½ä»¤(ppack) 
 
 	ppack_r0_sig <= dataa(23 downto 16);
 	ppack_g0_sig <= dataa(15 downto  8);
@@ -223,7 +223,7 @@ begin
 	ppack_sig( 4 downto  0) <= ppack_b0_sig(7 downto 3);
 
 
-	-- ƒsƒNƒZƒ‹ƒAƒ“ƒpƒbƒN–½—ß(punpackl,punpackh) 
+	-- ãƒ”ã‚¯ã‚»ãƒ«ã‚¢ãƒ³ãƒ‘ãƒƒã‚¯å‘½ä»¤(punpackl,punpackh) 
 
 	punpack_r_sig <= dataa(14 downto 10) when(n(0) = '0') else dataa(30 downto 26);
 	punpack_g_sig <= dataa( 9 downto  5) when(n(0) = '0') else dataa(25 downto 21);
@@ -236,9 +236,9 @@ begin
 
 
 
---==== ƒsƒNƒZƒ‹•ÏŠ·–½—ßŒQ ===========================================
+--==== ãƒ”ã‚¯ã‚»ãƒ«å¤‰æ›å‘½ä»¤ç¾¤ ===========================================
 
-	-- ƒsƒNƒZƒ‹YUVƒfƒR[ƒh–½—ß(pyuvdec)
+	-- ãƒ”ã‚¯ã‚»ãƒ«YUVãƒ‡ã‚³ãƒ¼ãƒ‰å‘½ä»¤(pyuvdec)
 
 	yuvdec : pixelsimd_yuvdec
 	port map(
@@ -251,7 +251,7 @@ begin
 	);
 
 
-	-- ƒsƒNƒZƒ‹ƒ¿‡¬–½—ß(pblend) 
+	-- ãƒ”ã‚¯ã‚»ãƒ«Î±åˆæˆå‘½ä»¤(pblend) 
 
 	resultblend_sig(31 downto 24) <= (others=>'0');
 
