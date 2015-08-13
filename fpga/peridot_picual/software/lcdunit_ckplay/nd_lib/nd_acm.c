@@ -15,6 +15,7 @@
 #include <io.h>
 #include "nd_egl.h"
 #include "nd_acm.h"
+#include "audio.h"
 
 
 
@@ -85,6 +86,7 @@ nd_s32 nd_GsCkPlay(
 	FRESULT res;
 	UINT readsize;
 	alt_u32 fps_ticks;
+	void (*payload_decoder)(const void *, int);
 
 
 	res = f_lseek(fckh, 0);						// ファイル先頭へシーク 
@@ -94,6 +96,11 @@ nd_s32 nd_GsCkPlay(
 
 	f_read(fckh, pBuff, 512, &readsize);		// ヘッダフィル 
 	if (*pBuff != 0x4b43) return (-1);			// 'C''K'のヘッダでない 
+
+	payload_decoder = NULL;
+	if (*(pBuff + 1) == 0x3337) {
+		payload_decoder = audio_init(pBuff + 10);
+	}
 
 	x_size    = *(pBuff + 2);
 	y_size    = *(pBuff + 3);
@@ -157,6 +164,11 @@ nd_s32 nd_GsCkPlay(
 
 			s_mcu = *pBuff++;
 			n += s_mcu;
+
+			// ペイロードのデコード
+			if (s_mcu == 0 && payload_decoder) {
+				(*payload_decoder)(pBuff, 512 - 2);
+			}
 
 			// ストライプのデコード 
 			for( ; s_mcu > 0 ; s_mcu--) {

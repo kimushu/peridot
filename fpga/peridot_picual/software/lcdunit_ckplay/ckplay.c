@@ -12,6 +12,7 @@
 #include "nd_lib/nd_acm.h"
 #include "nd_lib/ILI9325.h"
 #include "mmcfs/fatfs/ff.h"
+#include "tsc.h"
 
 
 // 再生ファイルが格納されているディレクトリパス 
@@ -121,6 +122,7 @@ int main(void)
 	nd_GsEglPage((nd_u32)pFrameBuffer, (nd_u32)pFrameBuffer, 0);
 //	nd_GsVgaScanOn();
 
+	tsc_SensorTest();
 
 	// ck-codec 再生開始 
 	while(1) {

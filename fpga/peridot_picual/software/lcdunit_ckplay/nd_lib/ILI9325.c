@@ -4,6 +4,7 @@
 #include <unistd.h>
 #include <system.h>
 #include <io.h>
+#define DEVICE_R61505W
 
 #define lcdc_wrreq		(1<<31)
 #define lcdc_reset		(1<<30)
@@ -50,6 +51,7 @@ void ILI9325_init(void)
 	IOWR(dev_lcdc, 0, 0);
 	usleep(10000);
 
+#ifdef DEVICE_ILI9325
 	Trans_Dat(0x00E3, 0x3008); // Set internal timing
 	Trans_Dat(0x00E7, 0x0012); // Set internal timing
 	Trans_Dat(0x00EF, 0x1231); // Set internal timing
@@ -116,6 +118,64 @@ void ILI9325_init(void)
 	Trans_Dat(0x0097, 0x0000);
 	Trans_Dat(0x0098, 0x0000);
 	Trans_Dat(0x0007, 0x0133); // 262K color and display ON
+#endif
+#ifdef DEVICE_R61505W
+	Trans_Dat(0x0001, 0x0000);
+	Trans_Dat(0x0002, 0x0700);
+	Trans_Dat(0x0003, 0x1020);
+	Trans_Dat(0x0004, 0x0000);
+	Trans_Dat(0x0008, 0x0302);
+	Trans_Dat(0x0009, 0x0000);
+	Trans_Dat(0x0010, 0x0710);
+	usleep(50000);
+	Trans_Dat(0x0011, 0x0247);
+	usleep(50000);
+	Trans_Dat(0x0012, 0x01BA);
+	usleep(50000);
+	Trans_Dat(0x0013, 0x1000);
+	usleep(50000);
+	Trans_Dat(0x0029, 0x0030);
+	usleep(100000);
+	Trans_Dat(0x002B, 0x0020);
+
+	Trans_Dat(0x0050, 0x0000);
+	Trans_Dat(0x0051, 0x00ef);
+	Trans_Dat(0x0052, 0x0000);
+	Trans_Dat(0x0053, 0x013F);
+
+	Trans_Dat(0x0060, 0x2700);
+	Trans_Dat(0x0061, 0x0001);
+	Trans_Dat(0x006A, 0x0000);
+
+	Trans_Dat(0x0080, 0x0000);
+	Trans_Dat(0x0081, 0x0000);
+	Trans_Dat(0x0082, 0x0000);
+	Trans_Dat(0x0083, 0x0000);
+	Trans_Dat(0x0084, 0x0000);
+	Trans_Dat(0x0085, 0x0000);
+
+	Trans_Dat(0x0090, 0x0010);
+
+	Trans_Dat(0x0092, 0x0000);
+	Trans_Dat(0x0093, 0x0003);
+	Trans_Dat(0x0095, 0x0110);
+	Trans_Dat(0x0097, 0x0000);
+	Trans_Dat(0x0098, 0x0000);
+	Trans_Dat(0x0003, 0x1020);
+
+	Trans_Dat(0x0030, 0x0004);
+	Trans_Dat(0x0031, 0x0307);
+	Trans_Dat(0x0032, 0x0002);
+	Trans_Dat(0x0035, 0x0206);
+	Trans_Dat(0x0036, 0x002a);
+	Trans_Dat(0x0037, 0x0507);
+	Trans_Dat(0x0038, 0x0204);
+	Trans_Dat(0x0039, 0x0707);
+	Trans_Dat(0x003C, 0x0405);
+	Trans_Dat(0x003D, 0x2A2A);
+
+	Trans_Dat(0x0007, 0x0173);
+#endif
 }
 
 

@@ -152,6 +152,8 @@ C_SRCS += mmcfs/mmcfs.c
 C_SRCS += nd_lib/ILI9325.c
 C_SRCS += nd_lib/nd_acm.c
 C_SRCS += nd_lib/nd_egl.c
+C_SRCS += tsc.c
+C_SRCS += nd_lib/audio.c
 CXX_SRCS :=
 ASM_SRCS := nd_lib/nd_acm_mcudecode.S
 
@@ -1082,7 +1084,7 @@ endif
 ifneq ($(DISABLE_STACKREPORT),1)
 	@bash -c "$(STACKREPORT) $@"
 endif
-	$(OBJCOPY) -R .sopcinfo -S $(ELF)
+	$(OBJCOPY) -R .sopcinfo -S $(ELF) boot.elf
 
 $(OBJDUMP_NAME) : $(ELF)
 	@$(ECHO) Info: Creating $@
