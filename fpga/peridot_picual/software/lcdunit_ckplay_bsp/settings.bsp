@@ -2,8 +2,8 @@
 <sch:Settings xmlns:sch="http://www.altera.com/embeddedsw/bsp/schema">
         <BspType>hal</BspType>
         <BspVersion>default</BspVersion>
-        <BspGeneratedTimeStamp>2015/08/13 12:47:55</BspGeneratedTimeStamp>
-        <BspGeneratedUnixTimeStamp>1439437675941</BspGeneratedUnixTimeStamp>
+        <BspGeneratedTimeStamp>2015/08/13 13:47:11</BspGeneratedTimeStamp>
+        <BspGeneratedUnixTimeStamp>1439441231079</BspGeneratedUnixTimeStamp>
         <BspGeneratedLocation>/home/shuta/projects/peridot/fpga/peridot_picual/software/lcdunit_ckplay_bsp</BspGeneratedLocation>
         <BspSettingsFile>settings.bsp</BspSettingsFile>
         <SopcDesignFile>../../cq_viola.sopcinfo</SopcDesignFile>

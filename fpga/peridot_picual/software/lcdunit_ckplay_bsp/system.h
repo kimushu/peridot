@@ -4,7 +4,7 @@
  * Machine generated for CPU 'nios2_s' in SOPC Builder design 'cq_viola'
  * SOPC Builder design path: ../../cq_viola.sopcinfo
  *
- * Generated: Thu Aug 13 12:47:46 JST 2015
+ * Generated: Thu Aug 13 13:47:11 JST 2015
  */
 
 /*
@@ -355,6 +355,7 @@
 
 #define ALT_MODULE_CLASS_sound avalonif_sound
 #define SOUND_BASE 0x10001040
+#define SOUND_FREQ 40000000
 #define SOUND_IRQ 2
 #define SOUND_IRQ_INTERRUPT_CONTROLLER_ID 0
 #define SOUND_NAME "/dev/sound"
@@ -374,7 +375,7 @@
 #define SYSID_IRQ_INTERRUPT_CONTROLLER_ID -1
 #define SYSID_NAME "/dev/sysid"
 #define SYSID_SPAN 8
-#define SYSID_TIMESTAMP 1439432259
+#define SYSID_TIMESTAMP 1439441141
 #define SYSID_TYPE "altera_avalon_sysid_qsys"
 
 
