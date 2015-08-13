@@ -5,7 +5,7 @@
 --     DATUM     : 2008/10/31 -> 2008/10/31 (HERSTELLUNG)
 --               : 2008/12/28 (FESTSTELLUNG)
 --
---               : 2010/12/12 CycloneIIIŒü‚¯‰ü‘¢ (NEUBEARBEITUNG)
+--               : 2010/12/12 CycloneIIIå‘ã‘æ”¹é€  (NEUBEARBEITUNG)
 ----------------------------------------------------------------------
 
 library IEEE;

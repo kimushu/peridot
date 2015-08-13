@@ -36,7 +36,7 @@ module cq_viola_sysid (
 
   wire    [ 31: 0] readdata;
   //control_slave, which is an e_avalon_slave
-  assign readdata = address ? 1399996659 : 538182181;
+  assign readdata = address ? 1439432259 : 538249235;
 
 endmodule
 

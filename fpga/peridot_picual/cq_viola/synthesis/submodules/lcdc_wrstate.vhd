@@ -56,15 +56,15 @@ architecture RTL of lcdc_wrstate is
 
 begin
 
--- wrreq‚ÌƒAƒT[ƒg‚ÅƒŠƒNƒGƒXƒg 
--- segsel‚Ædata‚Íwrreq‚ğƒAƒT[ƒg‚µ‚Ä‚¢‚éŠÔ‚Í•ÏX‚µ‚È‚¢ 
--- ˆ—‚ªI—¹ŒãA‚PƒNƒƒbƒN•‚Ìwrack‚ª•Ô‚é 
--- wrreq‚ÌƒlƒQ[ƒg‚ÍwrackóMŒãA‚PƒNƒƒbƒNˆÈ“à‚És‚¤‚±‚Æ 
+-- wrreqã®ã‚¢ã‚µãƒ¼ãƒˆã§ãƒªã‚¯ã‚¨ã‚¹ãƒˆ 
+-- segselã¨dataã¯wrreqã‚’ã‚¢ã‚µãƒ¼ãƒˆã—ã¦ã„ã‚‹é–“ã¯å¤‰æ›´ã—ãªã„ 
+-- å‡¦ç†ãŒçµ‚äº†å¾Œã€ï¼‘ã‚¯ãƒ­ãƒƒã‚¯å¹…ã®wrackãŒè¿”ã‚‹ 
+-- wrreqã®ãƒã‚²ãƒ¼ãƒˆã¯wrackå—ä¿¡å¾Œã€ï¼‘ã‚¯ãƒ­ãƒƒã‚¯ä»¥å†…ã«è¡Œã†ã“ã¨ 
 
---==== ILI9325 i80-8bitÚ‘± ==========================================
+--==== ILI9325 i80-8bitæ¥ç¶š ==========================================
 
 	lcdc_wrreq_sig <= wrreq;
-	wrack <= '1' when(lcdc_state = DONE) else '0';	-- ACK‚Í‚PƒNƒƒbƒN• 
+	wrack <= '1' when(lcdc_state = DONE) else '0';	-- ACKã¯ï¼‘ã‚¯ãƒ­ãƒƒã‚¯å¹… 
 
 	lcd_rs   <= lcdc_rs_reg;
 	lcd_wr_n <= not lcdc_wr_reg;
@@ -86,7 +86,7 @@ begin
 					lcdc_d_reg  <= data;
 				end if;
 
-			when RSETWAIT =>	-- nWR‚ÌƒZƒbƒgƒAƒbƒv‘Ò‚¿ 
+			when RSETWAIT =>	-- nWRã®ã‚»ãƒƒãƒˆã‚¢ãƒƒãƒ—å¾…ã¡ 
 				if (waitcount = 0) then
 					lcdc_state <= WRASSERT;
 					waitcount  <= LCDC_WRWIDTH_COUNT-1;
@@ -95,7 +95,7 @@ begin
 					waitcount <= waitcount - 1;
 				end if;
 
-			when WRASSERT =>	-- nWRƒAƒT[ƒg‚Æƒpƒ‹ƒX‘Ò‚¿ 
+			when WRASSERT =>	-- nWRã‚¢ã‚µãƒ¼ãƒˆã¨ãƒ‘ãƒ«ã‚¹å¾…ã¡ 
 				if (waitcount = 0) then
 					lcdc_state <= WRNEGATE;
 					waitcount  <= LCDC_WRHOLD_COUNT-1;
@@ -104,7 +104,7 @@ begin
 					waitcount <= waitcount - 1;
 				end if;
 
-			when WRNEGATE =>	-- nWRƒlƒQ[ƒg‚Æƒz[ƒ‹ƒh‚¨‚æ‚ÑƒTƒCƒNƒ‹‘Ò‚¿ 
+			when WRNEGATE =>	-- nWRãƒã‚²ãƒ¼ãƒˆã¨ãƒ›ãƒ¼ãƒ«ãƒ‰ãŠã‚ˆã³ã‚µã‚¤ã‚¯ãƒ«å¾…ã¡ 
 				if (waitcount = 0) then
 					lcdc_state <= DONE;
 				else

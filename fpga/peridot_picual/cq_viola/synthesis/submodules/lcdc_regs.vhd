@@ -75,9 +75,9 @@ architecture RTL of lcdc_regs is
 begin
 
 
---==== ƒRƒ“ƒgƒ[ƒ‹ƒŒƒWƒXƒ^ ==========================================
+--==== ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«ãƒ¬ã‚¸ã‚¹ã‚¿ ==========================================
 
-	-- ƒŒƒfƒBM†‚ÌƒGƒbƒWŒŸo•“¯Šú‰» 
+	-- ãƒ¬ãƒ‡ã‚£ä¿¡å·ã®ã‚¨ãƒƒã‚¸æ¤œå‡ºï¼†åŒæœŸåŒ– 
 
 	process (clk, reset) begin
 		if (reset = '1') then
@@ -87,15 +87,15 @@ begin
 		end if;
 	end process;
 
-	dmabegin_sig <= '1' when(ready_in_reg(2 downto 1) = "10") else '0';		-- DMAŠJn 
-	dmaend_sig   <= '1' when(ready_in_reg(2 downto 1) = "01") else '0';		-- DMAI—¹ 
+	dmabegin_sig <= '1' when(ready_in_reg(2 downto 1) = "10") else '0';		-- DMAé–‹å§‹ 
+	dmaend_sig   <= '1' when(ready_in_reg(2 downto 1) = "01") else '0';		-- DMAçµ‚äº† 
 
 
-	-- ƒŒƒWƒXƒ^ƒŠ[ƒhƒ‰ƒCƒgˆ— 
+	-- ãƒ¬ã‚¸ã‚¹ã‚¿ãƒªãƒ¼ãƒ‰ãƒ©ã‚¤ãƒˆå‡¦ç† 
 
-	readdata_0_sig <= (	31=>iowrreq_reg,		-- reg0 : LCDƒ_ƒCƒŒƒNƒgƒ‰ƒCƒgƒŒƒWƒXƒ^ 
+	readdata_0_sig <= (	31=>iowrreq_reg,		-- reg0 : LCDãƒ€ã‚¤ãƒ¬ã‚¯ãƒˆãƒ©ã‚¤ãƒˆãƒ¬ã‚¸ã‚¹ã‚¿ 
 						30=>lcdrst_reg,
-						19=>lcdsel_reg,			-- lcdselƒrƒbƒg‚ÍDMAI—¹‚É©“®ƒNƒŠƒA‚³‚ê‚é 
+						19=>lcdsel_reg,			-- lcdselãƒ“ãƒƒãƒˆã¯DMAçµ‚äº†æ™‚ã«è‡ªå‹•ã‚¯ãƒªã‚¢ã•ã‚Œã‚‹ 
 						18=>iors_reg,
 						7 =>iodata_reg(7),
 						6 =>iodata_reg(6),
@@ -107,14 +107,14 @@ begin
 						0 =>iodata_reg(0),
 						others=>'0');
 
---	readdata_1_sig <= frc_reg;					-- reg1 : FreerunƒJƒEƒ“ƒ^ 
+--	readdata_1_sig <= frc_reg;					-- reg1 : Freerunã‚«ã‚¦ãƒ³ã‚¿ 
 
-	readdata_2_sig <= (	15=>doneirqena_reg,		-- reg2 : DMAƒXƒe[ƒ^ƒXƒŒƒWƒXƒ^ 
+	readdata_2_sig <= (	15=>doneirqena_reg,		-- reg2 : DMAã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹ãƒ¬ã‚¸ã‚¹ã‚¿ 
 						14=>doneirq_reg,
-						0 =>busy_reg,			-- bit0‚É1‚ğ‘‚«‚Ş‚ÆDMAƒXƒ^[ƒg 
+						0 =>busy_reg,			-- bit0ã«1ã‚’æ›¸ãè¾¼ã‚€ã¨DMAã‚¹ã‚¿ãƒ¼ãƒˆ 
 						others=>'0');
 
-	readdata_3_sig <= '0' & fbaddr_reg;			-- reg3 : DMAƒAƒhƒŒƒXƒŒƒWƒXƒ^ 
+	readdata_3_sig <= '0' & fbaddr_reg;			-- reg3 : DMAã‚¢ãƒ‰ãƒ¬ã‚¹ãƒ¬ã‚¸ã‚¹ã‚¿ 
 
 	with address select readdata <=
 		readdata_0_sig when "00",
@@ -126,7 +126,7 @@ begin
 	irq <= doneirq_reg when(doneirqena_reg = '1') else '0';
 
 
-	-- I/Oƒ_ƒCƒŒƒNƒgƒ‰ƒCƒgƒŒƒWƒXƒ^ 
+	-- I/Oãƒ€ã‚¤ãƒ¬ã‚¯ãƒˆãƒ©ã‚¤ãƒˆãƒ¬ã‚¸ã‚¹ã‚¿ 
 
 	wrreq  <= iowrreq_reg;
 	regsel <= iors_reg;
@@ -163,7 +163,7 @@ begin
 	end process;
 
 
-	-- ƒtƒŠ[ƒ‰ƒ“ƒJƒEƒ“ƒ^ƒŒƒWƒXƒ^ 
+	-- ãƒ•ãƒªãƒ¼ãƒ©ãƒ³ã‚«ã‚¦ãƒ³ã‚¿ãƒ¬ã‚¸ã‚¹ã‚¿ 
 
 --	process (clk, reset) begin
 --		if (reset='1') then
@@ -182,7 +182,7 @@ begin
 --	end process;
 
 
-	-- DMAƒRƒ“ƒgƒ[ƒ‹ƒŒƒWƒXƒ^ 
+	-- DMAã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«ãƒ¬ã‚¸ã‚¹ã‚¿ 
 
 	topaddr <= fbaddr_reg;
 	start <= start_reg;

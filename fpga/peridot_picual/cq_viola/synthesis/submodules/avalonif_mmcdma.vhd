@@ -4,7 +4,7 @@
 --     Design : S.OSAFUNE (J-7SYSTEM Works)
 --     Update : 2008/07/15 -> 2008/07/17 (Fixed)
 --
---            : 2013/04/03 ƒRƒƒ“ƒgC³ 
+--            : 2013/04/03 ã‚³ãƒ¡ãƒ³ãƒˆä¿®æ­£ 
 --
 -- ===================================================================
 -- *******************************************************************
@@ -18,12 +18,12 @@
 --   notice.
 -- *******************************************************************
 
--- ƒf[ƒ^ƒg[ƒNƒ“ƒXƒ^[ƒgƒoƒCƒg(0xFE)óM‚Æƒ^ƒCƒ€ƒAƒEƒg‚ªd‚È‚Á‚½ê‡ 
--- ƒ^ƒCƒ€ƒAƒEƒgƒGƒ‰[‚ª—Dæ‚³‚ê‚é 
+-- ãƒ‡ãƒ¼ã‚¿ãƒˆãƒ¼ã‚¯ãƒ³ã‚¹ã‚¿ãƒ¼ãƒˆãƒã‚¤ãƒˆ(0xFE)å—ä¿¡ã¨ã‚¿ã‚¤ãƒ ã‚¢ã‚¦ãƒˆãŒé‡ãªã£ãŸå ´åˆ 
+-- ã‚¿ã‚¤ãƒ ã‚¢ã‚¦ãƒˆã‚¨ãƒ©ãƒ¼ãŒå„ªå…ˆã•ã‚Œã‚‹ 
 
--- ƒŠ[ƒhDMA‹N“®‚ÅMMC I/FƒŒƒWƒXƒ^‚Í 
+-- ãƒªãƒ¼ãƒ‰DMAèµ·å‹•ã§MMC I/Fãƒ¬ã‚¸ã‚¹ã‚¿ã¯ 
 --		irq_ena='0',nCS='0',TxD=0xFF
--- ‚ÉƒI[ƒo[ƒ‰ƒCƒg‚³‚ê‚é 
+-- ã«ã‚ªãƒ¼ãƒãƒ¼ãƒ©ã‚¤ãƒˆã•ã‚Œã‚‹ 
 
 
 library IEEE;
@@ -33,13 +33,13 @@ use IEEE.std_logic_arith.all;
 
 entity avalonif_mmcdma is
 	generic(
-		SYSTEMCLOCKINFO		: integer := 0		-- ‹ì“®ƒNƒƒbƒNî•ñ(Hz) 
+		SYSTEMCLOCKINFO		: integer := 0		-- é§†å‹•ã‚¯ãƒ­ãƒƒã‚¯æƒ…å ±(Hz) 
 	);
 	port(
 		clk			: in  std_logic;
 		reset		: in  std_logic;
 
-		----- AvalonƒoƒXM† -----------
+		----- Avalonãƒã‚¹ä¿¡å· -----------
 		chipselect	: in  std_logic;
 		address		: in  std_logic_vector(7 downto 0);
 		read		: in  std_logic;
@@ -48,14 +48,14 @@ entity avalonif_mmcdma is
 		writedata	: in  std_logic_vector(31 downto 0);
 		irq			: out std_logic;
 
-		----- MMC SPIM† -----------
-			-- Šeƒsƒ“‚ÌM†ƒŒƒxƒ‹‚ÍLVCMOS‚Éİ’è‚·‚é‚±‚Æ
+		----- MMC SPIä¿¡å· -----------
+			-- å„ãƒ”ãƒ³ã®ä¿¡å·ãƒ¬ãƒ™ãƒ«ã¯LVCMOSã«è¨­å®šã™ã‚‹ã“ã¨
 		MMC_nCS		: out std_logic;
 		MMC_SCK		: out std_logic;
 		MMC_SDO		: out std_logic;
 		MMC_SDI		: in  std_logic := '1';
-		MMC_CD		: in  std_logic := '1';	-- ƒJ[ƒh‘}“üŒŸo (ƒJ[ƒh‘}“ü‚Å'0') 
-		MMC_WP		: in  std_logic := '1'	-- ƒ‰ƒCƒgƒvƒƒeƒNƒgŒŸo (ƒ‰ƒCƒgƒvƒƒeƒNƒg‚É'0') 
+		MMC_CD		: in  std_logic := '1';	-- ã‚«ãƒ¼ãƒ‰æŒ¿å…¥æ¤œå‡º (ã‚«ãƒ¼ãƒ‰æŒ¿å…¥ã§'0') 
+		MMC_WP		: in  std_logic := '1'	-- ãƒ©ã‚¤ãƒˆãƒ—ãƒ­ãƒ†ã‚¯ãƒˆæ¤œå‡º (ãƒ©ã‚¤ãƒˆãƒ—ãƒ­ãƒ†ã‚¯ãƒˆæ™‚ã«'0') 
 	);
 end avalonif_mmcdma;
 
@@ -90,7 +90,7 @@ architecture RTL of avalonif_mmcdma is
 		SYSTEMCLOCKINFO		: integer
 	);
 	port(
-		----- AvalonƒoƒXM† -----------
+		----- Avalonãƒã‚¹ä¿¡å· -----------
 		clk			: in  std_logic;
 		reset		: in  std_logic;
 		chipselect	: in  std_logic;
@@ -101,14 +101,14 @@ architecture RTL of avalonif_mmcdma is
 		writedata	: in  std_logic_vector(31 downto 0);
 		irq			: out std_logic;
 
-		----- MMC SPIM† -----------
-			-- Šeƒsƒ“‚ÌM†ƒŒƒxƒ‹‚ÍLVCMOS‚Éİ’è‚·‚é‚±‚Æ
+		----- MMC SPIä¿¡å· -----------
+			-- å„ãƒ”ãƒ³ã®ä¿¡å·ãƒ¬ãƒ™ãƒ«ã¯LVCMOSã«è¨­å®šã™ã‚‹ã“ã¨
 		MMC_nCS		: out std_logic;
 		MMC_SCK		: out std_logic;
 		MMC_SDO		: out std_logic;
 		MMC_SDI		: in  std_logic := '1';
-		MMC_CD		: in  std_logic := '1';	-- ƒJ[ƒh‘}“üŒŸo 
-		MMC_WP		: in  std_logic := '1'	-- ƒ‰ƒCƒgƒvƒƒeƒNƒgŒŸo 
+		MMC_CD		: in  std_logic := '1';	-- ã‚«ãƒ¼ãƒ‰æŒ¿å…¥æ¤œå‡º 
+		MMC_WP		: in  std_logic := '1'	-- ãƒ©ã‚¤ãƒˆãƒ—ãƒ­ãƒ†ã‚¯ãƒˆæ¤œå‡º 
 	);
 	end component;
 	signal mmcifaddr_sig	: std_logic_vector(1 downto 0);
@@ -138,7 +138,7 @@ architecture RTL of avalonif_mmcdma is
 
 begin
 
---==== AvalonBUSƒCƒ“ƒ^[ƒtƒF[ƒX ====================================
+--==== AvalonBUSã‚¤ãƒ³ã‚¿ãƒ¼ãƒ•ã‚§ãƒ¼ã‚¹ ====================================
 
 	mmcregsel_sig <= '1' when(chipselect='1' and address(7 downto 2)="000000") else '0';
 	dmaregsel_sig <= '1' when(chipselect='1' and address(7 downto 2)="000001") else '0';
@@ -207,13 +207,13 @@ begin
 	end process;
 
 
---==== ƒŠ[ƒhDMAƒXƒe[ƒgƒ}ƒVƒ“ ======================================
+--==== ãƒªãƒ¼ãƒ‰DMAã‚¹ãƒ†ãƒ¼ãƒˆãƒã‚·ãƒ³ ======================================
 
 	dmairq_sig <= dmadone_reg when dmairqena_reg='1' else '0';
 
-	mmcifexit_sig <= mmcifrddata_sig(9);			-- MMC I/F“]‘—ƒtƒ‰ƒO 
-	mmcifzero_sig <= mmcifrddata_sig(12);			-- MMC I/F FRCƒ[ƒƒtƒ‰ƒO 
-	mmcifrxd_sig  <= mmcifrddata_sig(7 downto 0);	-- MMC I/FóMƒf[ƒ^ 
+	mmcifexit_sig <= mmcifrddata_sig(9);			-- MMC I/Fè»¢é€ãƒ•ãƒ©ã‚° 
+	mmcifzero_sig <= mmcifrddata_sig(12);			-- MMC I/F FRCã‚¼ãƒ­ãƒ•ãƒ©ã‚° 
+	mmcifrxd_sig  <= mmcifrddata_sig(7 downto 0);	-- MMC I/Få—ä¿¡ãƒ‡ãƒ¼ã‚¿ 
 
 	dmamemwr_sig  <= '1' when(state=READWAIT and mmcifexit_sig='1') else '0';
 
@@ -231,7 +231,7 @@ begin
 			when IDLE =>
 				dmaread_count <= (others=>'0');
 
-				if (dmastart_reg='1') then					-- ƒf[ƒ^ƒŠ[ƒhDMAŠJn 
+				if (dmastart_reg='1') then					-- ãƒ‡ãƒ¼ã‚¿ãƒªãƒ¼ãƒ‰DMAé–‹å§‹ 
 					state <= RESSET;
 					mmcifwr_reg   <= '1';
 					dmadone_reg   <= '0';
@@ -239,7 +239,7 @@ begin
 					dmatimout_reg <= '0';
 				end if;
 
-			-- ƒf[ƒ^ƒŠ[ƒhƒŒƒXƒ|ƒ“ƒX‚ğ‘Ò‚Â 
+			-- ãƒ‡ãƒ¼ã‚¿ãƒªãƒ¼ãƒ‰ãƒ¬ã‚¹ãƒãƒ³ã‚¹ã‚’å¾…ã¤ 
 			when RESSET =>
 				state <= RESWAIT;
 				mmcifwr_reg <= '0';
@@ -247,34 +247,34 @@ begin
 			when RESWAIT =>
 				if (mmcifexit_sig = '1') then
 					if (mmcifzero_sig = '0') then
-						if (mmcifrxd_sig = X"FE") then		-- ƒXƒ^[ƒgƒoƒCƒgóM 
+						if (mmcifrxd_sig = X"FE") then		-- ã‚¹ã‚¿ãƒ¼ãƒˆãƒã‚¤ãƒˆå—ä¿¡ 
 							state <= READSET;
 							mmcifwr_reg <= '1';
 
-						elsif (mmcifrxd_sig = X"FF") then	-- ƒrƒW[ 
+						elsif (mmcifrxd_sig = X"FF") then	-- ãƒ“ã‚¸ãƒ¼ 
 							state <= RESSET;
 							mmcifwr_reg <= '1';
 
-						else								-- ƒf[ƒ^ƒGƒ‰[ 
+						else								-- ãƒ‡ãƒ¼ã‚¿ã‚¨ãƒ©ãƒ¼ 
 							state <= IDLE;
 							dmadone_reg    <= '1';
 							dmadataerr_reg <= '1';
 						end if;
-					else 									-- óMƒ^ƒCƒ€ƒAƒEƒg 
+					else 									-- å—ä¿¡ã‚¿ã‚¤ãƒ ã‚¢ã‚¦ãƒˆ 
 						state <= IDLE;
 						dmadone_reg   <= '1';
 						dmatimout_reg <= '1';
 					end if;
 				end if;
 
-			-- ƒuƒƒbƒNƒf[ƒ^‚Ìƒo[ƒXƒgƒŠ[ƒh 
+			-- ãƒ–ãƒ­ãƒƒã‚¯ãƒ‡ãƒ¼ã‚¿ã®ãƒãƒ¼ã‚¹ãƒˆãƒªãƒ¼ãƒ‰ 
 			when READSET =>
 				state <= READWAIT;
 				mmcifwr_reg  <= '0';
 
 			when READWAIT =>
 				if (mmcifexit_sig = '1') then
-					if (dmaread_count = dmarefcount_reg) then	-- “]‘—I—¹ 
+					if (dmaread_count = dmarefcount_reg) then	-- è»¢é€çµ‚äº† 
 						state <= IDLE;
 						dmadone_reg <= '1';
 					else
@@ -292,7 +292,7 @@ begin
 	end process;
 
 
---==== MMC I/FƒCƒ“ƒXƒ^ƒ“ƒX ==========================================
+--==== MMC I/Fã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ ==========================================
 
 	mmcifaddr_sig  <= "00"        when dmadone_reg='0' else address(1 downto 0);
 	mmcifwrdata_sig<= X"000000FF" when dmadone_reg='0' else writedata;
@@ -324,7 +324,7 @@ begin
 	);
 
 
---==== ƒŠ[ƒhƒoƒbƒtƒ@ƒCƒ“ƒXƒ^ƒ“ƒX ===================================
+--==== ãƒªãƒ¼ãƒ‰ãƒãƒƒãƒ•ã‚¡ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ ===================================
 
 	memrdaddr_sig <= address(6 downto 0);
 

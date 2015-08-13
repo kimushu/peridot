@@ -3,9 +3,9 @@
 --
 --     Design : S.OSAFUNE (J-7SYSTEM Works)
 --     Update : 2007/01/19 -> 2007/01/31 (Fixed)
---            : 2008/07/17 FRCƒ[ƒƒtƒ‰ƒO‚ð’Ç‰Á 
+--            : 2008/07/17 FRCã‚¼ãƒ­ãƒ•ãƒ©ã‚°ã‚’è¿½åŠ  
 --
---            : 2013/04/03 CD•Ï‰»ƒtƒ‰ƒOA“®ìƒNƒƒbƒNƒŒƒWƒXƒ^‚ð’Ç‰Á 
+--            : 2013/04/03 CDå¤‰åŒ–ãƒ•ãƒ©ã‚°ã€å‹•ä½œã‚¯ãƒ­ãƒƒã‚¯ãƒ¬ã‚¸ã‚¹ã‚¿ã‚’è¿½åŠ  
 --
 -- ===================================================================
 -- *******************************************************************
@@ -26,10 +26,10 @@ use IEEE.std_logic_arith.all;
 
 entity avalonif_mmc is
 	generic(
-		SYSTEMCLOCKINFO		: integer := 0		-- ‹ì“®ƒNƒƒbƒNî•ñ(Hz) 
+		SYSTEMCLOCKINFO		: integer := 0		-- é§†å‹•ã‚¯ãƒ­ãƒƒã‚¯æƒ…å ±(Hz) 
 	);
 	port(
-		----- AvalonƒoƒXM† -----------
+		----- Avalonãƒã‚¹ä¿¡å· -----------
 		clk			: in  std_logic;
 		reset		: in  std_logic;
 		chipselect	: in  std_logic;
@@ -40,14 +40,14 @@ entity avalonif_mmc is
 		writedata	: in  std_logic_vector(31 downto 0);
 		irq			: out std_logic;
 
-		----- MMC SPIM† -----------
-			-- Šeƒsƒ“‚ÌM†ƒŒƒxƒ‹‚ÍLVCMOS‚ÉÝ’è‚·‚é‚±‚Æ
+		----- MMC SPIä¿¡å· -----------
+			-- å„ãƒ”ãƒ³ã®ä¿¡å·ãƒ¬ãƒ™ãƒ«ã¯LVCMOSã«è¨­å®šã™ã‚‹ã“ã¨
 		MMC_nCS		: out std_logic;
 		MMC_SCK		: out std_logic;
 		MMC_SDO		: out std_logic;
 		MMC_SDI		: in  std_logic := '1';
-		MMC_CD		: in  std_logic := '1';	-- ƒJ[ƒh‘}“üŒŸo (ƒJ[ƒh‘}“ü‚Å'0') 
-		MMC_WP		: in  std_logic := '1'	-- ƒ‰ƒCƒgƒvƒƒeƒNƒgŒŸo (ƒ‰ƒCƒgƒvƒƒeƒNƒgŽž‚É'0') 
+		MMC_CD		: in  std_logic := '1';	-- ã‚«ãƒ¼ãƒ‰æŒ¿å…¥æ¤œå‡º (ã‚«ãƒ¼ãƒ‰æŒ¿å…¥ã§'0') 
+		MMC_WP		: in  std_logic := '1'	-- ãƒ©ã‚¤ãƒˆãƒ—ãƒ­ãƒ†ã‚¯ãƒˆæ¤œå‡º (ãƒ©ã‚¤ãƒˆãƒ—ãƒ­ãƒ†ã‚¯ãƒˆæ™‚ã«'0') 
 	);
 end avalonif_mmc;
 

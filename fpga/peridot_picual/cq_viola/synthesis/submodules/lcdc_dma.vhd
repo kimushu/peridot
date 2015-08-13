@@ -103,9 +103,9 @@ begin
 	test_usedw <= fifo_usedw_sig;
 
 
---==== ƒtƒŒ[ƒ€ƒoƒbƒtƒ@‚Ì“]‘— ========================================
+--==== ãƒ•ãƒ¬ãƒ¼ãƒ ãƒãƒƒãƒ•ã‚¡ã®è»¢é€ ========================================
 
-	-- ƒXƒ^[ƒgM†‚ÌƒGƒbƒWŒŸo•“¯Šú‰» 
+	-- ã‚¹ã‚¿ãƒ¼ãƒˆä¿¡å·ã®ã‚¨ãƒƒã‚¸æ¤œå‡ºï¼†åŒæœŸåŒ– 
 
 	process (clk, reset) begin
 		if (reset = '1') then
@@ -118,7 +118,7 @@ begin
 	start_sig <= '1' when(start_in_reg(2 downto 1) = "01") else '0';
 
 
-	-- ƒƒ‚ƒŠ‚Ì‚QŸŒ³ƒXƒLƒƒƒ“ 
+	-- ãƒ¡ãƒ¢ãƒªã®ï¼’æ¬¡å…ƒã‚¹ã‚­ãƒ£ãƒ³ 
 
 	ready <= '1' when(ready_reg = '1' and fifo_empty_sig = '1') else '0';
 	address_sig <= memaddr_reg;
@@ -159,7 +159,7 @@ begin
 	end process;
 
 
-	-- LCDCƒAƒNƒZƒXƒRƒ“ƒgƒ[ƒ‰‚Ö‚ÌM† 
+	-- LCDCã‚¢ã‚¯ã‚»ã‚¹ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ©ã¸ã®ä¿¡å· 
 
 	wrreq  <= '1' when(fifo_empty_sig = '0') else '0';
 	wrdata <= fifo_q_sig;
@@ -167,9 +167,9 @@ begin
 
 
 
---==== ƒƒ‚ƒŠ‚©‚çƒo[ƒXƒgƒŠ[ƒh ======================================
+--==== ãƒ¡ãƒ¢ãƒªã‹ã‚‰ãƒãƒ¼ã‚¹ãƒˆãƒªãƒ¼ãƒ‰ ======================================
 
-	-- ƒƒ‚ƒŠƒRƒ“ƒgƒ[ƒ‰‚Ö‚ÌƒAƒNƒZƒX 
+	-- ãƒ¡ãƒ¢ãƒªã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ©ã¸ã®ã‚¢ã‚¯ã‚»ã‚¹ 
 
 	address <= address_sig(30 downto 1) & '0';
 	burstcount <= conv_std_logic_vector(DMABURSTCOUNT, burstcount'length);
@@ -216,7 +216,7 @@ begin
 	end process;
 
 
-	-- ƒTƒuƒsƒNƒZƒ‹ˆ— 
+	-- ã‚µãƒ–ãƒ”ã‚¯ã‚»ãƒ«å‡¦ç† 
 
 	pixel_r_sig <= readdata(14 downto 10);
 	pixel_g_sig <= readdata(9 downto 5) & readdata(9);
@@ -226,7 +226,7 @@ begin
 	fifo_data_sig <= pixelpack_sig(7 downto 0) & pixelpack_sig(15 downto 8);
 
 
-	-- DMAFIFO‚ÆƒoƒX••ÏŠ· 
+	-- DMAFIFOã¨ãƒã‚¹å¹…å¤‰æ› 
 
 	U0 : lcdc_dmafifo
 	PORT MAP (

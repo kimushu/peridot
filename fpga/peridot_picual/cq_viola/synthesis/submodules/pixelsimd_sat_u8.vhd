@@ -31,7 +31,7 @@ architecture RTL of pixelsimd_sat_u8 is
 
 begin
 
-	-- –O˜a‰ÁŽZ–½—ß 
+	-- é£½å’ŒåŠ ç®—å‘½ä»¤ 
 
 	adda_sig <= dataa;
 	addb_sig <= datab;
@@ -39,7 +39,7 @@ begin
 
 	sadd_result <= addq_sig(7 downto 0) when(addq_sig(8)='0') else (others=>'1');
 
-	-- –O˜aŒ¸ŽZ–½—ß 
+	-- é£½å’Œæ¸›ç®—å‘½ä»¤ 
 
 	suba_sig <= dataa;
 	subb_sig <= datab;
