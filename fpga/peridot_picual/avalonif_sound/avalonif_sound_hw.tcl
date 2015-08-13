@@ -30,6 +30,7 @@ set_module_property TOP_LEVEL_HDL_FILE avalonif_sound.vhd
 set_module_property TOP_LEVEL_HDL_MODULE avalonif_sound
 set_module_property INSTANTIATE_IN_SYSTEM_MODULE true
 set_module_property EDITABLE false
+set_module_property ELABORATION_CALLBACK elaborate
 # | 
 # +-----------------------------------
 
@@ -44,6 +45,15 @@ add_file sound_fifo.vhd {SYNTHESIS SIMULATION}
 # +-----------------------------------
 # | parameters
 # | 
+# | 
+# +-----------------------------------
+
+# +-----------------------------------
+# | system parameters
+# | 
+proc elaborate {} {
+	set_module_assignment embeddedsw.CMacro.FREQ [ get_parameter_value AUTO_GLOBAL_CLOCK_RATE ]
+}
 # | 
 # +-----------------------------------
 
