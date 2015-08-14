@@ -99,7 +99,7 @@ nd_s32 nd_GsCkPlay(
 
 	payload_decoder = NULL;
 	if (*(pBuff + 1) == 0x3337) {
-		payload_decoder = audio_init(pBuff + 10);
+		payload_decoder = audio_init(pBuff + 8);
 	}
 
 	x_size    = *(pBuff + 2);
